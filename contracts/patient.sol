@@ -47,12 +47,6 @@ contract patient{
         return false;
     }
 
-    // Define a modifier to check if the user's address is in the access list for a specific doctor
-    // modifier onlyAuthorized(address doctor) {
-    //     require(isAuthorized(msg.sender, doctor), "Not authorized.");
-    //     _;
-    // }
-
     function register_patient(
         string memory _name,
         uint16 _age,
@@ -73,6 +67,10 @@ contract patient{
         );
     }
 
+    function grantAccess(address _doctorAddress) public {
+        accessList[_doctorAddress].push( msg.sender);
+    }
+
     function addRecordByUser(string memory _org,
         string memory _date,
         string memory _docName,
@@ -81,41 +79,27 @@ contract patient{
         string memory _cid,
         string memory _docType
     ) public {
+        grantAccess(msg.sender);
         userRecords[msg.sender].push(HealthRecord(_org, _date, _name, _docName, _path, _cid, msg.sender, _docType));
     }
 
-
-
-    // modifier AuthorizedDoctor(address doctor, address patientAdd) {
-    //     address[] memory p = accessList[doctor];
-    //     bool auth= false;
-    //     for( uint i=0; i < p.length; i++)
-    //     {
-    //         if(p[i]== patientAdd){
-    //             auth=true;
-    //         }
-    //     }
-    //     require(auth == true, "unauthorized doctor");
-    //     _;
-    // }
-
-    function grantAccessToDoctor(address _doctorAddress) public {
-        // check if requesting user is owner
-        // if yes then add this document id to access list corresponding to doctor id
-        accessList[_doctorAddress].push( msg.sender);
+    function getPatientIndex(address _doctor, address _user) public view returns (uint256) {
+        address[] storage users = accessList[_doctor];
+        for (uint256 i = 0; i < users.length; i++) {
+            if (users[i] == _user) {
+                return i;
+            }
+        }
+        return users.length; // User address not found in the array
     }
 
-    function revokeAccess(address _doctorAddress)  public{
-        require(isAuthorized(msg.sender, _doctorAddress), "unauthorized");
-        address[] storage addresses = accessList[msg.sender];
-        for( uint i=0; i < accessList[_doctorAddress].length; i++)
-        {
-            if(accessList[_doctorAddress][i]== msg.sender){
-                uint indexToDelete = i;
-                require(indexToDelete < addresses.length, "Element not found in the array");
-                addresses[indexToDelete] = addresses[addresses.length - 1];
-                addresses.pop();
-            }
+    function revokeAccess(address _doctor) public {
+        uint256 index = getPatientIndex(_doctor, msg.sender);
+        
+        address[] storage users = accessList[_doctor];
+        if (index < users.length) {
+            users[index] = users[users.length - 1];
+            users.pop();
         }
     }
 }

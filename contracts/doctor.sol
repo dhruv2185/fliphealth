@@ -1,6 +1,7 @@
 pragma solidity ^0.8.0;
 import "./patient.sol";
-contract Doctor is patient{
+
+contract doctor is patient{
 
      function registerDoctor(
         uint128 _abhaId,
@@ -23,7 +24,9 @@ contract Doctor is patient{
     }
 
     function getHealthRecords(address patAddress) public view returns (HealthRecord[] memory) {
+        require(isAuthorized(patAddress, msg.sender), "unauthorized");
         return userRecords[patAddress];
     }
+
 
 }
