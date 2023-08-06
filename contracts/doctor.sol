@@ -20,6 +20,11 @@ contract Doctor is patient{
         doctors.push(Doctor(msg.sender, uint128(_abhaId), _name, _age, _degreePath));
     }
 
+    function requestAccess (uint _patientId) public {
+        uint64 index= doctorIndex[msg.sender];
+        doctors[index].abhaId                 
+    } 
+
     function viewDocuments() public view returns () {
     }
 
