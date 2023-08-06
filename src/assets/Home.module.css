@@ -1,9 +1,11 @@
 .one {
     min-height: 100vh;
-    background-image: linear-gradient(75deg, rgb(6 6 6 / 64%) 8%, transparent),
-        url("./images/Banner.jpg");
+    background-image: url("./images/Banner.jpg");
+
     background-position: center;
     background-size: cover;
+    background-position-y: bottom;
+
 }
 
 body {
@@ -21,6 +23,7 @@ body {
 
 .content {
     padding-left: 5%;
+    position: relative;
 }
 
 .text-content {
@@ -108,7 +111,7 @@ body {
 
     font-family: "Raleway", sans-serif;
 
-    border: 0.25px solid #fff;
+    /* border: 0.25px solid #fff; */
     transition: 0.5s all;
 }
 

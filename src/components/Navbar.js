@@ -37,8 +37,13 @@ function Navbar() {
     const handleOpenLoginMenu = (event) => {
         setAnchorElLogin(event.currentTarget);
     }
-    const handleCloseNavMenu = () => {
+    const handleCloseNavMenu = (action) => {
         setAnchorElNav(null);
+
+
+        if (action === "Home") {
+            navigate("/");
+        }
     };
     const handleCloseLoginMenu = (action) => {
         setAnchorElLogin(null);
@@ -105,9 +110,9 @@ function Navbar() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                            {pages.map((peg) => (
+                                <MenuItem key={peg} onClick={() => { handleCloseNavMenu(peg) }}>
+                                    <Typography textAlign="center">{peg}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -135,7 +140,7 @@ function Navbar() {
                         {pages.map((page) => (
                             <Button
                                 key={page}
-                                onClick={handleCloseNavMenu}
+                                onClick={() => { handleCloseNavMenu(page) }}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
                                 {page}
@@ -143,7 +148,7 @@ function Navbar() {
                         ))}
                     </Box>
                     {!isLoggedIn && <Box sx={{ flexGrow: 0 }}>
-                        <Button onClick={handleOpenLoginMenu} variant='outlined'>SIGNIN</Button>
+                        <Button onClick={handleOpenLoginMenu} variant='outlined'>SIGN IN</Button>
                         <Menu
                             sx={{ mt: '45px' }}
                             id="menu-appbar"
