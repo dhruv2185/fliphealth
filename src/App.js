@@ -7,6 +7,7 @@ import Home from './assets/Home';
 
 import PatientLogin from './assets/signinflow/PatientLogin';
 import DoctorLogin from './assets/signinflow/DoctorLogin';
+import Profile from './assets/Profile';
 
 
 
@@ -18,7 +19,8 @@ function App() {
     palette: {
       mode: 'dark',
       neutral: {
-        main: '#f45c03'
+        main: '#f45c03',
+
       }
     },
 
@@ -29,7 +31,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/Profile" />
+            <Route path="/Profile" element={<Profile />} />
             <Route path="/Patient/SignIn" element={<PatientLogin />} />
             <Route path="/Doctor/SignIn" element={<DoctorLogin />} />
 

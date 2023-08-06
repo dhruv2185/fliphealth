@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 import shield from "./images/shield.jpg";
 import security from "./images/security.jpg";
 import accessibility from "./images/accessibility.jpg";
+import Footer from '../components/Footer';
 const Home = () => {
     return (
         <>
@@ -62,7 +63,7 @@ const Home = () => {
                 </div>
 
             </section>
-
+            <Footer />
         </>
     );
 }
