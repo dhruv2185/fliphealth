@@ -1,24 +1,43 @@
-import logo from './logo.svg';
+
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import Home from './assets/Home';
+
+
+import PatientLogin from './assets/signinflow/PatientLogin';
+import DoctorLogin from './assets/signinflow/DoctorLogin';
+
+
+
 
 function App() {
+
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+      neutral: {
+        main: '#f45c03'
+      }
+    },
+
+  });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ThemeProvider theme={darkTheme}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/Profile" />
+            <Route path="/Patient/SignIn" element={<PatientLogin />} />
+            <Route path="/Doctor/SignIn" element={<DoctorLogin />} />
+
+
+          </Routes>
+        </Router>
+      </ThemeProvider>
+    </>
   );
 }
 
