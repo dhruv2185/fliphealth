@@ -1,11 +1,26 @@
 pragma solidity ^0.8.0;
 import "./doctor.sol";
 
-contract diagnostics is doctor{
-    struct Diagnostic{
-        string Diagname;
-        string email;
-        uint128 phone;
+contract diagnostic is doctor{
+
+    function registerDiagnostic(
+        uint128 _abhaId,
+        uint128 _aadharId,
+        string memory _name,
+        uint16 _age,
+        uint64 _grNum,
+        uint64 _mobile,
+        string memory _email
+    ) external {
+        doctorIndex[msg.sender] = Doctor(
+            _abhaId,
+            _aadharId,
+            _name,
+            _age,
+            _grNum,
+            _mobile,
+            _email
+        );
     }
 
     function uploadDocuments(address _patient,

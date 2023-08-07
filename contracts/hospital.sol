@@ -19,7 +19,7 @@ contract hospital is doctor{
         organization[_doctor] = address(0);                                                                
     }
 
-    function addHospital(address _doctor) public {
+    function addHospital(address _doctor) public  {
         organization[_doctor] = msg.sender;        
     }
 }

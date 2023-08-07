@@ -1,13 +1,19 @@
 pragma solidity ^0.8.0;
 
 contract patient{
+    struct Diagnostic{
+        string Diagname;
+        string email;
+        uint128 phone;
+    }
+
     struct Patient {
         uint128 abhaId; // will be replaced by abha id
         uint128 aadharId;
         string name;
         uint16 age;
         string gender;
-        uint64 mobile;
+        uint128 mobile;
         string email;
     }
 
@@ -17,7 +23,7 @@ contract patient{
         string name;
         uint16 age;
         uint64 grNum;
-        uint64 mobile;
+        uint128 mobile;
         string email;
     }
 
@@ -31,11 +37,15 @@ contract patient{
         address owner;
         string documentType;
     }
-
-    mapping(address => Patient) public patientIndex; // address of user to index in struct array
-    mapping(address => Doctor) public doctorIndex; // address of user to index in struct array
-    mapping(address => address[]) public accessList; // doctor id to user ids
-    mapping(address => HealthRecord[]) public userRecords; // address of user to list od ids of health records
+    
+    address[] internal doctors;    
+    address[] internal daignostics;    
+    mapping (address => Diagnostic) internal dagnostic;
+    mapping(address => Patient) internal patientIndex; // address of user to index in struct array
+    mapping(address => Doctor) internal doctorIndex; // address of user to index in struct array
+    mapping(address => address[]) internal  accessList; // doctor address to user address
+    mapping(address => HealthRecord[]) internal userRecords; // address of user to list od ids of health records
+    mapping (address => address[]) internal  accessList2;
 
     function isAuthorized(address user, address doctor)  internal view returns (bool) {
         address[] memory authorizedUsers = accessList[doctor];
@@ -55,19 +65,20 @@ contract patient{
         string memory _gender,
         uint _mobile,
         string memory _email
-    ) public {
+    ) external {
         patientIndex[msg.sender] = Patient(
             uint128(_abhaId),
             uint128(_aadharId),
             _name,
             _age,
             _gender,
-            uint64(_mobile),
+            uint128(_mobile),
             _email
         );
     }
 
     function grantAccess(address _doctorAddress) public {
+        accessList2[msg.sender].push(_doctorAddress);
         accessList[_doctorAddress].push( msg.sender);
     }
 
@@ -78,12 +89,12 @@ contract patient{
         string memory _path,
         string memory _cid,
         string memory _docType
-    ) public {
+    ) external {
         grantAccess(msg.sender);
         userRecords[msg.sender].push(HealthRecord(_org, _date, _name, _docName, _path, _cid, msg.sender, _docType));
     }
 
-    function getPatientIndex(address _doctor, address _user) public view returns (uint256) {
+    function getPatientIndex(address _doctor, address _user) internal view returns (uint256) {
         address[] storage users = accessList[_doctor];
         for (uint256 i = 0; i < users.length; i++) {
             if (users[i] == _user) {
@@ -93,7 +104,17 @@ contract patient{
         return users.length; // User address not found in the array
     }
 
-    function revokeAccess(address _doctor) public {
+    function getDoctorIndex(address _doctor, address _user) internal view returns (uint256) {
+        address[] storage users = accessList2[_user];
+        for (uint256 i = 0; i < users.length; i++) {
+            if (users[i] == _doctor) {
+                return i;
+            }
+        }
+        return users.length; // User address not found in the array
+    }
+
+    function revokeAccess(address _doctor) external {
         uint256 index = getPatientIndex(_doctor, msg.sender);
         
         address[] storage users = accessList[_doctor];
@@ -101,5 +122,22 @@ contract patient{
             users[index] = users[users.length - 1];
             users.pop();
         }
+
+        uint256 index1 = getDoctorIndex(_doctor, msg.sender);
+        
+        address[] storage users2 = accessList2[_doctor];
+        if (index < users2.length) {
+            users2[index1] = users[users2.length - 1];
+            users2.pop();
+        }
+        
     }
+
+    function getPatientOwnProfile() external view returns (Patient memory) {
+        return patientIndex[msg.sender];
+    }
+
+    function getPatientProfile(address _patient) external view returns (Patient memory) {
+        return patientIndex[_patient];
+    } 
 }
