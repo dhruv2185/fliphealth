@@ -23,6 +23,7 @@ import { patientABI } from '../../abis/patient.js'
 // instantiating object
 const web3 = new Web3('http://127.0.0.1:7545');
 
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 const PatientLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
     const name = useRef();
@@ -31,7 +32,11 @@ const PatientLogin = () => {
     const phone = useRef();
     const abha = useRef();
     const aadhar = useRef();
+    const [gender, setgender] = useState('');
     const [accounts, setAccounts] = useState([]);
+    const handleGenderChange = (event) => {
+        setgender(event.target.value);
+    };
     useEffect(() => {
 
         // Asking if metamask is already present or not
@@ -111,6 +116,18 @@ const PatientLogin = () => {
                                     inputRef={age}
                                 />
                             </Box>
+                            <FormControl fullWidth sx={{ marginTop: "8px 0" }} ><InputLabel id="demo-simple-select-label">Gender * </InputLabel><Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={gender}
+                                label="Gender"
+                                onChange={handleGenderChange}
+                                required
+                            >
+                                <MenuItem value={"male"}>Male</MenuItem>
+                                <MenuItem value={"female"}>Female</MenuItem>
+                                <MenuItem value={"other"}>Other</MenuItem>
+                            </Select></FormControl>
                             <TextField
                                 margin="normal"
                                 required
