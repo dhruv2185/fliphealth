@@ -1,6 +1,7 @@
-import { Container, CssBaseline, IconButton, InputBase, Paper } from '@mui/material';
+import { Container, CssBaseline, IconButton, InputBase, Paper, Box } from '@mui/material';
 import React, { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
+import SearchDocResult from './SearchDocResult';
 const SearchDoctor = () => {
     const [search, setSearch] = useState('');
     const searchHandler = (e) => {
@@ -19,13 +20,15 @@ const SearchDoctor = () => {
                         setSearch(e.target.value);
                     }}
                     placeholder="Search"
-                    inputProps={{ 'aria-label': 'search strategy' }}
+                    inputProps={{ 'aria-label': 'search ' }}
                 />
                 <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
                     <SearchIcon />
                 </IconButton>
 
-            </Paper></Container>
+            </Paper>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}><SearchDocResult /></Box>
+            </Container>
         </>
     );
 }

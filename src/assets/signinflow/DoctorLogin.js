@@ -18,6 +18,8 @@ import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { doctorABI } from '../../abis/doctor.js'
+const web3 = new Web3('http://127.0.0.1:7545');
 
 const DoctorLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -47,10 +49,20 @@ const DoctorLogin = () => {
             alert("install metamask extension!!");
         }
     }, [])
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, grnumber: grnumber.current.value, gender: gender };
-        console.log(data);
+        const doctorContract = new web3.eth.Contract(doctorABI, "0x7e96E574ABCD8Fc3d95492D499BD85B3c6bE4d18");
+        const result = await doctorContract.methods.registerDoctor(
+            data.abha,
+            data.aadhar,
+            data.name,
+            data.age,
+            data.grnumber,
+            data.phone,
+            data.email,
+        )
+        console.log(result);
     };
 
     return (
