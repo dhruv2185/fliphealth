@@ -17,6 +17,7 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const DoctorLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -27,7 +28,11 @@ const DoctorLogin = () => {
     const abha = useRef();
     const aadhar = useRef();
     const grnumber = useRef();
+    const [gender, setgender] = useState('');
     const [accounts, setAccounts] = useState([]);
+    const handleGenderChange = (event) => {
+        setgender(event.target.value);
+    };
     useEffect(() => {
 
         // Asking if metamask is already present or not
@@ -93,6 +98,18 @@ const DoctorLogin = () => {
                                     inputRef={age}
                                 />
                             </Box>
+                            <FormControl fullWidth sx={{ marginTop: "8px 0" }} ><InputLabel id="demo-simple-select-label">Gender * </InputLabel><Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={gender}
+                                label="Gender"
+                                onChange={handleGenderChange}
+                                required
+                            >
+                                <MenuItem value={"male"}>Male</MenuItem>
+                                <MenuItem value={"female"}>Female</MenuItem>
+                                <MenuItem value={"other"}>Other</MenuItem>
+                            </Select></FormControl>
                             <TextField
                                 margin="normal"
                                 required
