@@ -48,7 +48,7 @@ const PatientLogin = () => {
     }, [])
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value };
+        const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
         console.log(data);
     };
 
