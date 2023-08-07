@@ -23,6 +23,16 @@ contract doctor is patient{
         );
     }
 
+    function getPatients() public view returns (Patient[] memory) {
+        uint patientCount = accessList[msg.sender].length;
+        // add a response if patientCount is 0
+        Patient[] memory patients = new Patient[](patientCount);
+        for (uint i = 0; i < patientCount; i++) {
+            patients[i] = patientIndex[accessList[msg.sender][i]];
+        }
+        return patients;
+    }
+
     function getHealthRecords(address patAddress) public view returns (HealthRecord[] memory) {
         require(isAuthorized(patAddress, msg.sender), "unauthorized");
         return userRecords[patAddress];
