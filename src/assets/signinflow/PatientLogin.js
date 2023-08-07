@@ -18,6 +18,11 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
+import { patientABI } from '../../abis/patient.js'
+
+// instantiating object
+const web3 = new Web3('http://127.0.0.1:7545');
+
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 const PatientLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -46,10 +51,24 @@ const PatientLogin = () => {
             alert("install metamask extension!!");
         }
     }, [])
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log(accounts);
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
-        console.log(data);
+        const gender = "male";
+        // accounts = array of accounts
+        const patientContract = new web3.eth.Contract(patientABI, "0xDeC01AfA357A754ea3Ed6Ee6E8f27F954380f104");
+        const result = await patientContract.methods.register_patient(
+            data.name,
+            data.age,
+            data.abha,
+            data.aadhar,
+            gender,
+            data.phone,
+            data.email
+        ).send({ from: accounts[0], gas: 3000000 })
+
+        console.log(result);
     };
 
     return (
