@@ -18,6 +18,12 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
+import { patientABI } from '../../abis/patient.js'
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+// instantiating object
+const web3 = new Web3('http://127.0.0.1:7545');
+
+
 const PatientLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
     const name = useRef();
@@ -26,7 +32,11 @@ const PatientLogin = () => {
     const phone = useRef();
     const abha = useRef();
     const aadhar = useRef();
+    const [gender, setgender] = useState('');
     const [accounts, setAccounts] = useState([]);
+    const handleGenderChange = (event) => {
+        setgender(event.target.value);
+    };
     useEffect(() => {
 
         // Asking if metamask is already present or not
@@ -41,10 +51,24 @@ const PatientLogin = () => {
             alert("install metamask extension!!");
         }
     }, [])
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value };
-        console.log(data);
+        console.log(accounts);
+        const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
+        const gender = "male";
+        // accounts = array of accounts
+        const patientContract = new web3.eth.Contract(patientABI, "0xDeC01AfA357A754ea3Ed6Ee6E8f27F954380f104");
+        const result = await patientContract.methods.register_patient(
+            data.name,
+            data.age,
+            data.abha,
+            data.aadhar,
+            gender,
+            data.phone,
+            data.email
+        ).send({ from: accounts[0], gas: 3000000 })
+
+        console.log(result);
     };
 
     return (
@@ -92,6 +116,18 @@ const PatientLogin = () => {
                                     inputRef={age}
                                 />
                             </Box>
+                            <FormControl fullWidth sx={{ marginTop: "8px 0" }} ><InputLabel id="demo-simple-select-label">Gender * </InputLabel><Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={gender}
+                                label="Gender"
+                                onChange={handleGenderChange}
+                                required
+                            >
+                                <MenuItem value={"male"}>Male</MenuItem>
+                                <MenuItem value={"female"}>Female</MenuItem>
+                                <MenuItem value={"other"}>Other</MenuItem>
+                            </Select></FormControl>
                             <TextField
                                 margin="normal"
                                 required

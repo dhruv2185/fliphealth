@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Web3 from 'web3';
 import { useState } from 'react';
@@ -17,13 +17,24 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { doctorABI } from '../../abis/doctor.js'
+const web3 = new Web3('http://127.0.0.1:7545');
 
 const DoctorLogin = () => {
-    const [data, setdata] = useState({
-        address: "",
-        Balance: null,
-    });
     const [isLoading, setIsLoading] = useState(true);
+    const name = useRef();
+    const age = useRef();
+    const email = useRef();
+    const phone = useRef();
+    const abha = useRef();
+    const aadhar = useRef();
+    const grnumber = useRef();
+    const [gender, setgender] = useState('');
+    const [accounts, setAccounts] = useState([]);
+    const handleGenderChange = (event) => {
+        setgender(event.target.value);
+    };
     useEffect(() => {
 
         // Asking if metamask is already present or not
@@ -31,20 +42,27 @@ const DoctorLogin = () => {
             window.ethereum
                 .request({ method: "eth_requestAccounts" })
                 .then((res) => {
-                    console.log(res);
+                    setAccounts(res);
                     setIsLoading(false)
                 });
         } else {
             alert("install metamask extension!!");
         }
     }, [])
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, grnumber: grnumber.current.value, gender: gender };
+        const doctorContract = new web3.eth.Contract(doctorABI, "0x7e96E574ABCD8Fc3d95492D499BD85B3c6bE4d18");
+        const result = await doctorContract.methods.registerDoctor(
+            data.abha,
+            data.aadhar,
+            data.name,
+            data.age,
+            data.grnumber,
+            data.phone,
+            data.email,
+        )
+        console.log(result);
     };
 
     return (
@@ -78,6 +96,7 @@ const DoctorLogin = () => {
                                 label="Name"
                                 type="text"
                                 id="name"
+                                inputRef={name}
                             />
                                 <TextField
                                     margin="normal"
@@ -88,8 +107,21 @@ const DoctorLogin = () => {
                                     type="number"
                                     inputProps={{ inputMode: "numeric", min: "1", max: "120" }}
                                     id="age"
+                                    inputRef={age}
                                 />
                             </Box>
+                            <FormControl fullWidth sx={{ marginTop: "8px 0" }} ><InputLabel id="demo-simple-select-label">Gender * </InputLabel><Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={gender}
+                                label="Gender"
+                                onChange={handleGenderChange}
+                                required
+                            >
+                                <MenuItem value={"male"}>Male</MenuItem>
+                                <MenuItem value={"female"}>Female</MenuItem>
+                                <MenuItem value={"other"}>Other</MenuItem>
+                            </Select></FormControl>
                             <TextField
                                 margin="normal"
                                 required
@@ -98,6 +130,7 @@ const DoctorLogin = () => {
                                 label="E-mail"
                                 name="email"
                                 type='email'
+                                inputRef={email}
                             />
                             <TextField
                                 margin="normal"
@@ -107,6 +140,7 @@ const DoctorLogin = () => {
                                 label="Mobile Number"
                                 name="phone"
                                 type='text'
+                                inputRef={phone}
                             />
                             <TextField
                                 margin="normal"
@@ -115,7 +149,7 @@ const DoctorLogin = () => {
                                 id="abha"
                                 label="ABHA ID"
                                 name="abhaID"
-                                autoFocus
+                                inputRef={abha}
                             />
                             <TextField
                                 margin="normal"
@@ -125,6 +159,7 @@ const DoctorLogin = () => {
                                 label="AADHAR ID"
                                 type="text"
                                 id="aadhar"
+                                inputRef={aadhar}
                             />
                             <TextField
                                 margin="normal"
@@ -133,6 +168,7 @@ const DoctorLogin = () => {
                                 id="GR-number"
                                 label="General Registration (G.R.) Number"
                                 name="grnumber"
+                                inputRef={grnumber}
 
                             />
                             <FormControlLabel
