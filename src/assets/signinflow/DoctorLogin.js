@@ -51,6 +51,7 @@ const DoctorLogin = () => {
     }, [])
     const handleSubmit = async (event) => {
         event.preventDefault();
+        // add field for degree name
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, grnumber: grnumber.current.value, gender: gender };
         const doctorContract = new web3.eth.Contract(doctorABI, "0x7e96E574ABCD8Fc3d95492D499BD85B3c6bE4d18");
         const result = await doctorContract.methods.registerDoctor(
@@ -61,7 +62,11 @@ const DoctorLogin = () => {
             data.grnumber,
             data.phone,
             data.email,
-        )
+            data.degreeName
+        ).send({
+            from: accounts[0],
+            gas: 3000000
+        })
         console.log(result);
     };
 

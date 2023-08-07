@@ -2,10 +2,36 @@ import { Container, CssBaseline, IconButton, InputBase, Paper, Box } from '@mui/
 import React, { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchDocResult from './SearchDocResult';
+import Web3 from 'web3';
+import { doctorABI } from '../../abis/doctor.js'
+const web3 = new Web3('http://127.0.0.1:7545');
+const doctorContract = new web3.eth.Contract(doctorABI, "0x7e96E574ABCD8Fc3d95492D499BD85B3c6bE4d18");
+
 const SearchDoctor = () => {
     const [search, setSearch] = useState('');
+
+    let doctorProfile;
+    let accountAddress; // yeh globally stored logged in address hai
+    // search by address
+    // yeh galat ho sakta hai aur call ki jagah send ki jarurat pad sakti hai
+    const searchByAddress = async (enteredAddress) => {
+        const res = await doctorContract.methods.getDocProfile(enteredAddress).call({
+            from: accountAddress
+        });
+        doctorProfile = res;
+    }
+
+    // I will return profiles of all doctors
+    const searchByName = async () => {
+        const res = await doctorContract.methods.getAllDoctors().call({
+            from: accountAddress
+        })
+        doctorProfile = res;
+    }
+
     const searchHandler = (e) => {
         e.preventDefault();
+
     }
     return (
         <>
