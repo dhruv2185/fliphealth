@@ -55,7 +55,6 @@ const PatientLogin = () => {
         event.preventDefault();
         console.log(accounts);
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
-        const gender = "male";
         // accounts = array of accounts
         const patientContract = new web3.eth.Contract(patientABI, "0xDeC01AfA357A754ea3Ed6Ee6E8f27F954380f104");
         const result = await patientContract.methods.register_patient(
@@ -63,7 +62,7 @@ const PatientLogin = () => {
             data.age,
             data.abha,
             data.aadhar,
-            gender,
+            data.gender,
             data.phone,
             data.email
         ).send({ from: accounts[0], gas: 3000000 })
