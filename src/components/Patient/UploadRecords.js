@@ -4,7 +4,7 @@ import { Box, Button, Container, CssBaseline, FormControl, InputLabel, MenuItem,
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import Web3 from 'web3';
 import { doctorABI } from '../../abis/doctor.js'
-
+import { Document, Page, pdfjs } from 'react-pdf';
 
 const web3 = new Web3('http://127.0.0.1:7545');
 const doctorContract = new web3.eth.Contract(doctorABI, "0x7e96E574ABCD8Fc3d95492D499BD85B3c6bE4d18");
@@ -13,7 +13,7 @@ const projectId = process.env.REACT_APP_PROJECT_ID;
 const projectSecretKey = process.env.REACT_APP_PROJECT_KEY;
 const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
 
-
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 const UploadRecords = () => {
 
@@ -36,7 +36,12 @@ const UploadRecords = () => {
         setFile(val)
         setFileErr(false);
     }
+    const [numPages, setNumPages] = useState();
+    const [pageNumber, setPageNumber] = useState(1);
 
+    function onDocumentLoadSuccess(numPages) {
+        setNumPages(numPages);
+    }
     const onSubmitHandler = async (event) => {
         event.preventDefault();
         if (file === null) {
@@ -103,7 +108,9 @@ const UploadRecords = () => {
             <MenuItem value={"report"}>Report</MenuItem>
             <MenuItem value={"prescription"}>Prescription</MenuItem>
             <MenuItem value={"mediclaim"}>MediClaim</MenuItem>
-        </Select></FormControl><MuiFileInput error={fileErr} sx={{ width: "40vw", maxWidth: "405px", minWidth: "250px" }} label="Upload File(*.pdf, *.jpg, *.png) " value={file} onChange={handleFileChange} /><Box sx={{ display: "flex", gap: "20px", justifyContent: "center", padding: "20px" }}><Button type="submit" variant='contained'>SUBMIT</Button><Button type="reset" color='neutral' variant='outlined'>DISCARD</Button></Box></Box></Container></>)
+        </Select></FormControl><MuiFileInput error={fileErr} sx={{ width: "40vw", maxWidth: "405px", minWidth: "250px" }} label="Upload File(*.pdf, *.jpg, *.png) " value={file} onChange={handleFileChange} /><Box sx={{ display: "flex", gap: "20px", justifyContent: "center", padding: "20px" }}><Button type="submit" variant='contained'>SUBMIT</Button><Button type="reset" color='neutral' variant='outlined'>DISCARD</Button></Box></Box><Document file={file} onLoadSuccess={onDocumentLoadSuccess}>
+            <Page pageNumber={pageNumber} />
+        </Document></Container></>)
 }
 
 export default UploadRecords;
