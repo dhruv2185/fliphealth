@@ -126,13 +126,18 @@ export const doctorABI = [
                 "type": "uint64"
             },
             {
-                "internalType": "uint64",
+                "internalType": "uint128",
                 "name": "_mobile",
-                "type": "uint64"
+                "type": "uint128"
             },
             {
                 "internalType": "string",
                 "name": "_email",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_degreeName",
                 "type": "string"
             }
         ],
@@ -158,70 +163,198 @@ export const doctorABI = [
         "inputs": [
             {
                 "internalType": "address",
-                "name": "",
+                "name": "_doctor",
                 "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
             }
         ],
-        "name": "accessList",
+        "name": "DocProfileReturn",
         "outputs": [
             {
-                "internalType": "address",
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint16",
+                        "name": "age",
+                        "type": "uint16"
+                    },
+                    {
+                        "internalType": "uint64",
+                        "name": "grNum",
+                        "type": "uint64"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "degreeName",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "myAdd",
+                        "type": "address"
+                    }
+                ],
+                "internalType": "struct patient.DocProfile",
                 "name": "",
-                "type": "address"
+                "type": "tuple"
             }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "name": "doctorIndex",
+        "inputs": [],
+        "name": "getAllDoctors",
         "outputs": [
             {
-                "internalType": "uint128",
-                "name": "abhaId",
-                "type": "uint128"
+                "components": [
+                    {
+                        "internalType": "uint128",
+                        "name": "abhaId",
+                        "type": "uint128"
+                    },
+                    {
+                        "internalType": "uint128",
+                        "name": "aadharId",
+                        "type": "uint128"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint16",
+                        "name": "age",
+                        "type": "uint16"
+                    },
+                    {
+                        "internalType": "uint64",
+                        "name": "grNum",
+                        "type": "uint64"
+                    },
+                    {
+                        "internalType": "uint128",
+                        "name": "mobile",
+                        "type": "uint128"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "email",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "degreeName",
+                        "type": "string"
+                    }
+                ],
+                "internalType": "struct patient.Doctor[]",
+                "name": "",
+                "type": "tuple[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getDocOwnProfile",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "uint128",
+                        "name": "abhaId",
+                        "type": "uint128"
+                    },
+                    {
+                        "internalType": "uint128",
+                        "name": "aadharId",
+                        "type": "uint128"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint16",
+                        "name": "age",
+                        "type": "uint16"
+                    },
+                    {
+                        "internalType": "uint64",
+                        "name": "grNum",
+                        "type": "uint64"
+                    },
+                    {
+                        "internalType": "uint128",
+                        "name": "mobile",
+                        "type": "uint128"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "email",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "degreeName",
+                        "type": "string"
+                    }
+                ],
+                "internalType": "struct patient.Doctor",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getDoctorsForUser",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint16",
+                        "name": "age",
+                        "type": "uint16"
+                    },
+                    {
+                        "internalType": "uint64",
+                        "name": "grNum",
+                        "type": "uint64"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "degreeName",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "myAdd",
+                        "type": "address"
+                    }
+                ],
+                "internalType": "struct patient.DocProfile[]",
+                "name": "",
+                "type": "tuple[]"
             },
             {
-                "internalType": "uint128",
-                "name": "aadharId",
-                "type": "uint128"
-            },
-            {
-                "internalType": "string",
-                "name": "name",
-                "type": "string"
-            },
-            {
-                "internalType": "uint16",
-                "name": "age",
-                "type": "uint16"
-            },
-            {
-                "internalType": "uint64",
-                "name": "grNum",
-                "type": "uint64"
-            },
-            {
-                "internalType": "uint64",
-                "name": "mobile",
-                "type": "uint64"
-            },
-            {
-                "internalType": "string",
-                "name": "email",
-                "type": "string"
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
             }
         ],
         "stateMutability": "view",
@@ -289,24 +422,106 @@ export const doctorABI = [
         "type": "function"
     },
     {
+        "inputs": [],
+        "name": "getPatientOwnProfile",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "uint128",
+                        "name": "abhaId",
+                        "type": "uint128"
+                    },
+                    {
+                        "internalType": "uint128",
+                        "name": "aadharId",
+                        "type": "uint128"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint16",
+                        "name": "age",
+                        "type": "uint16"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "gender",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint128",
+                        "name": "mobile",
+                        "type": "uint128"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "email",
+                        "type": "string"
+                    }
+                ],
+                "internalType": "struct patient.Patient",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "inputs": [
             {
                 "internalType": "address",
-                "name": "_doctor",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "_user",
+                "name": "_patient",
                 "type": "address"
             }
         ],
-        "name": "getPatientIndex",
+        "name": "getPatientProfile",
         "outputs": [
             {
-                "internalType": "uint256",
+                "components": [
+                    {
+                        "internalType": "uint128",
+                        "name": "abhaId",
+                        "type": "uint128"
+                    },
+                    {
+                        "internalType": "uint128",
+                        "name": "aadharId",
+                        "type": "uint128"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint16",
+                        "name": "age",
+                        "type": "uint16"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "gender",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint128",
+                        "name": "mobile",
+                        "type": "uint128"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "email",
+                        "type": "string"
+                    }
+                ],
+                "internalType": "struct patient.Patient",
                 "name": "",
-                "type": "uint256"
+                "type": "tuple"
             }
         ],
         "stateMutability": "view",
@@ -344,9 +559,9 @@ export const doctorABI = [
                         "type": "string"
                     },
                     {
-                        "internalType": "uint64",
+                        "internalType": "uint128",
                         "name": "mobile",
-                        "type": "uint64"
+                        "type": "uint128"
                     },
                     {
                         "internalType": "string",
@@ -357,114 +572,6 @@ export const doctorABI = [
                 "internalType": "struct patient.Patient[]",
                 "name": "",
                 "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "name": "patientIndex",
-        "outputs": [
-            {
-                "internalType": "uint128",
-                "name": "abhaId",
-                "type": "uint128"
-            },
-            {
-                "internalType": "uint128",
-                "name": "aadharId",
-                "type": "uint128"
-            },
-            {
-                "internalType": "string",
-                "name": "name",
-                "type": "string"
-            },
-            {
-                "internalType": "uint16",
-                "name": "age",
-                "type": "uint16"
-            },
-            {
-                "internalType": "string",
-                "name": "gender",
-                "type": "string"
-            },
-            {
-                "internalType": "uint64",
-                "name": "mobile",
-                "type": "uint64"
-            },
-            {
-                "internalType": "string",
-                "name": "email",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "name": "userRecords",
-        "outputs": [
-            {
-                "internalType": "string",
-                "name": "organisation",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "date",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "doctorName",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "documentName",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "documentPath",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "documentCid",
-                "type": "string"
-            },
-            {
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "documentType",
-                "type": "string"
             }
         ],
         "stateMutability": "view",

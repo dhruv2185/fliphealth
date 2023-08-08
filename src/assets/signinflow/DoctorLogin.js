@@ -18,8 +18,11 @@ import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-// import { doctorABI } from '../../abis/doctor.js'
-const web3 = new Web3(process.env.BLOCKCHAIN_PROVIDER_URL);
+import { doctorABI } from '../../abis/doctor.js'
+const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
+const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
+console.log(doctorABI, doctorAddress);
+const doctorContract = new web3.eth.Contract(doctorABI, doctorAddress);
 
 const DoctorLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -54,7 +57,6 @@ const DoctorLogin = () => {
         event.preventDefault();
         // add field for degree name
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, grnumber: grnumber.current.value, gender: gender, specialisation: specialisation.current.value };
-        const doctorContract = new web3.eth.Contract(process.env.DOCTOR_CONTRACT_ABI, process.env.DOCTOR_CONTRACT_ADDRESS);
         const result = await doctorContract.methods.registerDoctor(
             data.abha,
             data.aadhar,

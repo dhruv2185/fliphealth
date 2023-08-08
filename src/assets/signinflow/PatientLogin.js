@@ -56,18 +56,18 @@ const PatientLogin = () => {
         console.log(accounts);
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
         // accounts = array of accounts
-        const patientContract = new web3.eth.Contract(process.env.DOCTOR_CONTRACT_ABI, process.env.DOCTOR_CONTRACT_ADDRESS);
-        const result = await patientContract.methods.register_patient(
-            data.name,
-            data.age,
-            data.abha,
-            data.aadhar,
-            data.gender,
-            data.phone,
-            data.email
-        ).send({ from: accounts[0], gas: 3000000 })
+        // const patientContract = new web3.eth.Contract(process.env.DOCTOR_CONTRACT_ABI, process.env.DOCTOR_CONTRACT_ADDRESS);
+        // const result = await patientContract.methods.register_patient(
+        //     data.name,
+        //     data.age,
+        //     data.abha,
+        //     data.aadhar,
+        //     data.gender,
+        //     data.phone,
+        //     data.email
+        // ).send({ from: accounts[0], gas: 3000000 })
 
-        console.log(result);
+        // console.log(result);
     };
 
     return (
