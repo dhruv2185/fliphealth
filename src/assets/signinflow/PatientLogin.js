@@ -19,9 +19,9 @@ import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { patientABI } from '../../abis/patient.js'
+// import { patientABI } from '../../abis/patient.js'
 // instantiating object
-const web3 = new Web3('http://127.0.0.1:7545');
+const web3 = new Web3(process.env.BLOCKCHAIN_PROVIDER_URL);
 
 
 const PatientLogin = () => {
@@ -56,7 +56,7 @@ const PatientLogin = () => {
         console.log(accounts);
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
         // accounts = array of accounts
-        const patientContract = new web3.eth.Contract(patientABI, "0xDeC01AfA357A754ea3Ed6Ee6E8f27F954380f104");
+        const patientContract = new web3.eth.Contract(process.env.DOCTOR_CONTRACT_ABI, process.env.DOCTOR_CONTRACT_ADDRESS);
         const result = await patientContract.methods.register_patient(
             data.name,
             data.age,
