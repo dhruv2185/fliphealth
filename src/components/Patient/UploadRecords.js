@@ -3,6 +3,7 @@ import { MuiFileInput } from 'mui-file-input';
 import { Box, Button, Container, CssBaseline, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import Web3 from 'web3';
+import { pdfjs, Document, Page } from "react-pdf";
 // import { doctorABI } from '../../abis/doctor.js'
 const web3 = new Web3(process.env.BLOCKCHAIN_PROVIDER_URL);
 const doctorContract = new web3.eth.Contract(process.env.DOCTOR_CONTRACT_ABI, process.env.DOCTOR_CONTRACT_ADDRESS);
