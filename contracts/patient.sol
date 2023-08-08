@@ -2,9 +2,10 @@ pragma solidity ^0.8.0;
 
 contract patient {
     struct Diagnostic {
-        string diagname;
+        string Diagname;
         string email;
         uint128 phone;
+        string license;
     }
 
     struct Patient {
@@ -39,20 +40,28 @@ contract patient {
         string documentType;
     }
 
-    // stored
+    struct DocProfile {
+        string name;
+        uint16 age;
+        uint64 grNum;
+        string degreeName;
+        address myAdd;
+    }
+
+    struct PatientProfile {
+        string name;
+        uint16 age;
+        string gender;
+        address myAdd;
+    }
+
     address[] internal doctors;
-    address[] internal diagnostics;
-    mapping(address => Diagnostic) internal diagnostic;
-
+    address[] internal daignostics;
+    mapping(address => Diagnostic) internal dagnostic;
     mapping(address => Patient) internal patientIndex; // address of user to index in struct array
-
     mapping(address => Doctor) internal doctorIndex; // address of user to index in struct array
-    // used in showing the doctor all patients who have granted access to him to their documents
     mapping(address => address[]) internal accessList; // doctor address to user address
-    // used in getting all documents of users, showing all documents of user to allowed doctors
     mapping(address => HealthRecord[]) internal userRecords; // address of user to list od ids of health records
-    // used in getting doctors to whom a user has given access
-    mapping(address => address[]) internal accessList2; // address of user to addresses of doctors
 
     function isAuthorized(
         address user,
@@ -76,6 +85,7 @@ contract patient {
         uint _mobile,
         string memory _email
     ) external {
+        grantAccess(msg.sender);
         patientIndex[msg.sender] = Patient(
             uint128(_abhaId),
             uint128(_aadharId),
@@ -88,7 +98,6 @@ contract patient {
     }
 
     function grantAccess(address _doctorAddress) public {
-        accessList2[msg.sender].push(_doctorAddress);
         accessList[_doctorAddress].push(msg.sender);
     }
 
@@ -101,7 +110,6 @@ contract patient {
         string memory _cid,
         string memory _docType
     ) external {
-        // yaha pe yeh function kyu hai?
         // grantAccess(msg.sender);
         userRecords[msg.sender].push(
             HealthRecord(
@@ -117,32 +125,13 @@ contract patient {
         );
     }
 
-    // yeh function likha toh hai lekin abhi thoda confusion hai iske baare main sochte hai kal
-    // mujhe samajh nahi aa raha abji
-    function getOwnRecords() public view returns (HealthRecord[] memory) {
-        return userRecords[msg.sender];
-    }
-
     function getPatientIndex(
         address _doctor,
         address _user
     ) internal view returns (uint256) {
-        address[] storage users = accessList[_doctor];
+        address[] memory users = accessList[_doctor];
         for (uint256 i = 0; i < users.length; i++) {
             if (users[i] == _user) {
-                return i;
-            }
-        }
-        return users.length; // User address not found in the array
-    }
-
-    function getDoctorIndex(
-        address _doctor,
-        address _user
-    ) internal view returns (uint256) {
-        address[] storage users = accessList2[_user];
-        for (uint256 i = 0; i < users.length; i++) {
-            if (users[i] == _doctor) {
                 return i;
             }
         }
@@ -157,37 +146,15 @@ contract patient {
             users[index] = users[users.length - 1];
             users.pop();
         }
-
-        uint256 index1 = getDoctorIndex(_doctor, msg.sender);
-
-        address[] storage users2 = accessList2[_doctor];
-        if (index < users2.length) {
-            users2[index1] = users[users2.length - 1];
-            users2.pop();
-        }
     }
 
     function getPatientOwnProfile() external view returns (Patient memory) {
         return patientIndex[msg.sender];
     }
 
-    struct PatientProfile {
-        string name;
-        uint16 age;
-        string gender;
-        address myAdd;
-    }
-
     function getPatientProfile(
         address _patient
-    ) external view returns (PatientProfile memory) {
-        Patient memory currPatient = patientIndex[_patient];
-        PatientProfile memory patProfile = PatientProfile(
-            currPatient.name,
-            currPatient.age,
-            currPatient.gender,
-            _patient
-        );
-        return patProfile;
+    ) external view returns (Patient memory) {
+        return patientIndex[_patient];
     }
 }
