@@ -1,32 +1,74 @@
 pragma solidity ^0.8.0;
 import "./doctor.sol";
 
-// yaha pe bhi owner toh patient hi hona chahiye diagnostics ne upload kiya ho toh bhi
-// aur diagnostic ke paas doctor jaisa gr number kaise hoga
-// baad main explain karna yeh aur acces functions firse diagnostics ke liye bhi likhne padenge
+contract diagnostics is doctor{
 
-contract diagnostic is doctor {
-    // function registerDiagnostic(
-    //     uint128 _abhaId,
-    //     uint128 _aadharId,
-    //     string memory _name,
-    //     uint16 _age,
-    //     uint64 _grNum,
-    //     uint64 _mobile,
-    //     string memory _email
-    // ) external {
-    //     doctorIndex[msg.sender] = Doctor(
-    //         _abhaId,
-    //         _aadharId,
-    //         _name,
-    //         _age,
-    //         _grNum,
-    //         _mobile,
-    //         _email
-    //     );
-    // }
+    function revokeAccessDiagnostic(address _diagnostic) external {
+        uint256 index = getPatientIndex(_diagnostic, msg.sender);
+        
+        address[] storage users = DiagnosticAccessList[_diagnostic];
+        if (index < users.length) {
+            users[index] = users[users.length - 1];
+            users.pop();
+        }
+    }
 
-    function uploadDocuments(
+     function registerDiagnostic(
+        string memory _Diagname,
+        string memory _email,
+        uint128 _phone,
+        string memory _license
+    ) external {
+        grantAccess(msg.sender);
+        diagnostics.push(msg.sender);
+        DiagnosticIndex[msg.sender] = Diagnostic(_Diagname, _email, _phone, _license);
+    }
+
+    function getDiagOwnProfile() external view returns (Diagnostic memory) {
+        return DiagnosticIndex[msg.sender];
+    }    
+
+    function getPatientsForDiagnostic() external view returns (PatientProfile[] memory) {
+        uint patientCount = DiagnosticAccessList[msg.sender].length;
+        // add a response if patientCount is 0
+        PatientProfile[] memory patients = new PatientProfile[](patientCount);
+        for (uint i = 0; i < patientCount; i++) {            
+            address currPatAddress = DiagnosticAccessList[msg.sender][i];
+            patients[i] = getPatientProfile(currPatAddress);
+        }
+        return patients;
+    }
+
+    function getHealthRecordsDiagnostic(address patAddress) public view returns (HealthRecord[] memory) {
+        require(isAuthorizedDiagnostic(patAddress, msg.sender), "unauthorized");
+        return userRecords[patAddress];
+    }
+
+    function getAllDiagnostics() external view returns (Diagnostic[] memory) {
+        uint256 numDiagnostics = diagnostics.length;
+        Diagnostic[] memory allDiagnostics = new Diagnostic[](numDiagnostics);
+        for (uint256 i = 0; i < numDiagnostics; i++) {
+            address diagnosticAddress = diagnostics[i];
+            Diagnostic memory curr = DiagnosticIndex[diagnosticAddress];
+            allDiagnostics[i] = curr;
+        }
+        return allDiagnostics;
+    }    
+
+    function getDiagnosticsForUser() external view returns (Diagnostic[] memory, uint) {
+        uint count= 0;
+        Diagnostic[] memory authDiagnostic = new Diagnostic[](50);
+        for(uint i = 0; i < diagnostics.length; i++){
+            if(isAuthorizedDiagnostic(msg.sender, diagnostics[i]))
+            {
+                authDiagnostic[count] =DiagnosticIndex[diagnostics[i]];
+                count++;
+            }
+        }
+        return (authDiagnostic, count);
+    }
+
+    function uploadRecordsDiagnostic (
         address _patient,
         string memory _org,
         string memory _date,
@@ -35,19 +77,8 @@ contract diagnostic is doctor {
         string memory _path,
         string memory _cid,
         string memory _docType
-    ) public {
-        require(isAuthorized(_patient, msg.sender), "unauthorized");
-        userRecords[_patient].push(
-            HealthRecord(
-                _org,
-                _date,
-                _name,
-                _docName,
-                _path,
-                _cid,
-                msg.sender,
-                _docType
-            )
-        );
+    ) external {
+        require(isAuthorizedDiagnostic(_patient, msg.sender), "unauthorized");
+        userRecords[_patient].push(HealthRecord(_org, _date, _name, _docName, _path, _cid, _patient, _docType));
     }
 }
