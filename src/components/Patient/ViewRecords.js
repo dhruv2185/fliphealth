@@ -11,7 +11,11 @@ const doctorContract = new web3.eth.Contract(doctorABI, "0x7e96E574ABCD8Fc3d9549
 const ViewRecords = () => {
 
     const getRecords = async () => {
-
+        const res = await doctorContract.methods.getRecordsByUser().call({
+            from: "0x7e96E574ABCD8Fc3d95492D499BD85B3c6bE4d18",
+            gas: 3000000
+        });
+        console.log(res);
     }
 
     return (
