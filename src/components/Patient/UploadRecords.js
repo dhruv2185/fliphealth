@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import { MuiFileInput } from 'mui-file-input';
 import { Box, Button, Container, CssBaseline, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { create as ipfsHttpClient } from "ipfs-http-client";
-import { pdfjs, Document, Page } from "react-pdf";
 import { uploadRecordByUser } from '../../Utils/SmartContractUtils';
 
 
