@@ -19,6 +19,7 @@ import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { register_patient } from '../../Utils/SmartContractUtils';
 
 const PatientLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -51,8 +52,8 @@ const PatientLogin = () => {
         console.log(accounts);
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
 
-
-
+        const res = register_patient(data, "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        console.log(res);
     };
 
     return (

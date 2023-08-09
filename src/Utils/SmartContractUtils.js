@@ -1,5 +1,5 @@
 import Web3 from 'web3';
-import { doctorABI } from '../../abis/doctor.js'
+import { doctorABI } from '../abis/doctor'
 const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
 const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
 const doctorContract = new web3.eth.Contract(doctorABI, doctorAddress);
@@ -50,7 +50,7 @@ const getDoctorOwnProfile = async (accountAddress) => {
         const result = await doctorContract.methods.getDocOwnProfile().call({
             from: accountAddress
         })
-        userData = result;
+        const userData = result;
         console.log(userData);
         return userData
     } catch (error) {
@@ -77,7 +77,7 @@ const getAllDoctorsForAPatient = async (accountAddress) => {
         const res = await doctorContract.methods.getDoctorsForUser().call({
             from: accountAddress
         });
-        grantedDocs = res;
+        const grantedDocs = res;
         console.log(grantedDocs);
         return grantedDocs;
     } catch (error) {
@@ -90,7 +90,7 @@ const getPatientOwnProfile = async (accountAddress) => {
         const result = await doctorContract.methods.getPatientOwnProfile().call({
             from: accountAddress
         })
-        userData = result;
+        const userData = result;
         console.log(userData);
         return userData;
     } catch (error) {
@@ -98,10 +98,10 @@ const getPatientOwnProfile = async (accountAddress) => {
     }
 }
 
-const grantAccessToDoctor = async (doctorAddress) => {
+const grantAccessToDoctor = async (doctorAddress, accountAddress) => {
     try {
         const res = await doctorContract.methods.grantAccess(doctorAddress).send({
-            from: accounts[0],
+            from: accountAddress,
             gas: 3000000
         });
         console.log(res);
@@ -117,7 +117,7 @@ const searchDoctorByAddress = async (enteredAddress, accountAddress) => {
         const res = await doctorContract.methods.getDocProfile(enteredAddress).call({
             from: accountAddress
         });
-        doctorProfile = res;
+        const doctorProfile = res;
         console.log(doctorProfile);
         return doctorProfile;
     } catch (error) {
@@ -130,7 +130,7 @@ const searchDoctorByName = async (accountAddress) => {
         const res = await doctorContract.methods.getAllDoctors().call({
             from: accountAddress
         })
-        doctorProfile = res;
+        const doctorProfile = res;
         console.log(doctorProfile);
         return doctorProfile;
     } catch (error) {
@@ -141,7 +141,7 @@ const searchDoctorByName = async (accountAddress) => {
 const uploadRecordByUser = async (data, accountAddress) => {
     try {
         const res = await doctorContract.methods.addRecordByUser(
-            data.org, data.date, data.doctorname, data.documentName, path, cid, docType).send({
+            data.org, data.date, data.doctorname, data.documentName, data.path, data.cid, data.docType).send({
                 from: accountAddress,
                 gas: 3000000
             });
@@ -177,6 +177,20 @@ const getRecordsOfUser = async (accountAddress) => {
     } catch (error) {
         console.log(error);
     }
+}
+
+
+
+export {
+    registerDoctor,
+    register_patient,
+    getDoctorOwnProfile,
+    getAllDoctorsForAPatient,
+    getPatientsForADoctor,
+    getPatientOwnProfile,
+    searchDoctorByAddress,
+    searchDoctorByName,
+    grantAccessToDoctor, revokeDoctorsAccess, getRecordsOfUser, uploadRecordByUser
 }
 
 
