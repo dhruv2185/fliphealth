@@ -8,11 +8,11 @@ const ViewRecords = () => {
 
     const [records, setRecords] = useState([]);
 
-    const getRecords = async () => {
-        const res = await getRecordsOfUser("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029")
-        console.log(res[0].date);
-        setRecords(records);
-    }
+    // const getRecords = async () => {
+    //     const res = await getRecordsOfUser("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029")
+    //     console.log(res[0].date);
+    //     setRecords(records);
+    // }
     // getRecords();
 
     return (

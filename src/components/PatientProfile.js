@@ -10,6 +10,7 @@ import ViewRecords from "./Patient/ViewRecords";
 import UploadRecords from "./Patient/UploadRecords";
 import ManageAccess from "./Patient/ManageAccess";
 import SearchDoctor from "./Patient/SearchDoctor";
+import SearchDiag from "./Patient/SearchDiag";
 
 const PatientProfile = () => {
     const [value, setValue] = useState('Profile');
@@ -28,6 +29,7 @@ const PatientProfile = () => {
                             <Tab label="UPLOAD RECORDS" value="uploadRecords" />
                             <Tab label="MANAGE ACCESS" value="manageAccess" />
                             <Tab label="SEARCH DOCTOR" value="searchDoctors" />
+                            <Tab label="SEARCH DIAGNOSTICS" value="searchDiag" />
 
                         </TabList>
                     </Box>
@@ -36,6 +38,7 @@ const PatientProfile = () => {
                     <TabPanel value="uploadRecords"><UploadRecords /></TabPanel>
                     <TabPanel value="manageAccess"><ManageAccess /></TabPanel>
                     <TabPanel value="searchDoctors"><SearchDoctor /></TabPanel>
+                    <TabPanel value="searchDiag"><SearchDiag /></TabPanel>
 
 
                 </TabContext>
