@@ -2,7 +2,7 @@ import Web3 from 'web3';
 import { doctorABI } from '../abis/doctor'
 const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
 const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
-console.log(doctorABI, doctorAddress);
+// console.log(doctorABI, doctorAddress);
 const doctorContract = new web3.eth.Contract(doctorABI, doctorAddress);
 // const accounts = await web3.eth.getAccounts();
 

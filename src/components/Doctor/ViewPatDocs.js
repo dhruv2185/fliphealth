@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal } from '@mui/material';
 import Box from '@mui/material/Box';
-
+import { getRecordsOfUser } from '../../Utils/SmartContractUtils';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@emotion/react';
 

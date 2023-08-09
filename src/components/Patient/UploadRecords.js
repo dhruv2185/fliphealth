@@ -42,7 +42,9 @@ const UploadRecords = () => {
             console.log("uploading");
             console.log(ipfs);
             console.log(file);
+
             const result = await ipfs.add(file);
+            // const result = await ipfs.pin.rm(file.cid);
             console.log(result);
             console.log("uploaded");
 
