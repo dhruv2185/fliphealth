@@ -19,6 +19,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { doctorABI } from '../../abis/doctor.js'
+import { registerDoctor } from '../../Utils/SmartContractUtils';
 // const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
 // const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
 // // console.log(doctorABI, doctorAddress);
@@ -58,6 +59,9 @@ const DoctorLogin = () => {
         // add field for degree name
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, grnumber: grnumber.current.value, gender: gender, specialisation: specialisation.current.value };
 
+        // const res = await registerDoctor(data, accounts[0]);
+        const res = await registerDoctor(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
+        console.log(res);
     };
 
     return (
