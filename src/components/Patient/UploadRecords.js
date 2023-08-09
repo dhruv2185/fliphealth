@@ -57,6 +57,7 @@ const UploadRecords = () => {
                     docType: docType
                 },
                 "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029"
+                // loggedInAddress
             )
             console.log(res);
 

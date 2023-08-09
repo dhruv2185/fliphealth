@@ -1,15 +1,22 @@
 import { Box, Container, CssBaseline } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import UserAccessBox from './UserAccessBox';
-import Web3 from 'web3';
-import { doctorABI } from '../../abis/doctor.js'
-// const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
-// const doctorContract = new web3.eth.Contract(doctorABI, process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS);
+import { getAllDoctorsForAPatient } from '../../Utils/SmartContractUtils';
+
+
 
 const ManageAccess = () => {
 
-    let grantedDocs;
-    let accountAddress;
+    const [doctors, setDoctors] = useState([]);
+
+    const fetchDoctors = async () => {
+        const res = await getAllDoctorsForAPatient('0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029')
+        // const res = await getAllDoctorsForAPatient('loggedInAddress')
+        setDoctors(res);
+        console.log(doctors);
+    }
+
+    // fetchDoctors();
 
     return (
         <>

@@ -13,7 +13,7 @@ const ViewRecords = () => {
         console.log(res[0].date);
         setRecords(records);
     }
-    getRecords();
+    // getRecords();
 
     return (
         <>

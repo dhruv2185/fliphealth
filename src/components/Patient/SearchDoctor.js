@@ -2,6 +2,7 @@ import { Container, CssBaseline, IconButton, InputBase, Paper, Box } from '@mui/
 import React, { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchDocResult from './SearchDocResult';
+import { searchDoctorByAddress, searchDoctorByName } from '../../Utils/SmartContractUtils';
 // import Web3 from 'web3';
 // import { doctorABI } from '../../abis/doctor.js'
 // const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
@@ -9,6 +10,28 @@ import SearchDocResult from './SearchDocResult';
 
 const SearchDoctor = () => {
     const [search, setSearch] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+
+    const getSearchResults = async () => {
+        // if by address
+        const res = searchDoctorByAddress(
+            "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029",
+            "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029"
+        )
+        // const res = searchDoctorByAddress(
+        // enteredAddress, loggedInAddress
+        // )
+        setSearchResults(res);
+
+        // if by name
+        const result = await searchDoctorByName(
+            "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029"
+            // or loggedInAddress
+        )
+        setSearchResults(result);
+        console.log(searchResults);
+        // further regex logic
+    }
 
     const searchHandler = (e) => {
         e.preventDefault();
