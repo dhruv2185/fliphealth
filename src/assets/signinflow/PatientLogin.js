@@ -52,7 +52,7 @@ const PatientLogin = () => {
         console.log(accounts);
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
 
-        const res = register_patient(data, "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        const res = await register_patient(data, "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
         console.log(res);
     };
 

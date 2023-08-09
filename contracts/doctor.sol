@@ -1,9 +1,8 @@
 pragma solidity ^0.8.0;
 import "./patient.sol";
 
-contract doctor is patient{
-
-     function registerDoctor(
+contract doctor is patient {
+    function registerDoctor(
         uint128 _abhaId,
         uint128 _aadharId,
         string memory _name,
@@ -30,29 +29,33 @@ contract doctor is patient{
         return doctorIndex[msg.sender];
     }
 
-    function DocProfileReturn(address _doctor) internal view returns (DocProfile memory){
+    function DocProfileReturn(
+        address _doctor
+    ) internal view returns (DocProfile memory) {
         Doctor memory curr = doctorIndex[_doctor];
-        DocProfile memory docprof  = DocProfile(
+        DocProfile memory docprof = DocProfile(
             curr.name,
             curr.age,
             curr.grNum,
             curr.degreeName,
-             _doctor
+            _doctor
         );
         return docprof;
-    }    
+    }
 
-    function getPatients() external view returns (Patient[] memory) {
+    function getPatients() external view returns (PatientProfile[] memory) {
         uint patientCount = accessList[msg.sender].length;
         // add a response if patientCount is 0
-        Patient[] memory patients = new Patient[](patientCount);
+        PatientProfile[] memory patients = new PatientProfile[](patientCount);
         for (uint i = 0; i < patientCount; i++) {
-            patients[i] = patientIndex[accessList[msg.sender][i]];
+            patients[i] = getPatientProfile(accessList[msg.sender][i]);
         }
         return patients;
     }
 
-    function getHealthRecords(address patAddress) public view returns (HealthRecord[] memory) {
+    function getHealthRecords(
+        address patAddress
+    ) public view returns (HealthRecord[] memory) {
         require(isAuthorized(patAddress, msg.sender), "unauthorized");
         return userRecords[patAddress];
     }
@@ -65,19 +68,21 @@ contract doctor is patient{
             allDoctors[i] = doctorIndex[doctorAddress];
         }
         return allDoctors;
-    }    
+    }
 
-    function getDoctorsForUser() external view returns (DocProfile[] memory, uint) {
-        uint count= 0;
+    function getDoctorsForUser()
+        external
+        view
+        returns (DocProfile[] memory, uint)
+    {
+        uint count = 0;
         DocProfile[] memory authDoctors = new DocProfile[](50);
-        for(uint i = 0; i < doctors.length; i++){
-            if(isAuthorized(msg.sender, doctors[i]))
-            {
-                authDoctors[count] =DocProfileReturn(doctors[i]);
+        for (uint i = 0; i < doctors.length; i++) {
+            if (isAuthorized(msg.sender, doctors[i])) {
+                authDoctors[count] = DocProfileReturn(doctors[i]);
                 count++;
             }
         }
         return (authDoctors, count);
     }
-
 }

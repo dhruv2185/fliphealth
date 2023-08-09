@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import RecordCard from './RecordCard';
 import { Container, CssBaseline } from '@mui/material';
-// import Web3 from 'web3';
-// import { doctorABI } from '../../abis/doctor.js'
-// const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
-// const doctorContract = new web3.eth.Contract(doctorABI, process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS);
+import { getRecordsOfUser } from '../../Utils/SmartContractUtils';
+
 
 const ViewRecords = () => {
+
+    const [records, setRecords] = useState([]);
+
+    const getRecords = async () => {
+        const res = await getRecordsOfUser("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029")
+        console.log(res[0].date);
+        setRecords(records);
+    }
+    getRecords();
+
     return (
         <>
             <Container component="main" maxWidth="s" minWidth="xs"><CssBaseline /><div style={{ display: "flex", gap: "30px", flexWrap: "wrap", justifyContent: "center" }} >

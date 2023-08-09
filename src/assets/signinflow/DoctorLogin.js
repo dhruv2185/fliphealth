@@ -19,10 +19,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { doctorABI } from '../../abis/doctor.js'
-const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
-const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
-console.log(doctorABI, doctorAddress);
-const doctorContract = new web3.eth.Contract(doctorABI, doctorAddress);
+// const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
+// const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
+// // console.log(doctorABI, doctorAddress);
+// const doctorContract = new web3.eth.Contract(doctorABI, doctorAddress);
 
 const DoctorLogin = () => {
     const [isLoading, setIsLoading] = useState(true);

@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, CssBaseline, Box } from '@mui/material';
 import PatientBox from './PatientBox';
 import Web3 from 'web3';
 import { doctorABI } from '../../abis/doctor.js'
-// const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
-// const doctorContract = new web3.eth.Contract(doctorABI, process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS);
-
-
+import { getPatientsForADoctor } from '../../Utils/SmartContractUtils';
 
 const ViewPatients = () => {
 
-
+    const [patients, setPatients] = useState([])
+    let doctorAddress;
+    const fetchPatients = async (doctorAddress) => {
+        const res = await getPatientsForADoctor("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        setPatients(res);
+    }
+    fetchPatients(doctorAddress);
 
     return (
         <>
