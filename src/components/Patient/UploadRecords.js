@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import { MuiFileInput } from 'mui-file-input';
 import { Box, Button, Container, CssBaseline, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { create as ipfsHttpClient } from "ipfs-http-client";
-import { pdfjs, Document, Page } from "react-pdf";
 import { uploadRecordByUser } from '../../Utils/SmartContractUtils';
 
 
@@ -10,7 +9,7 @@ const projectId = process.env.REACT_APP_PROJECT_ID;
 const projectSecretKey = process.env.REACT_APP_PROJECT_KEY;
 const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+
 
 const UploadRecords = () => {
 
@@ -33,12 +32,7 @@ const UploadRecords = () => {
         setFile(val)
         setFileErr(false);
     }
-    const [numPages, setNumPages] = useState();
-    const [pageNumber, setPageNumber] = useState(1);
 
-    function onDocumentLoadSuccess(numPages) {
-        setNumPages(numPages);
-    }
     const onSubmitHandler = async (event) => {
         event.preventDefault();
         if (file === null) {
@@ -108,9 +102,7 @@ const UploadRecords = () => {
             <MenuItem value={"report"}>Report</MenuItem>
             <MenuItem value={"prescription"}>Prescription</MenuItem>
             <MenuItem value={"mediclaim"}>MediClaim</MenuItem>
-        </Select></FormControl><MuiFileInput error={fileErr} sx={{ width: "40vw", maxWidth: "405px", minWidth: "250px" }} label="Upload File(*.pdf, *.jpg, *.png) " value={file} onChange={handleFileChange} /><Box sx={{ display: "flex", gap: "20px", justifyContent: "center", padding: "20px" }}><Button type="submit" variant='contained'>SUBMIT</Button><Button type="reset" color='neutral' variant='outlined'>DISCARD</Button></Box></Box><Document file={file} onLoadSuccess={onDocumentLoadSuccess}>
-            <Page pageNumber={pageNumber} />
-        </Document></Container></>)
+        </Select></FormControl><MuiFileInput error={fileErr} sx={{ width: "40vw", maxWidth: "405px", minWidth: "250px" }} label="Upload File(*.pdf, *.jpg, *.png) " value={file} onChange={handleFileChange} /><Box sx={{ display: "flex", gap: "20px", justifyContent: "center", padding: "20px" }}><Button type="submit" variant='contained'>SUBMIT</Button><Button type="reset" color='neutral' variant='outlined'>DISCARD</Button></Box></Box></Container></>)
 }
 
 export default UploadRecords;

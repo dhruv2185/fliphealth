@@ -12,7 +12,7 @@ const Profile = () => {
     return (
         <>
             <Navbar />
-            <PatientProfile />
+            <DoctorProfile />
             <Footer />
         </>
     );
