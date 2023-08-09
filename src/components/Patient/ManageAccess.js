@@ -1,5 +1,5 @@
 import { Box, Container, CssBaseline } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import UserAccessBox from './UserAccessBox';
 import Web3 from 'web3';
 import { doctorABI } from '../../abis/doctor.js'
@@ -9,8 +9,16 @@ import DiagAccessBox from './DiagAccessBox';
 
 const ManageAccess = () => {
 
-    let grantedDocs;
-    let accountAddress;
+    const [doctors, setDoctors] = useState([]);
+
+    const fetchDoctors = async () => {
+        const res = await getAllDoctorsForAPatient('0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029')
+        // const res = await getAllDoctorsForAPatient('loggedInAddress')
+        setDoctors(res);
+        console.log(doctors);
+    }
+
+    // fetchDoctors();
 
     return (
         <>

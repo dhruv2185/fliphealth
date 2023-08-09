@@ -1,12 +1,21 @@
 import { Avatar, Box, Button, Card } from '@mui/material';
 import React from 'react';
-// import Web3 from 'web3';
-// import { doctorABI } from '../../abis/doctor.js'
-// const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
-// const doctorContract = new web3.eth.Contract(doctorABI, process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS);
+import { revokeDoctorsAccess } from '../../Utils/SmartContractUtils';
+
 
 function UserAccessBox() {
 
+    const revokeAccessOnPress = async () => {
+        const res = revokeDoctorsAccess(
+            '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029',
+            '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029'
+        )
+        // const res = revokeDoctorsAccess(
+        //     docotrAddress,
+        //     loggedInAddress
+        // )
+        console.log(res);
+    }
 
     return (
         <>

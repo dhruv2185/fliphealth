@@ -167,9 +167,9 @@ const revokeDoctorsAccess = async (doctorAddress, accountAddress) => {
     }
 }
 
-const getRecordsOfUser = async (accountAddress) => {
+const getRecordsOfUser = async (patientAddress, accountAddress) => {
     try {
-        const res = await doctorContract.methods.getHealthRecords("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029").call({
+        const res = await doctorContract.methods.getHealthRecords(patientAddress).call({
             from: accountAddress,
             gas: 3000000
         });
