@@ -11,7 +11,9 @@ import Profile from './assets/Profile';
 import Diagnostics from './assets/signinflow/Diagnostics';
 import HospitalLogin from './assets/signinflow/HospitalLogin';
 import ClinicLogin from './assets/signinflow/ClinicLogin';
-
+import About from './assets/About';
+import Contact from './assets/Contact';
+import { SnackbarProvider } from 'notistack';
 
 
 
@@ -31,19 +33,22 @@ function App() {
   return (
     <>
       <ThemeProvider theme={darkTheme}>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/Profile" element={<Profile />} />
-            <Route path="/Patient/SignIn" element={<PatientLogin />} />
-            <Route path="/Doctor/SignIn" element={<DoctorLogin />} />
-            <Route path="/Diagnostics/SignIn" element={<Diagnostics />} />
-            <Route path="/Clinic/SignIn" element={<ClinicLogin />} />
-            <Route path="/Hospital/SignIn" element={<HospitalLogin />} />
+        <SnackbarProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/Dashboard" element={<Profile />} />
+              <Route path="/Patient/SignIn" element={<PatientLogin />} />
+              <Route path="/Doctor/SignIn" element={<DoctorLogin />} />
+              <Route path="/Diagnostics/SignIn" element={<Diagnostics />} />
+              <Route path="/Clinic/SignIn" element={<ClinicLogin />} />
+              <Route path="/Hospital/SignIn" element={<HospitalLogin />} />
+              <Route path="/About" element={<About />} />
+              <Route path="/Contact" element={<Contact />} />
 
 
-          </Routes>
-        </Router>
+            </Routes>
+          </Router></SnackbarProvider>
       </ThemeProvider>
     </>
   );

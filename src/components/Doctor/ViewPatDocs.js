@@ -41,12 +41,12 @@ const ViewPatDocs = (props) => {
 
     const [records, setRecords] = useState([]);
 
-    const getRecords = async () => {
-        const res = await getRecordsOfUser("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029")
-        // const res = await getRecordsOfUser(patientAddress, doctorAddress)
-        console.log(res[0].date);
-        setRecords(records);
-    }
+    // const getRecords = async () => {
+    //     const res = await getRecordsOfUser("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029")
+    //     // const res = await getRecordsOfUser(patientAddress, doctorAddress)
+    //     console.log(res[0].date);
+    //     setRecords(records);
+    // }
     // getRecords();
 
 

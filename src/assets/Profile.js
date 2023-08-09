@@ -9,13 +9,14 @@ import Footer from '../components/Footer';
 
 import HospitalProfile from '../components/HospitalProfile';
 import DiagnosticsProfile from '../components/DiagnosticsProfile';
+import ClinicProfile from '../components/ClinicProfile';
 
 const Profile = () => {
 
     return (
         <>
             <Navbar />
-            <PatientProfile />
+            <ClinicProfile />
             <Footer />
         </>
     );

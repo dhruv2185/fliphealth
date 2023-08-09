@@ -20,12 +20,16 @@ import Footer from '../../components/Footer';
 
 import { doctorABI } from '../../abis/doctor.js'
 import { registerDoctor } from '../../Utils/SmartContractUtils';
+import { useNavigate } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 // const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
 // const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
 // // console.log(doctorABI, doctorAddress);
 // const doctorContract = new web3.eth.Contract(doctorABI, doctorAddress);
 
 const Diagnostics = () => {
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
     const name = useRef();
 
@@ -43,9 +47,14 @@ const Diagnostics = () => {
                 .then((res) => {
                     setAccounts(res);
                     setIsLoading(false)
+                }).catch(err => {
+                    enqueueSnackbar("Please Log in to Metamask to Proceed!", { variant: "error" });
+                    navigate("/");
                 });
         } else {
-            alert("install metamask extension!!");
+            enqueueSnackbar("Please install Metamask to Proceed!", { variant: "error" });
+            navigate("/");
+
         }
     }, [])
     const handleSubmit = async (event) => {
@@ -57,7 +66,7 @@ const Diagnostics = () => {
         const res = await registerDoctor(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
         console.log(res);
     };
-
+    enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })
     return (
         <>
             {isLoading && <Box sx={{ display: 'flex', position: "absolute", top: "48%", left: "48%" }}>
