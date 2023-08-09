@@ -19,17 +19,6 @@ import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { doctorABI } from '../../abis/doctor.js'
-try {
-
-} catch (error) {
-    console.log(error)
-}
-const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
-const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
-console.log(doctorABI, doctorAddress);
-const doctorContract = new web3.eth.Contract(doctorABI, doctorAddress);
-
 
 const PatientLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -45,7 +34,6 @@ const PatientLogin = () => {
         setgender(event.target.value);
     };
     useEffect(() => {
-
         // Asking if metamask is already present or not
         if (window.ethereum) {
             window.ethereum
@@ -62,7 +50,8 @@ const PatientLogin = () => {
         event.preventDefault();
         console.log(accounts);
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
-        // accounts = array of accounts
+
+
 
     };
 
