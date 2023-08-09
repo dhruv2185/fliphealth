@@ -2,6 +2,7 @@ import Web3 from 'web3';
 import { doctorABI } from '../abis/doctor'
 const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
 const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
+console.log(doctorABI, doctorAddress);
 const doctorContract = new web3.eth.Contract(doctorABI, doctorAddress);
 // const accounts = await web3.eth.getAccounts();
 
@@ -141,7 +142,7 @@ const searchDoctorByName = async (accountAddress) => {
 const uploadRecordByUser = async (data, accountAddress) => {
     try {
         const res = await doctorContract.methods.addRecordByUser(
-            data.org, data.date, data.doctorname, data.documentName, data.path, data.cid, data.docType).send({
+            data.org, String(data.date), String(data.doctorname), String(data.documentName), String(data.path), String(data.cid), String(data.docType)).send({
                 from: accountAddress,
                 gas: 3000000
             });
@@ -168,7 +169,7 @@ const revokeDoctorsAccess = async (doctorAddress, accountAddress) => {
 
 const getRecordsOfUser = async (accountAddress) => {
     try {
-        const res = await doctorContract.methods.getRecordsByUser().call({
+        const res = await doctorContract.methods.getHealthRecords("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029").call({
             from: accountAddress,
             gas: 3000000
         });
