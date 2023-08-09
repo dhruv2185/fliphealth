@@ -18,6 +18,7 @@ contract diagnostics is patient {
         );
     }
 
+    // No need of this function if diagnostic mappingmade public
     function getDiagOwnProfile() external view returns (Diagnostic memory) {
         return DiagnosticIndex[msg.sender];
     }

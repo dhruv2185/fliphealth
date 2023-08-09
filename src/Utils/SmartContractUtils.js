@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 import { doctorABI } from '../abis/doctor'
 import { hospitalABI } from '../abis/hospital'
-import {diagABI} from '../abis/diagnostic'
+import { diagABI } from '../abis/diagnostic'
 const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
 const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
 const hospitalAddress = process.env.REACT_APP_HOSPITAL_CONTRACT_ADDRESS;
@@ -146,7 +146,7 @@ const searchDoctorByName = async (accountAddress) => {
 const uploadRecordByUser = async (data, accountAddress) => {
     try {
         const res = await doctorContract.methods.addRecordByUser(
-            data.org, String(data.date), String(data.doctorname), String(data.documentName), String(data.path), String(data.cid), String(data.docType)).send({
+            data.org, String(data.date), String(data.doctorname), String(data.documentName), String(data.path), String(data.cid), accountAddress, String(data.docType)).send({
                 from: accountAddress,
                 gas: 3000000
             });
@@ -253,11 +253,177 @@ const revokeAllAccessOfDoctor = async (doctorAddress, accountAddress) => {
     }
 }
 
+const registerHospital = async (data, accountAddress) => {
+    try {
+        const res = await hospitalContract.methods.registerHospital(
+            data.name,
+            data.email,
+            data.phone,
+            data.license
+        ).send({
+            from: accountAddress,
+            gas: 3000000
+        });
+        console.log(res);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
+const registerDiagnostic = async (data, accountAddress) => {
+    try {
+        const res = await diagContract.methods.registerDiagnostic(
+            data.name,
+            data.email,
+            data.phone,
+            data.license
+        ).send({
+            from: accountAddress,
+            gas: 3000000
+        });
+        console.log(res);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
+const getDiagnosticProfile = async (accountAddress) => {
+    try {
+        const res = await diagContract.methods.getDiagOwnProfile(accountAddress).call({
+            from: accountAddress,
+            gas: 3000000
+        });
+        console.log(res);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
+const getDiagnosticOfPatient = async (accountAddress) => {
+    try {
+        const res = await diagContract.methods.getDiagnosticOfPatient(accountAddress).call({
+            from: accountAddress,
+            gas: 3000000
+        });
+        console.log(res);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
+getHealthRecordsOfPatient = async (accountAddress) => {
+    try {
+        const res = await diagContract.methods.getHealthRecordsDiagnostic(accountAddress).call({
+            from: accountAddress,
+            gas: 3000000
+        });
+        console.log(res);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const getAllDiagnostics = async (accountAddress) => {
+    try {
+        const res = await diagContract.methods.getAllDiagnostics().call({
+            from: accountAddress,
+            gas: 3000000
+        });
+        console.log(res);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// public variable
+// important issue review with priority
+const getDiagProfile = async (address, accountAddress) => {
+    try {
+        const res = await diagContract.methods.DiagnosticIndex(address).call({
+            from: accountAddress,
+            gas: 3000000
+        });
+        console.log(res);
+        return res;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const getPatientsOfDiagnostic = async (accountAddress) => {
+    try {
+        const res = await diagContract.methods.getPatientsForDiagnostic().call({
+            from: accountAddress,
+            gas: 3000000
+        });
+        console.log(res);
+        return res
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const grantAccessToDiagnostic = async (address, accountAddress) => {
+    try {
+        const res = await diagContract.methods.grantAccessToDiagnostic(address).send({
+            from: accountAddress,
+            gas: 3000000
+        });
+        console.log(res);
+        return res
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const revokeAccessOfDiagnostic = async (address, accountAddress) => {
+    try {
+        const res = await diagContract.methods.revokeAccessDiagnostic(address).send({
+            from: accountAddress,
+            gas: 3000000
+        });
+        console.log(res);
+        return res
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const getDiagnosticForPatient = async (accountAddress) => {
+    try {
+        const res = await diagContract.methods.getDiagnosticForUser().call({
+            from: accountAddress,
+            gas: 3000000
+        });
+        // returns array and count of diagnostics
+        console.log(res);
+        return res
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const uploadRecordsByDiagnostic = async (data, accountAddress, patientAddress) => {
+    try {
+        const res = await diagContract.methods.uploadRecordsDiagnostic(
+            patientAddress,
+            data.org, String(data.date), String(data.doctorname), String(data.documentName), String(data.path), String(data.cid), String(data.docType)).send({
+                from: accountAddress,
+                gas: 3000000
+            });
+        console.log(res);
+        return res
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 export {
     registerDoctor,
@@ -268,7 +434,9 @@ export {
     getPatientOwnProfile,
     searchDoctorByAddress,
     searchDoctorByName,
-    grantAccessToDoctor, revokeDoctorsAccess, getRecordsOfUser, uploadRecordByUser
+    grantAccessToDoctor, revokeDoctorsAccess, getRecordsOfUser, uploadRecordByUser,
+    removeDoctorFromHospital, addDoctorToHospital, getDoctorsOfHospital, getHospitalProfile, revokeAllAccessOfDoctor, registerHospital,
+    registerDiagnostic, getDiagnosticProfile, getDiagnosticOfPatient, getHealthRecordsOfPatient, getAllDiagnostics, getDiagProfile, getPatientsOfDiagnostic, grantAccessToDiagnostic, revokeAccessOfDiagnostic, getDiagnosticForPatient, uploadRecordsByDiagnostic
 }
 
 
