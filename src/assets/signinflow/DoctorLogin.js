@@ -57,20 +57,7 @@ const DoctorLogin = () => {
         event.preventDefault();
         // add field for degree name
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, grnumber: grnumber.current.value, gender: gender, specialisation: specialisation.current.value };
-        const result = await doctorContract.methods.registerDoctor(
-            data.abha,
-            data.aadhar,
-            data.name,
-            data.age,
-            data.grnumber,
-            data.phone,
-            data.email,
-            data.specialisation,
-        ).send({
-            from: accounts[0],
-            gas: 3000000
-        })
-        console.log(result);
+
     };
 
     return (

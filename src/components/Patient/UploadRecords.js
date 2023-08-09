@@ -5,8 +5,8 @@ import { create as ipfsHttpClient } from "ipfs-http-client";
 import Web3 from 'web3';
 import { pdfjs, Document, Page } from "react-pdf";
 import { doctorABI } from '../../abis/doctor.js'
-const web3 = new Web3(process.env.BLOCKCHAIN_PROVIDER_URL);
-const doctorContract = new web3.eth.Contract(process.env.DOCTOR_CONTRACT_ABI, process.env.DOCTOR_CONTRACT_ADDRESS);
+// const web3 = new Web3(process.env.BLOCKCHAIN_PROVIDER_URL);
+// const doctorContract = new web3.eth.Contract(process.env.DOCTOR_CONTRACT_ABI, process.env.DOCTOR_CONTRACT_ADDRESS);
 
 const projectId = process.env.REACT_APP_PROJECT_ID;
 const projectSecretKey = process.env.REACT_APP_PROJECT_KEY;
@@ -53,25 +53,7 @@ const UploadRecords = () => {
             const result = await ipfs.add(file);
             console.log(result);
             console.log("uploaded");
-
-            const cid = result.cid; // tostring
-            const path = result.path;
-
-            const org = "sfhsd";
-            const date = "340-34-4"
-            const name = recordname.current;
-            const docname = docName.current;
-
-            // // add arguments to below function
-            const res = await doctorContract.methods.addRecordByUser(
-                org, date, docname, name, path, cid, docType).send({
-                    from: "0x7e96E574ABCD8Fc3d95492D499BD85B3c6bE4d18",
-                    gas: 3000000
-                });
-            console.log(res);
         }
-
-
     }
 
 

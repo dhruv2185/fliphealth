@@ -19,10 +19,7 @@ import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-// import { patientABI } from '../../abis/patient.js'
-// instantiating object
-const web3 = new Web3(process.env.BLOCKCHAIN_PROVIDER_URL);
-
+import { register_patient } from '../../Utils/SmartContractUtils';
 
 const PatientLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -38,7 +35,6 @@ const PatientLogin = () => {
         setgender(event.target.value);
     };
     useEffect(() => {
-
         // Asking if metamask is already present or not
         if (window.ethereum) {
             window.ethereum
@@ -55,19 +51,9 @@ const PatientLogin = () => {
         event.preventDefault();
         console.log(accounts);
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
-        // accounts = array of accounts
-        // const patientContract = new web3.eth.Contract(process.env.DOCTOR_CONTRACT_ABI, process.env.DOCTOR_CONTRACT_ADDRESS);
-        // const result = await patientContract.methods.register_patient(
-        //     data.name,
-        //     data.age,
-        //     data.abha,
-        //     data.aadhar,
-        //     data.gender,
-        //     data.phone,
-        //     data.email
-        // ).send({ from: accounts[0], gas: 3000000 })
 
-        // console.log(result);
+        const res = register_patient(data, "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        console.log(res);
     };
 
     return (

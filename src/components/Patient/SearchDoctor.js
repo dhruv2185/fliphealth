@@ -2,38 +2,16 @@ import { Container, CssBaseline, IconButton, InputBase, Paper, Box } from '@mui/
 import React, { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchDocResult from './SearchDocResult';
-import Web3 from 'web3';
-import { doctorABI } from '../../abis/doctor.js'
-const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
-const doctorContract = new web3.eth.Contract(doctorABI, process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS);
+// import Web3 from 'web3';
+// import { doctorABI } from '../../abis/doctor.js'
+// const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
+// const doctorContract = new web3.eth.Contract(doctorABI, process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS);
 
 const SearchDoctor = () => {
     const [search, setSearch] = useState('');
 
-    let doctorProfile;
-    let accountAddress; // yeh globally stored logged in address hai
-    // search by address
-    // yeh galat ho sakta hai aur call ki jagah send ki jarurat pad sakti hai
-    const searchByAddress = async (enteredAddress) => {
-        const res = await doctorContract.methods.getDocProfile(enteredAddress).call({
-            from: accountAddress
-        });
-        doctorProfile = res;
-        console.log(doctorProfile);
-    }
-
-    // I will return profiles of all doctors
-    const searchByName = async () => {
-        const res = await doctorContract.methods.getAllDoctors().call({
-            from: accountAddress
-        })
-        doctorProfile = res;
-        console.log(doctorProfile);
-    }
-
     const searchHandler = (e) => {
         e.preventDefault();
-
     }
     return (
         <>
