@@ -57,8 +57,8 @@ contract patient {
 
     address[] internal doctors;
     address[] internal diagnostics;
-    mapping(address => Diagnostic) internal DiagnosticIndex; // address of user to diagnostic obj
-    mapping(address => address[]) internal DiagnosticAccessList; // doctor address to user address
+    mapping(address => Diagnostic) public DiagnosticIndex;
+    mapping(address => address[]) internal DiagnosticAccessList;
     mapping(address => Patient) internal patientIndex;
     mapping(address => Doctor) internal doctorIndex;
     mapping(address => address[]) internal accessList; // doctor address to user address
@@ -90,6 +90,20 @@ contract patient {
             }
         }
         return false;
+    }
+
+    function DocProfileReturn(
+        address _doctor
+    ) internal view returns (DocProfile memory) {
+        Doctor memory curr = doctorIndex[_doctor];
+        DocProfile memory docprof = DocProfile(
+            curr.name,
+            curr.age,
+            curr.grNum,
+            curr.degreeName,
+            _doctor
+        );
+        return docprof;
     }
 
     function register_patient(
@@ -183,5 +197,30 @@ contract patient {
             _patient
         );
         return patientProf;
+    }
+
+    function getRecocrdIndex(
+        address _patient,
+        string memory _cid
+    ) internal view returns (uint256) {
+        HealthRecord[] memory documents = userRecords[_patient];
+        for (uint256 i = 0; i < documents.length; i++) {
+            if (
+                keccak256(abi.encodePacked(documents[i].documentCid)) ==
+                keccak256(abi.encodePacked(_cid))
+            ) {
+                return i;
+            }
+        }
+        return documents.length;
+    }
+
+    function deleteRecord(address _patient, string memory _cid) external {
+        uint256 index = getRecocrdIndex(_patient, _cid);
+        HealthRecord[] storage documents = userRecords[_patient];
+        if (index < documents.length) {
+            documents[index] = documents[documents.length - 1];
+            documents.pop();
+        }
     }
 }
