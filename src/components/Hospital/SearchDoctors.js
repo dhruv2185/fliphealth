@@ -1,13 +1,9 @@
-import { Container, CssBaseline, IconButton, InputBase, Paper, Box, Select, FormControl, InputLabel, MenuItem } from '@mui/material';
-import React, { useState } from 'react';
+import { Container, CssBaseline, FormControl, IconButton, InputBase, InputLabel, MenuItem, Paper, Select, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import SearchDocResult from './SearchDocResult';
-// import Web3 from 'web3';
-// import { doctorABI } from '../../abis/doctor.js'
-// const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
-// const doctorContract = new web3.eth.Contract(doctorABI, process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS);
+import React, { useState } from 'react';
+import DoctorBox from './DoctorBox';
 
-const SearchDoctor = () => {
+const SearchDoctors = () => {
     const [search, setSearch] = useState('');
     const [searchType, setSearchType] = useState('name');
     const searchHandler = (e) => {
@@ -47,10 +43,10 @@ const SearchDoctor = () => {
                 </IconButton>
 
             </Paper>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}><SearchDocResult /></Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}><DoctorBox /><DoctorBox /><DoctorBox /><DoctorBox /></Box>
             </Container>
         </>
     );
 }
 
-export default SearchDoctor;
+export default SearchDoctors;

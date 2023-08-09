@@ -8,6 +8,9 @@ import Home from './assets/Home';
 import PatientLogin from './assets/signinflow/PatientLogin';
 import DoctorLogin from './assets/signinflow/DoctorLogin';
 import Profile from './assets/Profile';
+import Diagnostics from './assets/signinflow/Diagnostics';
+import HospitalLogin from './assets/signinflow/HospitalLogin';
+import ClinicLogin from './assets/signinflow/ClinicLogin';
 
 
 
@@ -34,6 +37,9 @@ function App() {
             <Route path="/Profile" element={<Profile />} />
             <Route path="/Patient/SignIn" element={<PatientLogin />} />
             <Route path="/Doctor/SignIn" element={<DoctorLogin />} />
+            <Route path="/Diagnostics/SignIn" element={<Diagnostics />} />
+            <Route path="/Clinic/SignIn" element={<ClinicLogin />} />
+            <Route path="/Hospital/SignIn" element={<HospitalLogin />} />
 
 
           </Routes>

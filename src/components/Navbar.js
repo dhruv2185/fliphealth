@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 
 const pages = ['Home', 'About', 'Contact Us'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const user = ['Doctor', 'Patient'];
+const user = ['Doctor', 'Patient', 'Hospital', 'Clinic', 'Diagnostics'];
 
 function Navbar() {
     const isLoggedIn = useSelector(state => state.authenticated);
@@ -47,7 +47,7 @@ function Navbar() {
     };
     const handleCloseLoginMenu = (action) => {
         setAnchorElLogin(null);
-        if (action === "Patient" || action === "Doctor")
+        if (action === "Patient" || action === "Doctor" || action === "Diagnostics" || action === "Hospital" || action === "Clinic")
             navigate(`/${action}/SignIn`);
     }
     const handleCloseUserMenu = (action) => {
