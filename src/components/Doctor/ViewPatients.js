@@ -12,6 +12,7 @@ const ViewPatients = () => {
     const fetchPatients = async (doctorAddress) => {
         const res = await getPatientsForADoctor("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
         setPatients(res);
+        console.log(patients);
     }
     fetchPatients(doctorAddress);
 
