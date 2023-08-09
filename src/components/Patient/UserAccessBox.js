@@ -1,20 +1,12 @@
 import { Avatar, Box, Button, Card } from '@mui/material';
 import React from 'react';
-import Web3 from 'web3';
-import { doctorABI } from '../../abis/doctor.js'
-const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
-const doctorContract = new web3.eth.Contract(doctorABI, process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS);
+// import Web3 from 'web3';
+// import { doctorABI } from '../../abis/doctor.js'
+// const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
+// const doctorContract = new web3.eth.Contract(doctorABI, process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS);
 
 function UserAccessBox() {
 
-    let globalAddress;
-    const revokeAccessFunc = async (doctorAddress) => {
-        const res = await doctorContract.methods.revokeAccess(doctorAddress).send({
-            from: globalAddress,
-            gas: 3000000
-        })
-        console.log(res);
-    }
 
     return (
         <>

@@ -19,9 +19,16 @@ import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-// import { patientABI } from '../../abis/patient.js'
-// instantiating object
-const web3 = new Web3(process.env.BLOCKCHAIN_PROVIDER_URL);
+import { doctorABI } from '../../abis/doctor.js'
+try {
+
+} catch (error) {
+    console.log(error)
+}
+const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
+const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
+console.log(doctorABI, doctorAddress);
+const doctorContract = new web3.eth.Contract(doctorABI, doctorAddress);
 
 
 const PatientLogin = () => {
@@ -56,18 +63,7 @@ const PatientLogin = () => {
         console.log(accounts);
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
         // accounts = array of accounts
-        // const patientContract = new web3.eth.Contract(process.env.DOCTOR_CONTRACT_ABI, process.env.DOCTOR_CONTRACT_ADDRESS);
-        // const result = await patientContract.methods.register_patient(
-        //     data.name,
-        //     data.age,
-        //     data.abha,
-        //     data.aadhar,
-        //     data.gender,
-        //     data.phone,
-        //     data.email
-        // ).send({ from: accounts[0], gas: 3000000 })
 
-        // console.log(result);
     };
 
     return (
