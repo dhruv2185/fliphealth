@@ -92,6 +92,18 @@ contract patient {
         return false;
     }
 
+    function DocProfileReturn(address _doctor) internal view returns (DocProfile memory){
+        Doctor memory curr = doctorIndex[_doctor];
+        DocProfile memory docprof  = DocProfile(
+            curr.name,
+            curr.age,
+            curr.grNum,
+            curr.degreeName,
+             _doctor
+        );
+        return docprof;
+    }
+
     function register_patient(
         string memory _name,
         uint16 _age,
@@ -184,4 +196,23 @@ contract patient {
         );
         return patientProf;
     }
+
+    function getRecocrdIndex(address _patient, string memory _cid) internal view returns (uint256) {
+        HealthRecord[] memory documents = userRecords[_patient];
+        for (uint256 i = 0; i < documents.length; i++) {
+            if (keccak256(abi.encodePacked(documents[i].documentCid)) == keccak256(abi.encodePacked(_cid))) {
+                return i;
+            }
+        }
+        return documents.length;
+    }
+
+    function deleteRecord(address _patient, string memory _cid) external{
+        uint256 index = getRecocrdIndex(_patient, _cid);        
+        HealthRecord[] storage documents = userRecords[_patient];
+        if (index < documents.length) {
+            documents[index] = documents[documents.length - 1];
+            documents.pop();
+        }        
+    } 
 }

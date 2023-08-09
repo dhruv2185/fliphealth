@@ -29,20 +29,6 @@ contract doctor is patient {
         return doctorIndex[msg.sender];
     }
 
-    function DocProfileReturn(
-        address _doctor
-    ) internal view returns (DocProfile memory) {
-        Doctor memory curr = doctorIndex[_doctor];
-        DocProfile memory docprof = DocProfile(
-            curr.name,
-            curr.age,
-            curr.grNum,
-            curr.degreeName,
-            _doctor
-        );
-        return docprof;
-    }
-
     function getPatients() external view returns (PatientProfile[] memory) {
         uint patientCount = accessList[msg.sender].length;
         // add a response if patientCount is 0
