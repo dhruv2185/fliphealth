@@ -1,6 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 const initialState = {
-    authenticated: false
+    authenticated: false,
+    accountType: null,
+    accountAddress: null,
+    profile: {}
 }
 const reducer = (state = initialState, action) => {
     switch (action.type) {

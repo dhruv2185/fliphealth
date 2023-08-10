@@ -9,13 +9,12 @@ const ManageAccess = () => {
 
     const [doctors, setDoctors] = useState([]);
 
-    const fetchDoctors = async () => {
-        const res = await getAllDoctorsForAPatient('0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029')
-        // const res = await getAllDoctorsForAPatient('loggedInAddress')
-        // will return an array of objects and count of doctors sent
-        setDoctors(res);
-        console.log(doctors);
-    }
+    // const fetchDoctors = async () => {
+    //     const res = await getAllDoctorsForAPatient('0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029')
+    //     // const res = await getAllDoctorsForAPatient('loggedInAddress')
+    //     setDoctors(res);
+    //     console.log(doctors);
+    // }
 
     const [diagnostics, setDiagnostics] = useState([]);
 

@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const pages = ['Home', 'About', 'Contact Us'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Dashboard', 'Logout'];
 const user = ['Doctor', 'Patient', 'Hospital', 'Clinic', 'Diagnostics'];
 
 function Navbar() {
@@ -44,6 +44,12 @@ function Navbar() {
         if (action === "Home") {
             navigate("/");
         }
+        if (action === "About") {
+            navigate("/About");
+        }
+        if (action === "Contact Us") {
+            navigate("/Contact");
+        }
     };
     const handleCloseLoginMenu = (action) => {
         setAnchorElLogin(null);
@@ -54,6 +60,10 @@ function Navbar() {
         setAnchorElUser(null);
         if (action === "Logout") {
             dispatch({ type: "LOGOUT" });
+            navigate("/");
+        }
+        if (action === "Dashboard") {
+            navigate("/Dashboard");
         }
     };
 

@@ -6,6 +6,7 @@ import shield from "./images/shield.jpg";
 import security from "./images/security.jpg";
 import accessibility from "./images/accessibility.jpg";
 import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 const Home = () => {
     return (
         <>
@@ -17,8 +18,8 @@ const Home = () => {
                         </h1>
                         <h4 className={classes.blackish}>We offer Blockchain-Based services for EHR Management!</h4>
                         <div className={classes["two-button"]}>
-                            <Button variant='contained'>Get Started</Button>
-                            <Button variant='outlined'>About Us</Button>
+                            <Link to="/Patient/SignIn"><Button variant='contained'>Get Started</Button></Link>
+                            <Link to="/About"><Button variant='outlined'>About Us</Button></Link>
                         </div>
 
                     </div>

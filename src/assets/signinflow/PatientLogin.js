@@ -20,8 +20,12 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { register_patient } from '../../Utils/SmartContractUtils';
+import { useNavigate } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
 const PatientLogin = () => {
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
     const name = useRef();
     const age = useRef();
@@ -35,6 +39,7 @@ const PatientLogin = () => {
         setgender(event.target.value);
     };
     useEffect(() => {
+
         // Asking if metamask is already present or not
         if (window.ethereum) {
             window.ethereum
@@ -42,9 +47,14 @@ const PatientLogin = () => {
                 .then((res) => {
                     setAccounts(res);
                     setIsLoading(false)
+                }).catch(err => {
+                    enqueueSnackbar("Please Log in to Metamask to Proceed!", { variant: "error" });
+                    navigate("/");
                 });
         } else {
-            alert("install metamask extension!!");
+            enqueueSnackbar("Please install Metamask to Proceed!", { variant: "error" });
+            navigate("/");
+
         }
     }, [])
     const handleSubmit = async (event) => {
@@ -55,7 +65,7 @@ const PatientLogin = () => {
         const res = await register_patient(data, "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
         console.log(res);
     };
-
+    enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })
     return (
         <>
             {isLoading && <Box sx={{ display: 'flex', position: "absolute", top: "48%", left: "48%" }}>
