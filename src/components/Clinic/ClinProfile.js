@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import { Avatar, Card, Container, CssBaseline } from '@mui/material';
+import { getClinicProfile } from '../../Utils/SmartContractUtils';
 
 const ClinProfile = () => {
+
+    const [profile, setProfile] = useState({});
+
+    const fetchProfile = async () => {
+        // const res = await getClinicProfile(cliAddress, accountAddress);
+        const res = await getClinicProfile('0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029', '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
+        setProfile(res);
+    }
+
     return (
         <>
             <Container component="main" maxWidth="s" minWidth="xs"><CssBaseline />

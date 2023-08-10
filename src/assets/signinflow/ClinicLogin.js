@@ -17,15 +17,9 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
-
-import { doctorABI } from '../../abis/doctor.js'
-import { registerDoctor } from '../../Utils/SmartContractUtils';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-// const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
-// const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
-// // console.log(doctorABI, doctorAddress);
-// const doctorContract = new web3.eth.Contract(doctorABI, doctorAddress);
+
 
 const ClinicLogin = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -62,8 +56,8 @@ const ClinicLogin = () => {
         // add field for degree name
         const data = { name: name.current.value, phone: phone.current.value, email: email.current.value, location: location.current.value };
 
-        // const res = await registerDoctor(data, accounts[0]);
-        const res = await registerDoctor(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
+        const res = await registerClinic(data, accounts[0]);
+        // const res = await registerClinic(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
         console.log(res);
     };
     enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })

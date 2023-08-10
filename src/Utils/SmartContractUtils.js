@@ -2,13 +2,16 @@ import Web3 from 'web3';
 import { doctorABI } from '../abis/doctor'
 import { hospitalABI } from '../abis/hospital'
 import { diagABI } from '../abis/diagnostic'
+import { clinicABI } from '../abis/clinic'
 const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
 const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
 const hospitalAddress = process.env.REACT_APP_HOSPITAL_CONTRACT_ADDRESS;
+const clinicAddress = process.env.REACT_APP_CLINIC_CONTRACT_ADDRESS
 const doctorContract = new web3.eth.Contract(doctorABI, doctorAddress);
 const hospitalContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
 const diagAddress = process.env.REACT_APP_DIAGNOSTIC_CONTRACT_ADDRESS;
 const diagContract = new web3.eth.Contract(diagABI, diagAddress);
+const clinicContract = new web3.eth.Contract(clinicABI, clinicAddress);
 
 const registerDoctor = async (data, accountAddress) => {
     try {
@@ -117,9 +120,9 @@ const getPatientOwnProfile = async (accountAddress) => {
     }
 }
 
-const grantAccessToDoctor = async (doctorAddress, accountAddress) => {
+const grantAccessToDoctor = async (docAddress, accountAddress) => {
     try {
-        const res = await doctorContract.methods.grantAccess(doctorAddress).send({
+        const res = await doctorContract.methods.grantAccess(docAddress).send({
             from: accountAddress,
             gas: 3000000
         });
@@ -172,9 +175,9 @@ const uploadRecordByUser = async (data, accountAddress) => {
 }
 
 
-const revokeDoctorsAccess = async (doctorAddress, accountAddress) => {
+const revokeDoctorsAccess = async (docAddress, accountAddress) => {
     try {
-        const res = await doctorContract.methods.revokeAccess(doctorAddress).send({
+        const res = await doctorContract.methods.revokeAccess(docAddress).send({
             from: accountAddress,
             gas: 3000000
         })
@@ -200,9 +203,9 @@ const getRecordsOfUser = async (patientAddress, accountAddress) => {
 
 // -------------------------------------------------- //
 
-const removeDoctorFromHospital = async (doctorAddress, accountAddress) => {
+const removeDoctorFromHospital = async (docAddress, accountAddress) => {
     try {
-        const res = await hospitalContract.methods.removeDoctor(doctorAddress).send({
+        const res = await hospitalContract.methods.removeDoctor(docAddress).send({
             from: accountAddress,
             gas: 3000000
         });
@@ -213,9 +216,9 @@ const removeDoctorFromHospital = async (doctorAddress, accountAddress) => {
     }
 }
 
-const addDoctorToHospital = async (doctorAddress, accountAddress) => {
+const addDoctorToHospital = async (docAddress, accountAddress) => {
     try {
-        const res = await hospitalContract.methods.addDoctorTOHospital(doctorAddress).send({
+        const res = await hospitalContract.methods.addDoctorTOHospital(docAddress).send({
             from: accountAddress,
             gas: 3000000
         });
@@ -253,9 +256,9 @@ const getHospitalProfile = async (accountAddress) => {
     }
 }
 
-const revokeAllAccessOfDoctor = async (doctorAddress, accountAddress) => {
+const revokeAllAccessOfDoctor = async (docAddress, accountAddress) => {
     try {
-        const res = await hospitalContract.methods.revokeAllAccess(doctorAddress).send({
+        const res = await hospitalContract.methods.revokeAllAccess(docAddress).send({
             from: accountAddress,
             gas: 3000000
         });
@@ -426,6 +429,68 @@ const uploadRecordsByDiagnostic = async (data, accountAddress, patientAddress) =
     }
 }
 
+// CLinic Functions 
+// Begin
+
+const registerClinic = async (data, accountAddress) => {
+    try {
+        const res = await clinicContract.methods.registerClinic(
+            data.name,
+            data.phone,
+            data.email,
+            data.location
+        ).send({
+            from: accountAddress,
+            gas: 3000000
+        });
+        console.log(res);
+        return res
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const enrollInClinicForDoctor = async (cliAddress, accountAddress) => {
+    try {
+        const res = await clinicContract.methods.enrollInClinic(cliAddress).send({
+            from: accountAddress,
+            gas: 3000000
+        });
+        console.log(res);
+        return res
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const getDoctorsOfClinic = async (accountAddress) => {
+    try {
+        const res = await clinicContract.methods.getAllDoctorsForClinic().call({
+            from: accountAddress,
+            gas: 3000000
+        });
+        console.log(res);
+        return res
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+const getClinicProfile = async (cliAddress, accountAddress) => {
+    try {
+        const res = await clinicContract.methods.ClinicIndex(cliAddress).call({
+            from: accountAddress,
+            gas: 3000000
+        });
+        console.log(res);
+        return res
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 export {
     registerDoctor,
     register_patient,
@@ -437,7 +502,9 @@ export {
     searchDoctorByName,
     grantAccessToDoctor, revokeDoctorsAccess, getRecordsOfUser, uploadRecordByUser,
     removeDoctorFromHospital, addDoctorToHospital, getDoctorsOfHospital, getHospitalProfile, revokeAllAccessOfDoctor, registerHospital,
-    registerDiagnostic, getDiagnosticOfPatient, getHealthRecordsOfPatient, getAllDiagnostics, getDiagProfile, getPatientsOfDiagnostic, grantAccessToDiagnostic, revokeAccessOfDiagnostic, getDiagnosticForPatient, uploadRecordsByDiagnostic, deleteDocument
+    registerDiagnostic, getDiagnosticOfPatient, getHealthRecordsOfPatient, getAllDiagnostics, getDiagProfile, getPatientsOfDiagnostic, grantAccessToDiagnostic, revokeAccessOfDiagnostic, getDiagnosticForPatient, uploadRecordsByDiagnostic, deleteDocument,
+    registerClinic, enrollInClinicForDoctor, getDoctorsOfClinic,
+    getClinicProfile
 }
 
 

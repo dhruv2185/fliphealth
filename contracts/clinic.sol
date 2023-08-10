@@ -1,33 +1,48 @@
-// *pragma solidity ^0.8.0;
-// import "./patient.sol";
+pragma solidity ^0.8.0;
+import "./doctor.sol";
 
-// contract clinic is patient{
-//     struct Clinic {
-//         string name;
-//         uint128 phone;
-//         string email;
-//         string location;
-//     }
+contract clinic is doctor {
+    struct Clinic {
+        string name;
+        uint128 phone;
+        string email;
+        string location;
+    }
 
-//     mapping (address => address) internal DocClinAdd; // doctor address to clinic address
-//     mapping (address => Clinic) internal DoctorClinic;  // doctor address to clinic struct
+    mapping(address => address) internal DoctorToClinic; // doctor address to clinic address
+    mapping(address => Clinic) public ClinicIndex; // doctor address to clinic struct
 
-//     function getAllDoctorsForHospital() external view returns (DocProfile[] memory){
-//         DocProfile[] memory myDoctors= new DocProfile[](50);
-//         for (uint i=0; i<doctors.length; i++){
-//             if(DocClinAdd[doctors[i]] == msg.sender)
-//             {
-//                 myDoctors[i] = DocProfileReturn(doctors[i]);
-//             }
-//         }
-//         return myDoctors;        
-//     }
-     
-//     function addClinic(string memory _name, uint128 _phone, string memory _email, string memory _location) external{
-//         DoctorClinic[msg.sender]= Clinic(_name, _phone, _email, _location);        
-//     }
+    // register Clinic
+    // view all doctors of clininc
+    // view all clinics for doctors
+    // add organisation abd clinic to doctorProfile
 
-//     function removeClinic() external {
-//         delete DoctorClinic[msg.sender];            
-//     }
-// }
+    function registerClinic(
+        string memory _name,
+        uint128 _phone,
+        string memory _email,
+        string memory _location
+    ) external {
+        ClinicIndex[msg.sender] = Clinic(_name, _phone, _email, _location);
+    }
+
+    function enrollInClinic(address _clinic) external {
+        DoctorToClinic[msg.sender] = _clinic;
+    }
+
+    function getAllDoctorsForClinic()
+        external
+        view
+        returns (DocProfile[] memory, uint16)
+    {
+        uint16 count = 0;
+        DocProfile[] memory myDoctors = new DocProfile[](25);
+        for (uint i = 0; i < doctors.length; i++) {
+            if (DoctorToClinic[doctors[i]] == msg.sender) {
+                myDoctors[count] = DocProfileReturn(doctors[i]);
+                count++;
+            }
+        }
+        return (myDoctors, count);
+    }
+}
