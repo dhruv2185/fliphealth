@@ -57,8 +57,8 @@ const HospitalLogin = () => {
         const data = { name: name.current.value, phone: phone.current.value, email: email.current.value, license: license.current.value };
 
         // const res = await registerHospital(data, accounts[0]);
-        const res = await registerHospital(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
-        console.log(res);
+        // const res = await registerHospital(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
+        // console.log(res);
     };
     enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })
     return (

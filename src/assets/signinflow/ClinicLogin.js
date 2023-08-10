@@ -56,9 +56,9 @@ const ClinicLogin = () => {
         // add field for degree name
         const data = { name: name.current.value, phone: phone.current.value, email: email.current.value, location: location.current.value };
 
-        const res = await registerClinic(data, accounts[0]);
+        // const res = await registerClinic(data, accounts[0]);
         // const res = await registerClinic(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
-        console.log(res);
+        // console.log(res);
     };
     enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })
     return (

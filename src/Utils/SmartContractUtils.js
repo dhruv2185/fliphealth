@@ -1,17 +1,28 @@
 import Web3 from 'web3';
-import { doctorABI } from '../abis/doctor'
+// import { doctorABI } from '../abis/doctor'
 import { hospitalABI } from '../abis/hospital'
-import { diagABI } from '../abis/diagnostic'
-import { clinicABI } from '../abis/clinic'
+// import { diagABI } from '../abis/diagnostic'
+// import { clinicABI } from '../abis/clinic'
+console.log(hospitalABI);
 const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
+console.log(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
 const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
+console.log(doctorAddress);
 const hospitalAddress = process.env.REACT_APP_HOSPITAL_CONTRACT_ADDRESS;
+console.log(hospitalAddress);
 const clinicAddress = process.env.REACT_APP_CLINIC_CONTRACT_ADDRESS
-const doctorContract = new web3.eth.Contract(doctorABI, doctorAddress);
-const hospitalContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
+console.log(clinicAddress);
 const diagAddress = process.env.REACT_APP_DIAGNOSTIC_CONTRACT_ADDRESS;
-const diagContract = new web3.eth.Contract(diagABI, diagAddress);
-const clinicContract = new web3.eth.Contract(clinicABI, clinicAddress);
+console.log(diagAddress);
+const doctorContract = new web3.eth.Contract(hospitalABI, "0x763775eA648AA5CeA996c3b48e1c62EB371192c5");
+// const doctorContract = new web3.eth.Contract(hospitalABI, doctorAddress);
+const hospitalContract = new web3.eth.Contract(hospitalABI, "0x763775eA648AA5CeA996c3b48e1c62EB371192c5");
+// const hospitalContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
+const diagContract = new web3.eth.Contract(hospitalABI, "0x763775eA648AA5CeA996c3b48e1c62EB371192c5");
+// const diagContract = new web3.eth.Contract(hospitalABI, diagAddress);
+const clinicContract = new web3.eth.Contract(hospitalABI, "0x763775eA648AA5CeA996c3b48e1c62EB371192c5");
+// const clinicContract = new web3.eth.Contract(hospitalABI, clinicAddress);
+// let doctorContract, diagContract, hospitalContract, clinicContract;
 
 const registerDoctor = async (data, accountAddress) => {
     try {
@@ -37,6 +48,7 @@ const registerDoctor = async (data, accountAddress) => {
 
 const register_patient = async (data, accountAddress) => {
     try {
+        console.log("registering");
         const result = await doctorContract.methods.register_patient(
             data.name,
             data.age,
@@ -47,6 +59,7 @@ const register_patient = async (data, accountAddress) => {
             data.email
         ).send({ from: accountAddress, gas: 3000000 })
         console.log(result);
+        console.log("registered");
         return result;
     } catch (error) {
         console.log(error);
@@ -231,7 +244,7 @@ const addDoctorToHospital = async (docAddress, accountAddress) => {
 
 const getDoctorsOfHospital = async (accountAddress) => {
     try {
-        const res = await hospitalContract.methods.getDoctors().call({
+        const res = await hospitalContract.methods.getAllDoctorsForHospital().call({
             from: accountAddress,
             gas: 3000000
         });
@@ -319,7 +332,7 @@ const getDiagnosticOfPatient = async (accountAddress) => {
     }
 }
 
-getHealthRecordsOfPatient = async (accountAddress) => {
+const getHealthRecordsOfPatient = async (accountAddress) => {
     try {
         const res = await diagContract.methods.getHealthRecordsDiagnostic(accountAddress).call({
             from: accountAddress,

@@ -4,8 +4,8 @@ const DoctorBox = () => {
 
     const handleAdd = async () => {
         // const res = await addDoctorToHospital("doctorAddress", "accountAddress");
-        const res = await addDoctorToHospital("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
-        console.log(res);
+        // const res = await addDoctorToHospital("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        // console.log(res);
     }
 
     return (

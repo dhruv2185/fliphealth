@@ -59,10 +59,12 @@ const PatientLogin = () => {
     }, [])
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(accounts);
+        // console.log(accounts);
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
 
-        const res = await register_patient(data, "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        console.log(data);
+
+        const res = await register_patient(data, accounts[0]);
         console.log(res);
     };
     enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })

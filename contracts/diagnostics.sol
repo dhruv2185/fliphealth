@@ -1,8 +1,7 @@
 pragma solidity ^0.8.0;
-import "./doctor.sol";
-import "./patient.sol";
+import "./clinic.sol";
 
-contract diagnostics is patient {
+contract diagnostics is clinic {
     function registerDiagnostic(
         string memory _Diagname,
         string memory _email,

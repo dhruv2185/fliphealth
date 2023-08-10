@@ -17,14 +17,14 @@ const SearchDiag = () => {
 
     const handleSearch = async () => {
         // if search by name
-        const res = await getAllDiagnostics();
-        console.log(res);
+        // const res = await getAllDiagnostics();
+        // console.log(res);
         // further logic to filter out the result using regex
 
         // if search by address
-        const result = await getDiagProfile("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        // const result = await getDiagProfile("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
         // const result = await getDiagProfile("diagAddress", "accountAddress");
-        console.log(result);
+        // console.log(result);
     }
 
     return (

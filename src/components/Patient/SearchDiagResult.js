@@ -4,8 +4,8 @@ const SearchDiagResult = () => {
 
     const handleGrant = async () => {
         // const res = grantAccessToDiagnostic("address", "accountAddress");
-        const res = grantAccessToDiagnostic("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
-        console.log(res);
+        // const res = grantAccessToDiagnostic("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        // console.log(res);
     }
 
     return (

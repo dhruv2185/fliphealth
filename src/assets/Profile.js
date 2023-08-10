@@ -16,7 +16,7 @@ const Profile = () => {
     return (
         <>
             <Navbar />
-            <ClinicProfile />
+            <HospitalProfile />
             <Footer />
         </>
     );

@@ -42,8 +42,8 @@ const DiagUpload = () => {
             console.log("uploaded");
 
             // const res = await uploadRecordsByDiagnostic(data, accountAddress, patientAddress);
-            const res = await uploadRecordsByDiagnostic(data, accountAddress, patientAddress);
-            console.log(res);
+            // const res = await uploadRecordsByDiagnostic(data, accountAddress, patientAddress);
+            // console.log(res);
         }
     }
     return (

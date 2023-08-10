@@ -1,8 +1,8 @@
 pragma solidity ^0.8.0;
-
 import "./doctor.sol";
+import "./diagnostics.sol";
 
-contract hospital is doctor {
+contract hospital is diagnostics {
     struct Hospital {
         string hospname;
         string email;
