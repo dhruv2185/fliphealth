@@ -50,6 +50,20 @@ const register_patient = async (data, accountAddress) => {
     }
 }
 
+const deleteDocument = async (accountAddress, cid) => {
+    try {
+        const result = await doctorContract.methods.deleteRecord(cid).send({
+            from: accountAddress,
+            gas: 3000000
+        })
+        console.log(result);
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 const getDoctorOwnProfile = async (accountAddress) => {
     try {
         const result = await doctorContract.methods.getDocOwnProfile().call({
@@ -184,7 +198,6 @@ const getRecordsOfUser = async (patientAddress, accountAddress) => {
     }
 }
 
-
 // -------------------------------------------------- //
 
 const removeDoctorFromHospital = async (doctorAddress, accountAddress) => {
@@ -229,7 +242,7 @@ const getDoctorsOfHospital = async (accountAddress) => {
 // public variable
 const getHospitalProfile = async (accountAddress) => {
     try {
-        const res = await hospitalContract.methods.getHospitalProfile(accountAddress).call({
+        const res = await hospitalContract.methods.hospitals(accountAddress).call({
             from: accountAddress,
             gas: 3000000
         });
@@ -290,19 +303,6 @@ const registerDiagnostic = async (data, accountAddress) => {
     }
 }
 
-const getDiagnosticProfile = async (accountAddress) => {
-    try {
-        const res = await diagContract.methods.getDiagOwnProfile(accountAddress).call({
-            from: accountAddress,
-            gas: 3000000
-        });
-        console.log(res);
-        return res;
-    } catch (error) {
-        console.log(error);
-    }
-}
-
 const getDiagnosticOfPatient = async (accountAddress) => {
     try {
         const res = await diagContract.methods.getDiagnosticOfPatient(accountAddress).call({
@@ -335,6 +335,7 @@ const getAllDiagnostics = async (accountAddress) => {
             from: accountAddress,
             gas: 3000000
         });
+        // returns (array of objects, array of addresses)
         console.log(res);
         return res;
     } catch (error) {
@@ -436,7 +437,7 @@ export {
     searchDoctorByName,
     grantAccessToDoctor, revokeDoctorsAccess, getRecordsOfUser, uploadRecordByUser,
     removeDoctorFromHospital, addDoctorToHospital, getDoctorsOfHospital, getHospitalProfile, revokeAllAccessOfDoctor, registerHospital,
-    registerDiagnostic, getDiagnosticProfile, getDiagnosticOfPatient, getHealthRecordsOfPatient, getAllDiagnostics, getDiagProfile, getPatientsOfDiagnostic, grantAccessToDiagnostic, revokeAccessOfDiagnostic, getDiagnosticForPatient, uploadRecordsByDiagnostic
+    registerDiagnostic, getDiagnosticOfPatient, getHealthRecordsOfPatient, getAllDiagnostics, getDiagProfile, getPatientsOfDiagnostic, grantAccessToDiagnostic, revokeAccessOfDiagnostic, getDiagnosticForPatient, uploadRecordsByDiagnostic, deleteDocument
 }
 
 

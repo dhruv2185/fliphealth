@@ -1,7 +1,20 @@
 import { Avatar, Card, Container, CssBaseline } from '@mui/material';
 import React from 'react';
+import { getDiagProfile } from '../../Utils/SmartContractUtils';
 
 const DiagProfile = () => {
+
+    const [profile, setProfile] = React.useState({});
+
+    const getProfile = async (accountAddress) => {
+        // const res = await getHospitalProfile(diagAddress,"accountAddress");
+        const res = await getDiagProfile(
+            "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029"
+            , "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        console.log(res);
+        setProfile(res);
+    }
+
     return (
         <>
             <Container component="main" maxWidth="s" minWidth="xs"><CssBaseline />

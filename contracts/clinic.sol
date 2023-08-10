@@ -9,8 +9,8 @@
 //         string location;
 //     }
 
-//     mapping (address => address) internal DocClinAdd;
-//     mapping (address => Clinic) internal DoctorClinic;
+//     mapping (address => address) internal DocClinAdd; // doctor address to clinic address
+//     mapping (address => Clinic) internal DoctorClinic;  // doctor address to clinic struct
 
 //     function getAllDoctorsForHospital() external view returns (DocProfile[] memory){
 //         DocProfile[] memory myDoctors= new DocProfile[](50);

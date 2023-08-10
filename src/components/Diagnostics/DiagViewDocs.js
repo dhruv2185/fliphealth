@@ -8,6 +8,7 @@ import { useTheme } from '@emotion/react';
 import CloseIcon from '@mui/icons-material/Close';
 import { useSelector, useDispatch } from 'react-redux';
 import RecordCard from '../Patient/RecordCard';
+import { getHealthRecordsOfPatient } from '../../Utils/SmartContractUtils';
 
 const DiagViewDocs = (props) => {
     const { open, setOpen } = props;
@@ -39,6 +40,15 @@ const DiagViewDocs = (props) => {
         })
 
     };
+
+    const [records, setRecords] = useState([]);
+    const getRecords = async (accountAddress) => {
+        // const res = await getHealthRecordsOfPatient("accountAddress");
+        const res = await getHealthRecordsOfPatient("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        console.log(res);
+        setRecords(res);
+    }
+
     return (
         <>
             <Modal open={open}

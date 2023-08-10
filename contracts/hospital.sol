@@ -23,7 +23,7 @@ contract hospital is doctor {
         returns (DocProfile[] memory, uint16)
     {
         uint16 count = 0;
-        DocProfile[] memory myDoctors = new DocProfile[](50);
+        DocProfile[] memory myDoctors = new DocProfile[](25);
         for (uint i = 0; i < doctors.length; i++) {
             if (organization[doctors[i]] == msg.sender) {
                 myDoctors[count] = DocProfileReturn(doctors[i]);

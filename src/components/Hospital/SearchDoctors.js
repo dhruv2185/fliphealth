@@ -2,10 +2,34 @@ import { Container, CssBaseline, FormControl, IconButton, InputBase, InputLabel,
 import SearchIcon from '@mui/icons-material/Search';
 import React, { useState } from 'react';
 import DoctorBox from './DoctorBox';
+import { searchDoctorByAddress, searchDoctorByName } from '../../Utils/SmartContractUtils';
 
 const SearchDoctors = () => {
     const [search, setSearch] = useState('');
     const [searchType, setSearchType] = useState('name');
+    const [searchResults, setSearchResults] = useState()
+
+    const getSearchResults = async () => {
+        // if by address
+        const res = searchDoctorByAddress(
+            "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029",
+            "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029"
+        )
+        // const res = searchDoctorByAddress(
+        // enteredAddress, loggedInAddress
+        // )
+        setSearchResults(res);
+
+        // if by name
+        const result = await searchDoctorByName(
+            "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029"
+            // or loggedInAddress
+        )
+        setSearchResults(result);
+        console.log(searchResults);
+        // further regex logic
+    }
+
     const searchHandler = (e) => {
         e.preventDefault();
     }

@@ -7,7 +7,38 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import image from "../../assets/images/IMG.png";
 import pdf from "../../assets/images/PDF.png";
+import { create as ipfsHttpClient } from "ipfs-http-client";
+import { deleteDocument } from '../../Utils/SmartContractUtils';
+
+const projectId = process.env.REACT_APP_PROJECT_ID;
+const projectSecretKey = process.env.REACT_APP_PROJECT_KEY;
+const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
+
 const RecordCard = (props) => {
+
+    const ipfs = ipfsHttpClient({
+        url: "https://ipfs.infura.io:5001",
+        headers: {
+            authorization,
+        },
+    });
+
+    const unpinFromInfura = async (hash) => {
+        const res = await ipfs.pin.rm(hash);
+        console.log(res);
+    }
+
+    const removeDocFromBlock = async (accountAddress, hash) => {
+        const res = await deleteDocument(accountAddress, hash)
+        console.log(res);
+    }
+
+    const handleRemove = async () => {
+        const res = await unpinFromInfura(props.cid);
+        // account address is hardcoded for now
+        const result = await removeDocFromBlock("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", props.cid);
+    }
+
     return (
         <>
             <Card sx={{ maxWidth: 400, minWidth: 190 }}>

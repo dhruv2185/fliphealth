@@ -215,7 +215,8 @@ contract patient {
         return documents.length;
     }
 
-    function deleteRecord(address _patient, string memory _cid) external {
+    function deleteRecord(string memory _cid) external {
+        address _patient = msg.sender;
         uint256 index = getRecocrdIndex(_patient, _cid);
         HealthRecord[] storage documents = userRecords[_patient];
         if (index < documents.length) {

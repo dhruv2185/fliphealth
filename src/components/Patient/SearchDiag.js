@@ -2,6 +2,7 @@ import { Container, CssBaseline, IconButton, InputBase, Paper, Box, Select, Form
 import React, { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchDiagResult from './SearchDiagResult';
+import { getAllDiagnostics } from '../../Utils/SmartContractUtils';
 
 const SearchDiag = () => {
     const [search, setSearch] = useState('');
@@ -12,6 +13,20 @@ const SearchDiag = () => {
     const handleChange = (event) => {
         setSearchType(event.target.value);
     }
+
+
+    const handleSearch = async () => {
+        // if search by name
+        const res = await getAllDiagnostics();
+        console.log(res);
+        // further logic to filter out the result using regex
+
+        // if search by address
+        const result = await getDiagProfile("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        // const result = await getDiagProfile("diagAddress", "accountAddress");
+        console.log(result);
+    }
+
     return (
         <>
             <Container component="main" maxWidth="s" minWidth="xs" sx={{ minHeight: "50vh" }}><CssBaseline /><Paper onSubmit={searchHandler}

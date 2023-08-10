@@ -1,6 +1,13 @@
 import React from 'react';
 import { Avatar, Button, Card } from '@mui/material'
+import { revokeAccessOfDiagnostic } from '../../Utils/SmartContractUtils';
 const DiagAccessBox = () => {
+
+    const handleRevoke = async () => {
+        const res = revokeAccessOfDiagnostic("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        console.log(res);
+    }
+
     return (
         <>
             <Card sx={{ width: "60vw", minWidth: "400px", padding: "5px 20px", display: "flex", justifyContent: "space-between" }}>

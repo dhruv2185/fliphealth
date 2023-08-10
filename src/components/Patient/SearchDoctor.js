@@ -3,10 +3,6 @@ import React, { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchDocResult from './SearchDocResult';
 import { searchDoctorByAddress, searchDoctorByName } from '../../Utils/SmartContractUtils';
-// import Web3 from 'web3';
-// import { doctorABI } from '../../abis/doctor.js'
-// const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
-// const doctorContract = new web3.eth.Contract(doctorABI, process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS);
 
 const SearchDoctor = () => {
     const [search, setSearch] = useState('');

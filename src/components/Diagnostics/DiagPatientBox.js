@@ -7,6 +7,9 @@ const DiagPatientBox = () => {
     const openRecords = () => {
         setOpen(true);
     }
+
+
+
     return (
         <>
             <Card sx={{ width: "60vw", minWidth: "400px", padding: "5px 20px", display: "flex", justifyContent: "space-between" }}>

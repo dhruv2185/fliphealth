@@ -18,13 +18,6 @@ import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
 
-import { doctorABI } from '../../abis/doctor.js'
-import { registerDoctor } from '../../Utils/SmartContractUtils';
-// const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
-// const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
-// // console.log(doctorABI, doctorAddress);
-// const doctorContract = new web3.eth.Contract(doctorABI, doctorAddress);
-
 const HospitalLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
     const name = useRef();
@@ -53,8 +46,8 @@ const HospitalLogin = () => {
         // add field for degree name
         const data = { name: name.current.value, phone: phone.current.value, email: email.current.value, license: license.current.value };
 
-        // const res = await registerDoctor(data, accounts[0]);
-        const res = await registerDoctor(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
+        // const res = await registerHospital(data, accounts[0]);
+        const res = await registerHospital(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
         console.log(res);
     };
 

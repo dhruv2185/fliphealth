@@ -1,7 +1,20 @@
 import { Avatar, Button, Card } from '@mui/material';
 import React from 'react';
+import { removeDoctorFromHospital } from '../../Utils/SmartContractUtils';
 
 const DoctorAccessBox = () => {
+
+    const handleRemove = async () => {
+        // const res = await removeDoctorFromHospital("doctorAddress", "accountAddress");
+        const res = await removeDoctorFromHospital("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        console.log(res);
+    }
+
+    const handleRevoke = async () => {
+        const res = await removeDoctorFromHospital("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        console.log(res);
+    }
+
     return (
         <>
             <Card sx={{ width: "60vw", minWidth: "400px", padding: "5px 20px", display: "flex", justifyContent: "space-between" }}>

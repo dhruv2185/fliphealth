@@ -1,11 +1,9 @@
 import { Box, Container, CssBaseline } from '@mui/material';
 import React, { useState } from 'react';
 import UserAccessBox from './UserAccessBox';
-import Web3 from 'web3';
-import { doctorABI } from '../../abis/doctor.js'
 import DiagAccessBox from './DiagAccessBox';
-// const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
-// const doctorContract = new web3.eth.Contract(doctorABI, process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS);
+import { getDiagnosticForPatient } from '../../Utils/SmartContractUtils';
+
 
 const ManageAccess = () => {
 
@@ -19,7 +17,15 @@ const ManageAccess = () => {
         console.log(doctors);
     }
 
-    // fetchDoctors();
+    const [diagnostics, setDiagnostics] = useState([]);
+
+    const fetchDiagnostics = async () => {
+        const res = await getDiagnosticForPatient('0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029')
+        // const res = await getDiagnosticForPatient('accountAddress')
+        // will return an array of objects and count of diagnostics sent
+        setDiagnostics(res);
+        console.log(diagnostics);
+    }
 
     return (
         <>

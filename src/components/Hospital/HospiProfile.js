@@ -1,7 +1,15 @@
 import { Avatar, Card, Container, CssBaseline } from '@mui/material';
 import React from 'react';
+import { getHospitalProfile } from '../../Utils/SmartContractUtils';
 
 const HospiProfile = () => {
+
+    const getProfile = async (accountAddress) => {
+        // const res = await getHospitalProfile("accountAddress");
+        const res = await getHospitalProfile("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        console.log(res);
+    }
+
     return (
         <>
             <Container component="main" maxWidth="s" minWidth="xs"><CssBaseline />

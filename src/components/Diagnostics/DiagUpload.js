@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { MuiFileInput } from 'mui-file-input';
 import { Box, Button, Container, CssBaseline, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { create as ipfsHttpClient } from "ipfs-http-client";
+import { uploadRecordsByDiagnostic } from '../../Utils/SmartContractUtils';
 const projectId = process.env.REACT_APP_PROJECT_ID;
 const projectSecretKey = process.env.REACT_APP_PROJECT_KEY;
 const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
@@ -40,20 +41,9 @@ const DiagUpload = () => {
             console.log(result);
             console.log("uploaded");
 
-            // const res = await uploadRecordByUser(
-            //     {
-            //         org: "Mera",
-            //         date: "23-4-2003",
-            //         doctorname: docName.current.value,
-            //         documentName: recordname.current.value,
-            //         path: result.path,
-            //         cid: result.cid,
-            //         docType: docType
-            //     },
-            //     "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029"
-            // )
-            // console.log(res);
-
+            // const res = await uploadRecordsByDiagnostic(data, accountAddress, patientAddress);
+            const res = await uploadRecordsByDiagnostic(data, accountAddress, patientAddress);
+            console.log(res);
         }
     }
     return (

@@ -4,12 +4,9 @@ import { Box, Button, Container, CssBaseline, FormControl, InputLabel, MenuItem,
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import { uploadRecordByUser } from '../../Utils/SmartContractUtils';
 
-
 const projectId = process.env.REACT_APP_PROJECT_ID;
 const projectSecretKey = process.env.REACT_APP_PROJECT_KEY;
 const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
-
-
 
 const UploadRecords = () => {
 

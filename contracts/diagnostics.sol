@@ -1,5 +1,6 @@
 pragma solidity ^0.8.0;
 import "./doctor.sol";
+import "./patient.sol";
 
 contract diagnostics is patient {
     function registerDiagnostic(
@@ -16,11 +17,6 @@ contract diagnostics is patient {
             _phone,
             _license
         );
-    }
-
-    // No need of this function if diagnostic mappingmade public
-    function getDiagOwnProfile() external view returns (Diagnostic memory) {
-        return DiagnosticIndex[msg.sender];
     }
 
     function getPatientsForDiagnostic()
@@ -45,7 +41,11 @@ contract diagnostics is patient {
         return userRecords[patAddress];
     }
 
-    function getAllDiagnostics() external view returns (Diagnostic[] memory) {
+    function getAllDiagnostics()
+        external
+        view
+        returns (Diagnostic[] memory, address[] memory)
+    {
         uint256 numDiagnostics = diagnostics.length;
         Diagnostic[] memory allDiagnostics = new Diagnostic[](numDiagnostics);
         for (uint256 i = 0; i < numDiagnostics; i++) {
@@ -53,7 +53,7 @@ contract diagnostics is patient {
             Diagnostic memory curr = DiagnosticIndex[diagnosticAddress];
             allDiagnostics[i] = curr;
         }
-        return allDiagnostics;
+        return (allDiagnostics, diagnostics);
     }
 
     function getDiagnosticsForUser()
