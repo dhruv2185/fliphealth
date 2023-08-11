@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, Card, Container, CssBaseline } from '@mui/material';
 import { getPatientOwnProfile } from '../../Utils/SmartContractUtils';
+import { useSelector } from 'react-redux';
 
 
 const PatUser = () => {
-
+    const accountAddress = useSelector(state => state.accountAddress);
     const [profile, setProfile] = useState();
-
+    useEffect(() => {
+        fetchProfile();
+    }, [accountAddress]);
     const fetchProfile = async () => {
         const res = getPatientOwnProfile('0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
         // const res = getPatientOwnProfile(patientAddress/loggedInAddress);

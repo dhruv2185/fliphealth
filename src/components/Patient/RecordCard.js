@@ -9,13 +9,17 @@ import image from "../../assets/images/IMG.png";
 import pdf from "../../assets/images/PDF.png";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import { deleteDocument } from '../../Utils/SmartContractUtils';
-
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DownloadIcon from '@mui/icons-material/Download';
+import { useSelector } from 'react-redux';
 const projectId = process.env.REACT_APP_PROJECT_ID;
 const projectSecretKey = process.env.REACT_APP_PROJECT_KEY;
 const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
 
 const RecordCard = (props) => {
-
+    const accountAddress = useSelector(state => state.accountAddress);
+    const { refresh, setRefresh, cid } = props;
     const ipfs = ipfsHttpClient({
         url: "https://ipfs.infura.io:5001",
         headers: {
@@ -28,15 +32,16 @@ const RecordCard = (props) => {
         console.log(res);
     }
 
-    const removeDocFromBlock = async (accountAddress, hash) => {
-        const res = await deleteDocument(accountAddress, hash)
+    const removeDocFromBlock = async (hash) => {
+        const res = await deleteDocument(hash)
         console.log(res);
     }
 
     const handleRemove = async () => {
-        const res = await unpinFromInfura(props.cid);
+        const res = await unpinFromInfura(cid);
         // account address is hardcoded for now
-        const result = await removeDocFromBlock("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", props.cid);
+        const result = await removeDocFromBlock(cid);
+        setRefresh(!refresh);
     }
 
     return (
@@ -58,8 +63,8 @@ const RecordCard = (props) => {
                     </Typography>
                 </CardContent>
                 <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-                    <Button size="small">View</Button>
-                    <Button size="small">Remove</Button>
+                    <IconButton><DownloadIcon /></IconButton>
+                    <IconButton onClick={handleRemove}><DeleteIcon /></IconButton>
                 </CardActions>
             </Card>
         </>

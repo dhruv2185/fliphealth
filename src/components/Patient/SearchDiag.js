@@ -1,32 +1,62 @@
 import { Container, CssBaseline, IconButton, InputBase, Paper, Box, Select, FormControl, InputLabel, MenuItem } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchDiagResult from './SearchDiagResult';
-import { getAllDiagnostics } from '../../Utils/SmartContractUtils';
+import { getAllDiagnostics, getDiagProfile } from '../../Utils/SmartContractUtils';
+import { useSelector } from 'react-redux';
 
 const SearchDiag = () => {
-    const [search, setSearch] = useState('');
+    const accountAddress = useSelector(state => state.accountAddress);
+    const search = useRef();
     const [searchType, setSearchType] = useState('name');
-    const searchHandler = (e) => {
-        e.preventDefault();
-    }
+    const [results, setResults] = useState([]);
     const handleChange = (event) => {
         setSearchType(event.target.value);
     }
+    const getByAddress = async (address) => {
+        const result = await getDiagProfile(address, accountAddress);
+        // const result = await getDiagProfile("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        result.address = address;
+        setResults([result]);
 
-
-    const handleSearch = async () => {
+    }
+    const getByName = async (name) => {
+        const res = await getAllDiagnostics(accountAddress);
+        const regex = new RegExp(name, "gi");
+        const newres = [];
+        for (let i = 0; i < res[0].length; i++) {
+            newres.push({
+                Diagname: res[0][i].Diagname,
+                email: res[0][i].email,
+                phone: Number(res[0][i].phone),
+                license: res[0][i].license,
+            })
+        }
+        for (let i = 0; i < res[1].length; i++) {
+            newres[i].address = res[1][i];
+        }
+        const result = newres.filter(
+            item => (name !== '' && regex.test(item.Diagname))
+        )
+        setResults(result);
+        console.log(results);
+    }
+    const searchHandler = (e) => {
+        e.preventDefault();
         // if search by name
         // const res = await getAllDiagnostics();
         // console.log(res);
         // further logic to filter out the result using regex
 
         // if search by address
-        // const result = await getDiagProfile("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
-        // const result = await getDiagProfile("diagAddress", "accountAddress");
-        // console.log(result);
-    }
+        if (searchType === "name") {
+            getByName(search.current.value);
+        }
+        if (searchType === "address") {
+            getByAddress(search.current.value);
+        }
 
+    }
     return (
         <>
             <Container component="main" maxWidth="s" minWidth="xs" sx={{ minHeight: "50vh" }}><CssBaseline /><Paper onSubmit={searchHandler}
@@ -46,19 +76,19 @@ const SearchDiag = () => {
             </Select></FormControl>
                 <InputBase
                     sx={{ ml: 1, flex: 1 }}
-                    value={search}
-                    onChange={(e) => {
-                        setSearch(e.target.value);
-                    }}
                     placeholder="Search"
                     inputProps={{ 'aria-label': 'search ' }}
+                    inputRef={search}
                 />
                 <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
                     <SearchIcon />
                 </IconButton>
 
             </Paper>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}><SearchDiagResult /></Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{results.length !== 0 && results.map(item => <SearchDiagResult data={item} />)}
+                    {results.length === 0 && search.current.value.length === 0 && <h3>ENTER A SEARCH QUERY</h3>}
+                    {results.length === 0 && search.current.value.length !== 0 && <h3>NO RESULTS FOUND</h3>}
+                </Box>
             </Container>
         </>
     );
