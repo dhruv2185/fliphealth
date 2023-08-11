@@ -68,6 +68,27 @@ const DoctorLogin = () => {
         // add field for degree name
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, grnumber: grnumber.current.value, gender: gender, specialisation: specialisation.current.value };
 
+        // accessToken to be stored in the redux store
+        let accessToken;
+        const result = await generateOtp(data.aadhar, accessToken);
+        // error case
+        // if (result.message) {
+        //     enqueueSnackbar(result.message, { variant: "error" });
+        //     return;
+        // }
+        const refId = result.ref_id;
+
+        // otp to be taken from user make form/ modal field for that
+        let otp;
+        const veriOTP = await verifyOTP(refId, otp, accessToken);
+        // error case
+        // if (veriOTP.message) {
+        //     enqueueSnackbar(veriOTP.message, { variant: "error" });
+        //     return;
+        // }
+        const aadharDetails = veriOTP;
+        // note the format and create a new data object to be sent to the smart contract
+
         // const res = await registerDoctor(data, accounts[0]);
         const res = await registerDoctor(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
         console.log(res);
