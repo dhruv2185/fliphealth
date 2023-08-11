@@ -2,7 +2,7 @@ import { Container, CssBaseline, IconButton, InputBase, Paper, Box, Select, Form
 import React, { useRef, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchDiagResult from './SearchDiagResult';
-import { getAllDiagnostics, getDiagProfile } from '../../Utils/SmartContractUtils';
+import { getAllDiagnostics, getDiagnosticForPatient } from '../../Utils/SmartContractUtils';
 import { useSelector } from 'react-redux';
 
 const SearchDiag = () => {
@@ -14,7 +14,7 @@ const SearchDiag = () => {
         setSearchType(event.target.value);
     }
     const getByAddress = async (address) => {
-        const result = await getDiagProfile(address, accountAddress);
+        const result = await getDiagnosticForPatient(address, accountAddress);
         // const result = await getDiagProfile("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
         result.address = address;
         setResults([result]);
@@ -47,6 +47,17 @@ const SearchDiag = () => {
         // const res = await getAllDiagnostics();
         // console.log(res);
         // further logic to filter out the result using regex
+
+        // to filter out the already granted diagnostics
+
+        const fetchDiagnostics = async () => {
+            const res = await getDiagnosticForPatient('0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029')
+            // const res = await getDiagnosticForPatient('accountAddress')
+            // will return an array of objects and count of diagnostics sent
+            console.log(res);
+            // or add a setState function which will store the granted diagnostics
+            return res;
+        }
 
         // if search by address
         if (searchType === "name") {

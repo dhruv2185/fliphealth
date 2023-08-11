@@ -43,6 +43,10 @@ const registerDoctor = async (data, accountAddress) => {
         return result;
     } catch (err) {
         console.log(err);
+        const errObject = {
+            message: "Failed to register, Please check your balance or try another account"
+        }
+        return errObject;
     }
 }
 
@@ -63,6 +67,9 @@ const register_patient = async (data, accountAddress) => {
         return result;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to register, Please check your balance or try another account"
+        }
     }
 }
 
@@ -76,6 +83,10 @@ const deleteDocument = async (accountAddress, cid) => {
         return result;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to delete your document, Please check your balance or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -90,6 +101,9 @@ const getDoctorOwnProfile = async (accountAddress) => {
         return userData
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to fetch your profile, Please reload the page or try again later",
+        }
     }
 }
 
@@ -104,6 +118,10 @@ const getPatientsForADoctor = async (accountAddress) => {
         return result;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to fetch your patients, Please reload the page or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -117,6 +135,10 @@ const getAllDoctorsForAPatient = async (accountAddress) => {
         return grantedDoctors;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to fetch your doctors, Please reload the page or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -130,6 +152,10 @@ const getPatientOwnProfile = async (accountAddress) => {
         return userData;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to fetch your profile, Please reload the page or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -143,6 +169,10 @@ const grantAccessToDoctor = async (docAddress, accountAddress) => {
         return res;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to grant access, Please check your balance or try another account",
+        }
+        return errObject;
     }
 
 }
@@ -157,6 +187,10 @@ const searchDoctorByAddress = async (enteredAddress, accountAddress) => {
         return doctorProfile;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to fetch doctor profile, Please reload the page or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -170,6 +204,10 @@ const searchDoctorByName = async (accountAddress) => {
         return doctorProfile;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to fetch doctor profiles, Please reload the page or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -184,6 +222,10 @@ const uploadRecordByUser = async (data, accountAddress) => {
         return res;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to upload your document, Please check your balance or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -198,6 +240,10 @@ const revokeDoctorsAccess = async (docAddress, accountAddress) => {
         return res;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to revoke access, Please check your balance or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -211,6 +257,10 @@ const getRecordsOfUser = async (patientAddress, accountAddress) => {
         return res;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to fetch the documents, Please reload the page or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -226,6 +276,10 @@ const removeDoctorFromHospital = async (docAddress, accountAddress) => {
         return res;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to remove doctor, Please check your balance or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -239,6 +293,10 @@ const addDoctorToHospital = async (docAddress, accountAddress) => {
         return res;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to add doctor, Please check your balance or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -252,6 +310,10 @@ const getDoctorsOfHospital = async (accountAddress) => {
         return res;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to fetch doctors, Please reload the page or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -266,6 +328,10 @@ const getHospitalProfile = async (accountAddress) => {
         return res;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to fetch hospital profile, Please reload the page or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -279,6 +345,10 @@ const revokeAllAccessOfDoctor = async (docAddress, accountAddress) => {
         return res;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed revoke access, Please check your balance or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -297,6 +367,10 @@ const registerHospital = async (data, accountAddress) => {
         return res;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to register hospital, Please check your balance or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -316,6 +390,10 @@ const registerDiagnostic = async (data, accountAddress) => {
         return res;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to register diagnostic, Please check your balance or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -329,6 +407,10 @@ const getDiagnosticOfPatient = async (accountAddress) => {
         return res;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to fetch diagnostic profiles, Please reload the page or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -342,6 +424,10 @@ const getHealthRecordsOfPatient = async (accountAddress) => {
         return res;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to fetch health records, Please reload the page or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -356,6 +442,10 @@ const getAllDiagnostics = async (accountAddress) => {
         return res;
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to fetch diagnostics, Please reload the page or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -371,6 +461,10 @@ const getDiagProfile = async (address, accountAddress) => {
         return res;
     } catch (error) {
         console.log(error)
+        const errObject = {
+            message: "Failed to fetch diagnostic profile, Please reload the page or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -384,6 +478,10 @@ const getPatientsOfDiagnostic = async (accountAddress) => {
         return res
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to fetch patients, Please reload the page or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -397,6 +495,10 @@ const grantAccessToDiagnostic = async (address, accountAddress) => {
         return res
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to grant access, Please check your balance or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -410,6 +512,10 @@ const revokeAccessOfDiagnostic = async (address, accountAddress) => {
         return res
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to revoke access, Please check your balance and try again later",
+        }
+        return errObject;
     }
 }
 
@@ -424,6 +530,10 @@ const getDiagnosticForPatient = async (accountAddress) => {
         return res
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to fetch diagnostics, Please reload the page or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -439,6 +549,10 @@ const uploadRecordsByDiagnostic = async (data, accountAddress, patientAddress) =
         return res
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to upload records, Please check your balance or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -460,6 +574,10 @@ const registerClinic = async (data, accountAddress) => {
         return res
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to register clinic, Please check your balance or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -473,6 +591,10 @@ const enrollInClinicForDoctor = async (cliAddress, accountAddress) => {
         return res
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to enroll in clinic, Please check your balance or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -486,6 +608,10 @@ const getDoctorsOfClinic = async (accountAddress) => {
         return res
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to fetch doctor profiles, Please reload the page or try again later",
+        }
+        return errObject;
     }
 }
 
@@ -500,6 +626,10 @@ const getClinicProfile = async (cliAddress, accountAddress) => {
         return res
     } catch (error) {
         console.log(error);
+        const errObject = {
+            message: "Failed to fetch clinic profile, Please reload the page or try again later",
+        }
+        return errObject;
     }
 }
 

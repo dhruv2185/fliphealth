@@ -28,6 +28,15 @@ const SearchDoctor = () => {
         const res = await searchDoctorByName(
             accountAddress
         )
+
+        // to filter out the already granted doctors
+        // const fetchDoctors = async () => {
+        //     const res = await getAllDoctorsForAPatient('0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029')
+        //     // const res = await getAllDoctorsForAPatient('loggedInAddress')
+        //     setDoctors(res);
+        //     console.log(doctors);
+        // }
+
         // further regex logic
         setSearchResults(res);
     }

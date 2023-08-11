@@ -18,14 +18,10 @@ import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { doctorABI } from '../../abis/doctor.js'
 import { registerDoctor } from '../../Utils/SmartContractUtils';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-// const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
-// const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
-// // console.log(doctorABI, doctorAddress);
-// const doctorContract = new web3.eth.Contract(doctorABI, doctorAddress);
+// import { generateOtp, verifyOTP } from '../../Utils/AadhaarVerification';
 
 const DoctorLogin = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -67,6 +63,27 @@ const DoctorLogin = () => {
         event.preventDefault();
         // add field for degree name
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, grnumber: grnumber.current.value, gender: gender, specialisation: specialisation.current.value };
+
+        // accessToken to be stored in the redux store
+        // let accessToken;
+        // const result = await generateOtp(data.aadhar, accessToken);
+        // error case
+        // if (result.message) {
+        //     enqueueSnackbar(result.message, { variant: "error" });
+        //     return;
+        // }
+        // const refId = result.ref_id;
+
+        // otp to be taken from user make form/ modal field for that
+        // let otp;
+        // const veriOTP = await verifyOTP(refId, otp, accessToken);
+        // error case
+        // if (veriOTP.message) {
+        //     enqueueSnackbar(veriOTP.message, { variant: "error" });
+        //     return;
+        // }
+        // const aadharDetails = veriOTP;
+        // note the format and create a new data object to be sent to the smart contract
 
         // const res = await registerDoctor(data, accounts[0]);
         const res = await registerDoctor(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
