@@ -2,19 +2,19 @@ import { Container, CssBaseline, IconButton, InputBase, Paper, Box, Select, Form
 import React, { useRef, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchDiagResult from './SearchDiagResult';
-import { getAllDiagnostics, getDiagnosticForPatient } from '../../Utils/SmartContractUtils';
+import { getAllDiagnostics, getDiagnosticForPatient, getDiagProfile } from '../../Utils/SmartContractUtils';
 import { useSelector } from 'react-redux';
 
 const SearchDiag = () => {
     const accountAddress = useSelector(state => state.accountAddress);
-    const search = useRef();
+    const search = useRef("");
     const [searchType, setSearchType] = useState('name');
     const [results, setResults] = useState([]);
     const handleChange = (event) => {
         setSearchType(event.target.value);
     }
     const getByAddress = async (address) => {
-        const result = await getDiagnosticForPatient(address, accountAddress);
+        const result = await getDiagProfile(address, accountAddress);
         // const result = await getDiagProfile("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
         result.address = address;
         setResults([result]);
@@ -43,10 +43,7 @@ const SearchDiag = () => {
     }
     const searchHandler = (e) => {
         e.preventDefault();
-        // if search by name
-        // const res = await getAllDiagnostics();
-        // console.log(res);
-        // further logic to filter out the result using regex
+
 
         // to filter out the already granted diagnostics
 
@@ -59,10 +56,14 @@ const SearchDiag = () => {
             return res;
         }
 
-        // if search by address
+        // if search by name
+        // const res = await getAllDiagnostics();
+        // console.log(res);
+        // further logic to filter out the result using regex
         if (searchType === "name") {
             getByName(search.current.value);
         }
+        // if search by address
         if (searchType === "address") {
             getByAddress(search.current.value);
         }
@@ -96,9 +97,10 @@ const SearchDiag = () => {
                 </IconButton>
 
             </Paper>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{results.length !== 0 && results.map(item => <SearchDiagResult data={item} />)}
-                    {results.length === 0 && search.current.value.length === 0 && <h3>ENTER A SEARCH QUERY</h3>}
-                    {results.length === 0 && search.current.value.length !== 0 && <h3>NO RESULTS FOUND</h3>}
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>
+                    {results.length !== 0 && results.map(item => <SearchDiagResult data={item} />)}
+                    {results.length === 0 && search.current.value === '' && <h3>ENTER A SEARCH QUERY</h3>}
+                    {results.length === 0 && search.current.value !== '' && <h3>NO RESULTS FOUND</h3>}
                 </Box>
             </Container>
         </>

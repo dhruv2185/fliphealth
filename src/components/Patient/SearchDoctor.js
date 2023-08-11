@@ -2,23 +2,23 @@ import { Container, CssBaseline, IconButton, InputBase, Paper, Box, Select, Form
 import React, { useRef, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchDocResult from './SearchDocResult';
-import { searchDoctorByAddress, searchDoctorByName } from '../../Utils/SmartContractUtils';
+import { searchDoctorByAddress, searchDoctorByName, getAllDoctorsForAPatient } from '../../Utils/SmartContractUtils';
 import { useSelector } from 'react-redux';
 
 const SearchDoctor = () => {
     const accountAddress = useSelector(state => state.accountAddress);
-    const search = useRef();
+    const search = useRef("");
     const [searchType, setSearchType] = useState('name');
     const [searchResults, setSearchResults] = useState([]);
     const getByAddress = async (search) => {
         // const res = searchDoctorByAddress(
         // enteredAddress, loggedInAddress
         // )
-        const res = searchDoctorByAddress(
+        const res = await searchDoctorByAddress(
             search,
             accountAddress
         )
-        setSearchResults(res);
+        setSearchResults([res]);
     }
     const getByName = async (search) => {
         // const result = await searchDoctorByName(
@@ -28,7 +28,17 @@ const SearchDoctor = () => {
         const res = await searchDoctorByName(
             accountAddress
         )
+        const regex = new RegExp(search, "gi");
+        // const newres=res.map(item=>{if(typeof(item)==="Array"){
+        //     return {
+        //         name:item["name"],
+        //         degreeName:item["degreeName"],
+        //         abhaId:item["abhaId"],
+        //         aadharId:item["aadharId"],
+        //         age:item["age"],
 
+        //     }
+        // }})
         // to filter out the already granted doctors
         // const fetchDoctors = async () => {
         //     const res = await getAllDoctorsForAPatient('0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029')
@@ -44,11 +54,11 @@ const SearchDoctor = () => {
         e.preventDefault();
         // if by address
         if (searchType === "address") {
-            getByAddress(search.current.value);
+            getByAddress(search.current.valueOf);
         }
         // if by name
         if (searchType === "name") {
-            getByName(search.current.value);
+            getByName(search.current.valueOf);
         }
 
     }
@@ -84,8 +94,8 @@ const SearchDoctor = () => {
 
             </Paper>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{searchResults.length !== 0 && searchResults.map(item => <SearchDocResult data={item} />)}
-                    {searchResults.length === 0 && search.current.value.length === 0 && <h3>ENTER A SEARCH QUERY</h3>}
-                    {searchResults.length === 0 && search.current.value.length !== 0 && <h3>NO RESULTS FOUND</h3>}</Box>
+                    {searchResults.length === 0 && search.current.valueOf === "" && <h3>ENTER A SEARCH QUERY</h3>}
+                    {searchResults.length === 0 && search.current.valueOf !== "" && <h3>NO RESULTS FOUND</h3>}</Box>
             </Container>
         </>
     );

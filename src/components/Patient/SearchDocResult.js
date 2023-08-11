@@ -28,7 +28,7 @@ function SearchDocResult(props) {
                     <Avatar sx={{ bgcolor: "red", margin: "auto" }} aria-label="recipe">
                         {data.name[0]}
                     </Avatar>
-                    <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{data.name}</p><p style={{ color: "grey", lineHeight: "18px" }}>{data.degreeName} | GR : {data.grNum}</p></div>
+                    <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{data.name}</p><p style={{ color: "grey", lineHeight: "18px" }}>{data.degreeName} | GR : {Number(data.grNum)}</p></div>
                 </div>
                 <Button onClick={grantAccessOnPress} variant="contained" style={{ margin: "auto 15px" }}>Grant Access</Button>
             </Card>

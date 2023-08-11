@@ -12,16 +12,18 @@ const ManageAccess = () => {
     const [diagnostics, setDiagnostics] = useState([]);
     const [refresh, setRefresh] = useState(0);
     const fetchDoctors = async () => {
-        const res = await getAllDoctorsForAPatient('0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029')
+        const res = await getAllDoctorsForAPatient(accountAddress)
         // const res = await getAllDoctorsForAPatient('loggedInAddress')
-        setDoctors(res);
-        console.log(doctors);
+        const newres = res[0].filter(item => item.name !== "");
+        setDoctors(newres);
+        console.log(newres);
     }
     const fetchDiagnostics = async () => {
-        const res = await getDiagnosticForPatient('0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029')
+        const res = await getDiagnosticForPatient(accountAddress)
+        const newres = res[0].filter(item => item.phone !== 0);
         // const res = await getDiagnosticForPatient('accountAddress')
         // will return an array of objects and count of diagnostics sent
-        setDiagnostics(res);
+        setDiagnostics(newres);
         console.log(diagnostics);
     }
     useEffect(() => {

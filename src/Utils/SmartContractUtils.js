@@ -179,7 +179,7 @@ const grantAccessToDoctor = async (docAddress, accountAddress) => {
 
 const searchDoctorByAddress = async (enteredAddress, accountAddress) => {
     try {
-        const res = await doctorContract.methods.getDocProfile(enteredAddress).call({
+        const res = await doctorContract.methods.getDocOwnProfile(enteredAddress).call({
             from: accountAddress
         });
         const doctorProfile = res;
@@ -521,7 +521,7 @@ const revokeAccessOfDiagnostic = async (address, accountAddress) => {
 
 const getDiagnosticForPatient = async (accountAddress) => {
     try {
-        const res = await diagContract.methods.getDiagnosticForUser().call({
+        const res = await diagContract.methods.getDiagnosticsForUser().call({
             from: accountAddress,
             gas: 3000000
         });
