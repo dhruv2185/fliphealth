@@ -26,10 +26,8 @@ const HospitalLogin = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
     const name = useRef();
-
     const email = useRef();
     const phone = useRef();
-
     const license = useRef();
     const [accounts, setAccounts] = useState([]);
     useEffect(() => {

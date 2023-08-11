@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Web3 from 'web3';
@@ -22,7 +21,7 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { register_patient } from '../../Utils/SmartContractUtils';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { generateOtp, verifyOTP } from '../../Utils/AadharVerification';
+// import { generateOtp, verifyOTP } from '../../Utils/AadhaarVerification';
 
 const PatientLogin = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -47,6 +46,7 @@ const PatientLogin = () => {
                 .request({ method: "eth_requestAccounts" })
                 .then((res) => {
                     setAccounts(res);
+                    console.log(accounts);
                     setIsLoading(false)
                 }).catch(err => {
                     enqueueSnackbar("Please Log in to Metamask to Proceed!", { variant: "error" });
@@ -62,26 +62,25 @@ const PatientLogin = () => {
         event.preventDefault();
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
 
-
         // accessToken to be stored in the redux store
-        let accessToken;
-        const result = await generateOtp(data.aadhar, accessToken);
+        // let accessToken;
+        // const result = await generateOtp(data.aadhar, accessToken);
         // error case
         // if (result.message) {
         //     enqueueSnackbar(result.message, { variant: "error" });
         //     return;
         // }
-        const refId = result.ref_id;
+        // const refId = result.ref_id;
 
         // otp to be taken from user make form/ modal field for that
-        let otp;
-        const veriOTP = await verifyOTP(refId, otp, accessToken);
+        // let otp;
+        // const veriOTP = await verifyOTP(refId, otp, accessToken);
         // error case
         // if (veriOTP.message) {
         //     enqueueSnackbar(veriOTP.message, { variant: "error" });
         //     return;
         // }
-        const aadharDetails = veriOTP;
+        // const aadharDetails = veriOTP;
         // note the format and create a new data object to be sent to the smart contract
 
         const res = await register_patient(data, accounts[0]);
