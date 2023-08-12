@@ -23,7 +23,7 @@ function App() {
   const dispatch = useDispatch();
   dispatch({
     type: "UPDATE", payload: {
-      accountAddress: "0x7fB1b8dC61388dC7E6C146aD059304641F27c6Bf", accountType: "PATIENT", authenticated: true, profile: {
+      accountAddress: "0xB2dA6D158BDf85066BFE5b3E3C170d4DBa8C3000", accountType: "CLINIC", authenticated: true, profile: {
         name: "omkar Wadu", age: "18", abhaId: 867, aadharId: 7858, gender: "male", mobile: "342424", email: "omkar@hotmail.com"
       }
     }

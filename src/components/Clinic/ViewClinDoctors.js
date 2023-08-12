@@ -2,16 +2,21 @@ import { Box, Container, CssBaseline } from '@mui/material';
 import React, { useState } from 'react';
 import ClinDocBox from './ClinDocBox';
 import { getDoctorsOfClinic } from '../../Utils/SmartContractUtils';
+import { useSelector } from 'react-redux';
 
 const ViewClinDoctors = () => {
 
     const [doctors, setDoctors] = useState([]);
+    const accountAddress = useSelector(state => state.accountAddress);
 
-    const fetchDoctors = async () => {
+    const fetchDoctors = async (acctAdd) => {
         // const res = await getDoctorsOfClinic( accountAddress);
-        const res = await getDoctorsOfClinic('0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
+        const res = await getDoctorsOfClinic(acctAdd);
         setDoctors(res);
     }
+    useState(() => {
+        fetchDoctors(accountAddress);
+    }, [accountAddress,]);
 
     return (
         <>

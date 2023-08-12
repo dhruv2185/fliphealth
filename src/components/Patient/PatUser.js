@@ -14,7 +14,6 @@ const PatUser = () => {
         fetchProfile();
     }, [accountAddress]);
     const fetchProfile = async () => {
-
         const res = await getPatientOwnProfile(accountAddress);
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
@@ -23,11 +22,8 @@ const PatUser = () => {
             setProfile(res);
         }
         setIsLoading(false);
-        // const res = getPatientOwnProfile(patientAddress/loggedInAddress);
-
-        console.log(profile);
+        console.log(res);
     }
-    // fetchProfile();
 
     return (
         <>

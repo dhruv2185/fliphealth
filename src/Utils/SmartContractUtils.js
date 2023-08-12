@@ -1,12 +1,10 @@
 import Web3 from 'web3';
-// import { doctorABI } from '../abis/doctor'
 import { hospitalABI } from '../abis/hospital'
-// import { diagABI } from '../abis/diagnostic'
-// import { clinicABI } from '../abis/clinic'
 console.log(hospitalABI);
 const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
 console.log(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
 const hospitalAddress = process.env.REACT_APP_HOSPITAL_CONTRACT_ADDRESS
+console.log(hospitalAddress);
 const doctorContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
 const hospitalContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
 const diagContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
@@ -42,6 +40,7 @@ const registerDoctor = async (data, accountAddress) => {
 const register_patient = async (data, accountAddress) => {
     try {
         console.log("registering");
+        console.log(accountAddress);
         const result = await doctorContract.methods.register_patient(
             data.name,
             data.age,
@@ -139,7 +138,7 @@ const getPatientOwnProfile = async (accountAddress) => {
             from: accountAddress
         })
         const userData = result;
-        console.log(userData);
+        console.log(result);
         return userData;
     } catch (error) {
         console.log(error);
