@@ -94,7 +94,7 @@ contract patient {
 
     function DocProfileReturn(
         address _doctor
-    ) internal view returns (DocProfile memory) {
+    ) public view returns (DocProfile memory) {
         Doctor memory curr = doctorIndex[_doctor];
         DocProfile memory docprof = DocProfile(
             curr.name,

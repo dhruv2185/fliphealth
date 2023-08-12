@@ -6,21 +6,14 @@ import { hospitalABI } from '../abis/hospital'
 console.log(hospitalABI);
 const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
 console.log(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
-const doctorAddress = process.env.REACT_APP_DOCTOR_CONTRACT_ADDRESS;
-console.log(doctorAddress);
-const hospitalAddress = process.env.REACT_APP_HOSPITAL_CONTRACT_ADDRESS;
-console.log(hospitalAddress);
-const clinicAddress = process.env.REACT_APP_CLINIC_CONTRACT_ADDRESS
-console.log(clinicAddress);
-const diagAddress = process.env.REACT_APP_DIAGNOSTIC_CONTRACT_ADDRESS;
-console.log(diagAddress);
-const doctorContract = new web3.eth.Contract(hospitalABI, "0x553E7bb3C0411A88A0CfFcB1D07Df86a0118AaC2");
+const hospitalAddress = process.env.REACT_APP_HOSPITAL_CONTRACT_ADDRESS
+const doctorContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
 // const doctorContract = new web3.eth.Contract(hospitalABI, doctorAddress);
-const hospitalContract = new web3.eth.Contract(hospitalABI, "0x553E7bb3C0411A88A0CfFcB1D07Df86a0118AaC2");
+const hospitalContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
 // const hospitalContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
-const diagContract = new web3.eth.Contract(hospitalABI, "0x553E7bb3C0411A88A0CfFcB1D07Df86a0118AaC2");
+const diagContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
 // const diagContract = new web3.eth.Contract(hospitalABI, diagAddress);
-const clinicContract = new web3.eth.Contract(hospitalABI, "0x553E7bb3C0411A88A0CfFcB1D07Df86a0118AaC2");
+const clinicContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
 // const clinicContract = new web3.eth.Contract(hospitalABI, clinicAddress);
 // let doctorContract, diagContract, hospitalContract, clinicContract;
 
@@ -179,7 +172,7 @@ const grantAccessToDoctor = async (docAddress, accountAddress) => {
 
 const searchDoctorByAddress = async (enteredAddress, accountAddress) => {
     try {
-        const res = await doctorContract.methods.getDocOwnProfile(enteredAddress).call({
+        const res = await doctorContract.methods.DocProfileReturn(enteredAddress).call({
             from: accountAddress
         });
         const doctorProfile = res;

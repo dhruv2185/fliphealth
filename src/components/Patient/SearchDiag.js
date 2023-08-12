@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import SearchDiagResult from './SearchDiagResult';
 import { getAllDiagnostics, getDiagnosticForPatient, getDiagProfile } from '../../Utils/SmartContractUtils';
 import { useSelector } from 'react-redux';
+import { enqueueSnackbar } from 'notistack';
 
 const SearchDiag = () => {
     const accountAddress = useSelector(state => state.accountAddress);
@@ -15,9 +16,15 @@ const SearchDiag = () => {
     }
     const getByAddress = async (address) => {
         const result = await getDiagProfile(address, accountAddress);
+        if (result.message) {
+            enqueueSnackbar(result.message, { variant: "error" })
+        }
+        else {
+            result.address = address;
+            setResults([result]);
+        }
         // const result = await getDiagProfile("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
-        result.address = address;
-        setResults([result]);
+
 
     }
     const getByName = async (name) => {

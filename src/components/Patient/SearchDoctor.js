@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import SearchDocResult from './SearchDocResult';
 import { searchDoctorByAddress, searchDoctorByName, getAllDoctorsForAPatient } from '../../Utils/SmartContractUtils';
 import { useSelector } from 'react-redux';
+import { enqueueSnackbar } from 'notistack';
 
 const SearchDoctor = () => {
     const accountAddress = useSelector(state => state.accountAddress);
@@ -18,7 +19,13 @@ const SearchDoctor = () => {
             search,
             accountAddress
         )
-        setSearchResults([res]);
+        if (res.message) {
+            enqueueSnackbar(res.message, { variant: "error" });
+        }
+        else {
+            setSearchResults([res]);
+        }
+
     }
     const getByName = async (search) => {
         // const result = await searchDoctorByName(
@@ -29,16 +36,20 @@ const SearchDoctor = () => {
             accountAddress
         )
         const regex = new RegExp(search, "gi");
-        // const newres=res.map(item=>{if(typeof(item)==="Array"){
-        //     return {
-        //         name:item["name"],
-        //         degreeName:item["degreeName"],
-        //         abhaId:item["abhaId"],
-        //         aadharId:item["aadharId"],
-        //         age:item["age"],
+        const newres = res.map(item => {
 
-        //     }
-        // }})
+            return {
+                name: item["name"],
+                degreeName: item["degreeName"],
+                age: item["age"],
+                grNum: item["grNum"],
+                address: item["myAdd"]
+            }
+
+        })
+        const result = newres.filter(
+            item => (search !== "" && regex.test(item["name"]))
+        )
         // to filter out the already granted doctors
         // const fetchDoctors = async () => {
         //     const res = await getAllDoctorsForAPatient('0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029')
@@ -48,17 +59,19 @@ const SearchDoctor = () => {
         // }
 
         // further regex logic
-        setSearchResults(res);
+
+        setSearchResults(result);
+
     }
     const searchHandler = (e) => {
         e.preventDefault();
         // if by address
         if (searchType === "address") {
-            getByAddress(search.current.valueOf);
+            getByAddress(search.current.value);
         }
         // if by name
         if (searchType === "name") {
-            getByName(search.current.valueOf);
+            getByName(search.current.value);
         }
 
     }
@@ -94,8 +107,8 @@ const SearchDoctor = () => {
 
             </Paper>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{searchResults.length !== 0 && searchResults.map(item => <SearchDocResult data={item} />)}
-                    {searchResults.length === 0 && search.current.valueOf === "" && <h3>ENTER A SEARCH QUERY</h3>}
-                    {searchResults.length === 0 && search.current.valueOf !== "" && <h3>NO RESULTS FOUND</h3>}</Box>
+                    {searchResults.length === 0 && search.current.value === "" && <h3>ENTER A SEARCH QUERY</h3>}
+                    {searchResults.length === 0 && search.current.value !== "" && <h3>NO RESULTS FOUND</h3>}</Box>
             </Container>
         </>
     );

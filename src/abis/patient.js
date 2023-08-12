@@ -2,6 +2,40 @@ export const patientABI = [
     {
         "inputs": [
             {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "DiagnosticIndex",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "Diagname",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "email",
+                "type": "string"
+            },
+            {
+                "internalType": "uint128",
+                "name": "phone",
+                "type": "uint128"
+            },
+            {
+                "internalType": "string",
+                "name": "license",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
                 "internalType": "string",
                 "name": "_org",
                 "type": "string"
@@ -13,12 +47,12 @@ export const patientABI = [
             },
             {
                 "internalType": "string",
-                "name": "_docName",
+                "name": "_doctorName",
                 "type": "string"
             },
             {
                 "internalType": "string",
-                "name": "_name",
+                "name": "_documentName",
                 "type": "string"
             },
             {
@@ -45,12 +79,88 @@ export const patientABI = [
     {
         "inputs": [
             {
+                "internalType": "string",
+                "name": "_cid",
+                "type": "string"
+            }
+        ],
+        "name": "deleteRecord",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getPatientOwnProfile",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "uint128",
+                        "name": "abhaId",
+                        "type": "uint128"
+                    },
+                    {
+                        "internalType": "uint128",
+                        "name": "aadharId",
+                        "type": "uint128"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint16",
+                        "name": "age",
+                        "type": "uint16"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "gender",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint128",
+                        "name": "mobile",
+                        "type": "uint128"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "email",
+                        "type": "string"
+                    }
+                ],
+                "internalType": "struct patient.Patient",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
                 "internalType": "address",
                 "name": "_doctorAddress",
                 "type": "address"
             }
         ],
         "name": "grantAccess",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_diagnosticAddress",
+                "type": "address"
+            }
+        ],
+        "name": "grantAccessToDiagnostic",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -109,211 +219,6 @@ export const patientABI = [
         "name": "revokeAccess",
         "outputs": [],
         "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "name": "accessList",
-        "outputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "name": "doctorIndex",
-        "outputs": [
-            {
-                "internalType": "uint128",
-                "name": "abhaId",
-                "type": "uint128"
-            },
-            {
-                "internalType": "uint128",
-                "name": "aadharId",
-                "type": "uint128"
-            },
-            {
-                "internalType": "string",
-                "name": "name",
-                "type": "string"
-            },
-            {
-                "internalType": "uint16",
-                "name": "age",
-                "type": "uint16"
-            },
-            {
-                "internalType": "uint64",
-                "name": "grNum",
-                "type": "uint64"
-            },
-            {
-                "internalType": "uint64",
-                "name": "mobile",
-                "type": "uint64"
-            },
-            {
-                "internalType": "string",
-                "name": "email",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_doctor",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "_user",
-                "type": "address"
-            }
-        ],
-        "name": "getPatientIndex",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "name": "patientIndex",
-        "outputs": [
-            {
-                "internalType": "uint128",
-                "name": "abhaId",
-                "type": "uint128"
-            },
-            {
-                "internalType": "uint128",
-                "name": "aadharId",
-                "type": "uint128"
-            },
-            {
-                "internalType": "string",
-                "name": "name",
-                "type": "string"
-            },
-            {
-                "internalType": "uint16",
-                "name": "age",
-                "type": "uint16"
-            },
-            {
-                "internalType": "string",
-                "name": "gender",
-                "type": "string"
-            },
-            {
-                "internalType": "uint64",
-                "name": "mobile",
-                "type": "uint64"
-            },
-            {
-                "internalType": "string",
-                "name": "email",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "name": "userRecords",
-        "outputs": [
-            {
-                "internalType": "string",
-                "name": "organisation",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "date",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "doctorName",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "documentName",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "documentPath",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "documentCid",
-                "type": "string"
-            },
-            {
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "documentType",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "view",
         "type": "function"
     }
 ]
