@@ -1070,4 +1070,4 @@ export const hospitalABI = [
         "stateMutability": "view",
         "type": "function"
     }
-];
+]

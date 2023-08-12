@@ -14,13 +14,13 @@ const clinicAddress = process.env.REACT_APP_CLINIC_CONTRACT_ADDRESS
 console.log(clinicAddress);
 const diagAddress = process.env.REACT_APP_DIAGNOSTIC_CONTRACT_ADDRESS;
 console.log(diagAddress);
-const doctorContract = new web3.eth.Contract(hospitalABI, "0x763775eA648AA5CeA996c3b48e1c62EB371192c5");
+const doctorContract = new web3.eth.Contract(hospitalABI, "0x553E7bb3C0411A88A0CfFcB1D07Df86a0118AaC2");
 // const doctorContract = new web3.eth.Contract(hospitalABI, doctorAddress);
-const hospitalContract = new web3.eth.Contract(hospitalABI, "0x763775eA648AA5CeA996c3b48e1c62EB371192c5");
+const hospitalContract = new web3.eth.Contract(hospitalABI, "0x553E7bb3C0411A88A0CfFcB1D07Df86a0118AaC2");
 // const hospitalContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
-const diagContract = new web3.eth.Contract(hospitalABI, "0x763775eA648AA5CeA996c3b48e1c62EB371192c5");
+const diagContract = new web3.eth.Contract(hospitalABI, "0x553E7bb3C0411A88A0CfFcB1D07Df86a0118AaC2");
 // const diagContract = new web3.eth.Contract(hospitalABI, diagAddress);
-const clinicContract = new web3.eth.Contract(hospitalABI, "0x763775eA648AA5CeA996c3b48e1c62EB371192c5");
+const clinicContract = new web3.eth.Contract(hospitalABI, "0x553E7bb3C0411A88A0CfFcB1D07Df86a0118AaC2");
 // const clinicContract = new web3.eth.Contract(hospitalABI, clinicAddress);
 // let doctorContract, diagContract, hospitalContract, clinicContract;
 
