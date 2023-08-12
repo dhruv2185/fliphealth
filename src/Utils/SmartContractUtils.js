@@ -8,14 +8,10 @@ const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
 console.log(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
 const hospitalAddress = process.env.REACT_APP_HOSPITAL_CONTRACT_ADDRESS
 const doctorContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
-// const doctorContract = new web3.eth.Contract(hospitalABI, doctorAddress);
 const hospitalContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
-// const hospitalContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
 const diagContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
-// const diagContract = new web3.eth.Contract(hospitalABI, diagAddress);
 const clinicContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
-// const clinicContract = new web3.eth.Contract(hospitalABI, clinicAddress);
-// let doctorContract, diagContract, hospitalContract, clinicContract;
+
 
 const registerDoctor = async (data, accountAddress) => {
     try {
@@ -63,6 +59,7 @@ const register_patient = async (data, accountAddress) => {
         const errObject = {
             message: "Failed to register, Please check your balance or try another account"
         }
+        return errObject;
     }
 }
 
@@ -97,6 +94,7 @@ const getDoctorOwnProfile = async (accountAddress) => {
         const errObject = {
             message: "Failed to fetch your profile, Please reload the page or try again later",
         }
+        return errObject;
     }
 }
 
