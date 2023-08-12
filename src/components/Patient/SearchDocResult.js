@@ -9,15 +9,20 @@ function SearchDocResult(props) {
     const data = props.data;
     const grantAccessOnPress = async () => {
         const res = await grantAccessToDoctor(
-            data.address,
+            data.myAdd,
             accountAddress
         )
-        enqueueSnackbar("Access GRANTED to Doctor!", { variant: "success" });
+        if (res.message) {
+            enqueueSnackbar(res.message, { variant: "error" });
+        }
+        else {
+            enqueueSnackbar("Access GRANTED to Doctor!", { variant: "success" });
+        }
+
         // const res = await grantAccessToDoctor(
         //     doctorAddress,
         //     loggedInAddress
         // )
-        console.log(res);
     }
     // grantAccessOnPress();
 

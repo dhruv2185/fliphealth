@@ -206,8 +206,9 @@ const searchDoctorByName = async (accountAddress) => {
 
 const uploadRecordByUser = async (data, accountAddress) => {
     try {
+        console.log((data.docType));
         const res = await doctorContract.methods.addRecordByUser(
-            data.org, String(data.date), String(data.doctorname), String(data.documentName), String(data.path), String(data.cid), accountAddress, String(data.docType)).send({
+            data.org, String(data.date), String(data.doctorname), String(data.documentName), String(data.path), String(data.cid), data.docType).send({
                 from: accountAddress,
                 gas: 3000000
             });

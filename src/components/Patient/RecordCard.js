@@ -19,7 +19,7 @@ const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
 
 const RecordCard = (props) => {
     const accountAddress = useSelector(state => state.accountAddress);
-    const { refresh, setRefresh, cid } = props;
+    const { refresh, setRefresh, data } = props;
     const ipfs = ipfsHttpClient({
         url: "https://ipfs.infura.io:5001",
         headers: {
@@ -38,9 +38,9 @@ const RecordCard = (props) => {
     }
 
     const handleRemove = async () => {
-        const res = await unpinFromInfura(cid);
+        const res = await unpinFromInfura(data.cid);
         // account address is hardcoded for now
-        const result = await removeDocFromBlock(cid);
+        const result = await removeDocFromBlock(data.cid);
         setRefresh(!refresh);
     }
 
@@ -49,17 +49,23 @@ const RecordCard = (props) => {
             <Card sx={{ maxWidth: 400, minWidth: 190 }}>
                 <CardMedia
                     component="img"
-                    alt="green iguana"
+                    alt="No image Found"
                     height="180"
-                    image={props.type === "pdf" ? pdf : image}
+                    image={pdf}
                     sx={{ marginTop: "8px" }}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        Heart.pdf
+                        {data.documentName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        Report
+                        {data.documentType}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        {data.organisation}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        {Date(data.date)}
                     </Typography>
                 </CardContent>
                 <CardActions sx={{ display: "flex", justifyContent: "center" }}>

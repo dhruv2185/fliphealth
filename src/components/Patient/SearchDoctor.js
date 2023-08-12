@@ -43,7 +43,7 @@ const SearchDoctor = () => {
                 degreeName: item["degreeName"],
                 age: item["age"],
                 grNum: item["grNum"],
-                address: item["myAdd"]
+                myAdd: item["myAdd"]
             }
 
         })
