@@ -46,12 +46,12 @@ contract doctor is patient {
         return userRecords[patAddress];
     }
 
-    function getAllDoctors() external view returns (Doctor[] memory) {
+    function getAllDoctors() external view returns (DocProfile[] memory) {
         uint256 numDoctors = doctors.length;
-        Doctor[] memory allDoctors = new Doctor[](numDoctors);
+        DocProfile[] memory allDoctors = new DocProfile[](numDoctors);
         for (uint256 i = 0; i < numDoctors; i++) {
             address doctorAddress = doctors[i];
-            allDoctors[i] = doctorIndex[doctorAddress];
+            allDoctors[i] = DocProfileReturn(doctorAddress);
         }
         return allDoctors;
     }
