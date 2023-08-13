@@ -77,14 +77,11 @@ const UploadRecords = () => {
                     setDocType('');
                     setFile(null);
                 }
-
                 setIsLoading(false);
-
             } catch (err) {
                 enqueueSnackbar("Failed to upload record", { variant: "error" });
                 setIsLoading(false);
             }
-
         }
     }
 
