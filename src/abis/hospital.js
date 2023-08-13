@@ -82,6 +82,13 @@ export const hospitalABI = [
         "type": "function"
     },
     {
+        "inputs": [],
+        "name": "exitFromClinic",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
         "inputs": [
             {
                 "internalType": "address",
