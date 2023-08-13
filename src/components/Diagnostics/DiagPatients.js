@@ -1,22 +1,51 @@
 import { Box, Container, CssBaseline } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import DiagPatientBox from './DiagPatientBox';
 import { getPatientsOfDiagnostic } from '../../Utils/SmartContractUtils';
+import { useSelector } from 'react-redux';
+import { enqueueSnackbar } from 'notistack';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const DiagPatients = () => {
 
-    const [patients, setPatients] = React.useState([]);
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [patients, setPatients] = React.useState(null);
+    const accountAddress = useSelector(state => state.accountAddress);
 
     const getPatients = async (accountAddress) => {
-        // const res = await getPatientsOfDiagnostic("accountAddress");
-        const res = await getPatientsOfDiagnostic("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
+        const res = await getPatientsOfDiagnostic(accountAddress);
+        if (res.message) {
+            enqueueSnackbar(res.message, { variant: "error" });
+        }
+        else {
+            setPatients(res);
+        }
+        setIsLoading(false);
         console.log(res);
-        setPatients(res);
     }
+
+    useEffect(() => {
+        getPatients(accountAddress);
+    }, [accountAddress]);
 
     return (
         <>
-            <Container component="main" maxWidth="s" minWidth="xs"><CssBaseline /><Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}><DiagPatientBox /></Box></Container>
+            <Container component="main" maxWidth="s" minWidth="xs"><CssBaseline />
+                <Backdrop
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={isLoading}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>
+                    {patients && patients.map((patient, index) => {
+                        return <DiagPatientBox key={index} patient={patient} />
+                    })
+                    }
+                    {patients && patients.length === 0 && <p>No Patients Found</p>}
+                </Box>
+            </Container>
         </>
     );
 }

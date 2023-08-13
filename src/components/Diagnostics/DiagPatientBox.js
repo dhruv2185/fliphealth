@@ -1,14 +1,20 @@
-import { Avatar, Button, Card } from '@mui/material'
+import { Avatar, Button, Card, IconButton } from '@mui/material'
 import React, { useState } from 'react'
 import DiagViewDocs from './DiagViewDocs';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { enqueueSnackbar } from 'notistack';
 
-const DiagPatientBox = () => {
+const DiagPatientBox = (props) => {
+    const { patient } = props;
     const [open, setOpen] = useState(false);
     const openRecords = () => {
         setOpen(true);
     }
-
-
+    const address = patient.myAdd;
+    const handleClick = async () => {
+        await navigator.clipboard.writeText((address.toString()));
+        enqueueSnackbar("Address Copied to Clipboard", { variant: "success" });
+    }
 
     return (
         <>
@@ -17,11 +23,16 @@ const DiagPatientBox = () => {
                     <Avatar sx={{ bgcolor: "red", margin: "auto" }} aria-label="recipe">
                         R
                     </Avatar>
-                    <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >Kishun Patil</p><p style={{ color: "grey", lineHeight: "18px" }}>Male | Age : 69 yrs</p></div>
+                    <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{patient.name}</p><p style={{ color: "grey", lineHeight: "18px" }}>{patient.gender} | Age : {patient.age} yrs</p></div>
                 </div>
-                <div style={{ margin: "auto 15px" }}><Button onClick={openRecords} variant="contained" style={{ margin: "auto 10px" }}>VIEW RECORDS</Button><Button variant="outlined" style={{ margin: "auto 10px" }}>COPY ADDRESS</Button></div>
-
-            </Card><DiagViewDocs open={open} setOpen={setOpen} />
+                <div style={{ margin: "auto 15px" }}>
+                    <IconButton onClick={handleClick} >
+                        <ContentCopyIcon />
+                    </IconButton>
+                    <Button onClick={openRecords} variant="contained" style={{ margin: "auto 10px" }}>VIEW RECORDS</Button>
+                </div>
+            </Card>
+            <DiagViewDocs open={open} setOpen={setOpen} patientAddress={patient.myAdd} />
         </>
     );
 }

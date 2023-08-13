@@ -1,11 +1,21 @@
 import React from 'react';
 import { Avatar, Button, Card } from '@mui/material'
-const DoctorBox = () => {
+import { useSelector } from 'react-redux';
+import { enqueueSnackbar } from 'notistack';
+const DoctorBox = (props) => {
+
+    // const { data } = props;
+    // const accountAddress = useSelector(state => state.accountAddress);
+    // const doctorAddress = data.myAdd;
 
     const handleAdd = async () => {
-        // const res = await addDoctorToHospital("doctorAddress", "accountAddress");
-        // const res = await addDoctorToHospital("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
-        // console.log(res);
+        // const res = await addDoctorToHospital(doctorAddress, accountAddress);
+        // if (res.message) {
+        //     enqueueSnackbar(res.message, { variant: "error" });
+        // }
+        // else {
+        //     enqueueSnackbar("Doctor Added Successfully", { variant: "success" });
+        // }
     }
 
     return (

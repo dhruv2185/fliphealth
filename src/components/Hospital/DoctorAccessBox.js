@@ -22,11 +22,15 @@ const DoctorAccessBox = (props) => {
     const handleRevoke = async () => {
         setIsLoading(true);
         const res = await revokeAllAccessOfDoctor(data.myAdd, accountAddress);
+        const result = await removeDoctorFromHospital(data.myAdd, accountAddress);
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
         }
+        else if (result.message) {
+            enqueueSnackbar(result.message, { variant: "error" });
+        }
         else {
-            enqueueSnackbar("Doctor Access Revoked Successfully", { variant: "success" });
+            enqueueSnackbar("Doctor Accesses Revoked and Removed Doctor Successfully", { variant: "success" });
         }
         setRefresh(!refresh);
         setIsLoading(false);

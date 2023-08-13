@@ -42,7 +42,6 @@ const SearchDoctor = () => {
         }
         else {
             const newres = (res.filter(item => item.myAdd !== "0x0000000000000000000000000000000000000000")).map(item => {
-
                 return {
                     name: item["name"],
                     degreeName: item["degreeName"],
