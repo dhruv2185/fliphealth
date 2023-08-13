@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, CssBaseline, IconButton, Modal } from '@mui/material';
 import Box from '@mui/material/Box';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@emotion/react';
-
 import CloseIcon from '@mui/icons-material/Close';
-import { useSelector, useDispatch } from 'react-redux';
-import RecordCard from '../Patient/RecordCard';
-import { getHealthRecordsOfPatient } from '../../Utils/SmartContractUtils';
 
+import { getHealthRecordsOfPatient } from '../../Utils/SmartContractUtils';
+import { enqueueSnackbar } from 'notistack';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useSelector } from 'react-redux';
+import DiagRecordCard from './DiagRecordCard';
 const DiagViewDocs = (props) => {
-    const { open, setOpen } = props;
+    const accountAddress = useSelector(state => state.accountAddress);
+    const [isLoading, setIsLoading] = useState(false);
+    const { open, setOpen, patientAddress } = props;
     const handleClose = (event, reason) => {
         if (reason === "backdropClick") {
             return;
@@ -42,12 +46,25 @@ const DiagViewDocs = (props) => {
     };
 
     const [records, setRecords] = useState([]);
-    const getRecords = async (accountAddress) => {
-        // const res = await getHealthRecordsOfPatient("accountAddress");
-        const res = await getHealthRecordsOfPatient("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
-        console.log(res);
-        setRecords(res);
-    }
+
+    useEffect(() => {
+        const getRecords = async () => {
+            // const res = await getHealthRecordsOfPatient("accountAddress");
+            setIsLoading(true);
+            // console.log(patientAddress)
+            const res = await getHealthRecordsOfPatient(patientAddress, accountAddress);
+            if (res.message) {
+                enqueueSnackbar(res.message, { variant: "error" });
+            }
+            else {
+                setRecords(res);
+                console.log(res);
+            }
+            setIsLoading(false);
+
+        }
+        getRecords();
+    }, [patientAddress, accountAddress]);
 
     return (
         <>
@@ -66,27 +83,20 @@ const DiagViewDocs = (props) => {
                 >
                     <CloseIcon />
                 </IconButton>
-                    <h2 id="parent-modal-title">Kishun Patil's Records</h2>
+                    <Backdrop
+                        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                        open={isLoading}
+                    >
+                        <CircularProgress color="inherit" />
+                    </Backdrop>
+                    <h2 id="parent-modal-title">Patient Records</h2>
                     <p id="parent-modal-description">
                         Here, you can access Patient's Records.
                     </p><Container component="main" maxWidth="s" minWidth="xs"><CssBaseline /><div style={{ display: "flex", gap: "30px", flexWrap: "wrap", justifyContent: "center" }} >
-                        <RecordCard type="img" />
-                        <RecordCard type="img" />
-                        <RecordCard type="img" />
-                        <RecordCard type="img" />
-                        <RecordCard type="img" />
-                        <RecordCard type="img" />
-                        <RecordCard type="pdf" />
-                        <RecordCard type="pdf" />
-                        <RecordCard type="pdf" />
-                        <RecordCard type="pdf" />
-                        <RecordCard type="pdf" />
-                        <RecordCard type="pdf" />
-                        <RecordCard type="pdf" />
-                        <RecordCard type="pdf" />
-                        <RecordCard type="pdf" />
-                        <RecordCard type="pdf" />
-                        <RecordCard type="pdf" />
+                        {records.length === 0 && <div style={{ height: "70vh", }}><h4 style={{ margin: "30vh 30vw" }}>No Records Found</h4></div>}
+                        {records.length !== 0 && records.map((record, index) => {
+                            return <DiagRecordCard key={index} data={record} />
+                        })}
                     </div></Container></Box></Modal>
         </>
     );

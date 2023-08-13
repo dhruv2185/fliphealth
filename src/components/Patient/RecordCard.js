@@ -3,7 +3,6 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -32,12 +31,12 @@ const RecordCard = (props) => {
     });
 
     const unpinFromInfura = async (hash) => {
-        const res = await ipfs.pin.rm(hash);
+        await ipfs.pin.rm(hash);
         // console.log(res);
     }
 
     const removeDocFromBlock = async (hash) => {
-        const res = await deleteDocument(accountAddress, hash)
+        await deleteDocument(accountAddress, hash)
         // console.log(res);
     }
 
@@ -46,8 +45,8 @@ const RecordCard = (props) => {
         try {
             // console.log(data.documentPath);
 
-            // const res = await unpinFromInfura(data.documentPath);
-            const result = await removeDocFromBlock(data.documentCid);
+            await unpinFromInfura(data.documentPath);
+            await removeDocFromBlock(data.documentCid);
 
 
 
@@ -68,7 +67,7 @@ const RecordCard = (props) => {
             >
                 <CircularProgress color="inherit" />
             </Backdrop>
-            <Card sx={{ maxWidth: 400, minWidth: 190 }}>
+            <Card sx={{ maxWidth: 400, width: 200 }}>
                 <CardMedia
                     component="img"
                     alt="No image Found"
@@ -91,7 +90,7 @@ const RecordCard = (props) => {
                     </Typography>
                 </CardContent>
                 <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-                    <a href={`https://skywalker.infura-ipfs.io/ipfs/${data.documentPath}`} target='_blank'><IconButton><VisibilityIcon /></IconButton></a>
+                    <a href={`https://skywalker.infura-ipfs.io/ipfs/${data.documentPath}`} target='_blank' rel='noreferrer'><IconButton><VisibilityIcon /></IconButton></a>
                     <IconButton onClick={handleRemove}><DeleteIcon /></IconButton>
                 </CardActions>
             </Card>

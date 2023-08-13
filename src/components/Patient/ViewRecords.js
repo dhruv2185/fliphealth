@@ -40,7 +40,7 @@ const ViewRecords = () => {
             >
                 <CircularProgress color="inherit" />
             </Backdrop><div style={{ display: "flex", gap: "30px", flexWrap: "wrap", justifyContent: "center" }} >
-                    {records.length === 0 && <div style={{ height: "70vh", }}><h1 style={{ margin: "30vh 30vw" }}>No Records Found</h1></div>}
+                    {records.length === 0 && <div style={{ height: "70vh", }}><h4 style={{ margin: "30vh 30vw" }}>No Records Found</h4></div>}
                     {records.length !== 0 && records.map((record, index) => {
                         return <RecordCard key={index} data={record} refresh={refresh} setRefresh={setRefresh} />
                     })}

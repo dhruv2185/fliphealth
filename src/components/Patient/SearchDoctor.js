@@ -147,8 +147,8 @@ const SearchDoctor = () => {
 
                 </Paper>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{searchResults.length !== 0 && searchResults.map((item, index) => <SearchDocResult key={index} data={item} grantedDoctors={grantedDoctors} isLoading={isLoading} setIsLoading={setIsLoading} />)}
-                    {searchResults.length === 0 && search.current.value === "" && <h3>ENTER A SEARCH QUERY</h3>}
-                    {searchResults.length === 0 && search.current.value !== "" && <h3>NO RESULTS FOUND</h3>}</Box>
+                    {searchResults.length === 0 && search.current.value === "" && <h5>ENTER A SEARCH QUERY</h5>}
+                    {searchResults.length === 0 && search.current.value !== "" && <h5>NO RESULTS FOUND</h5>}</Box>
             </Container>
         </>
     );

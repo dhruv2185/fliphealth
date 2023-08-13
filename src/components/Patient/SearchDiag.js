@@ -135,8 +135,8 @@ const SearchDiag = () => {
                 </Paper>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>
                     {results.length !== 0 && results.map((item, index) => <SearchDiagResult key={index} data={item} grantedDiag={grantedDiag} isLoading={isLoading} setIsLoading={setIsLoading} />)}
-                    {results.length === 0 && search.current.value === '' && <h3>ENTER A SEARCH QUERY</h3>}
-                    {results.length === 0 && search.current.value !== '' && <h3>NO RESULTS FOUND</h3>}
+                    {results.length === 0 && search.current.value === '' && <h5>ENTER A SEARCH QUERY</h5>}
+                    {results.length === 0 && search.current.value !== '' && <h5>NO RESULTS FOUND</h5>}
                 </Box>
             </Container>
         </>

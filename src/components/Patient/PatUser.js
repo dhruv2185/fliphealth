@@ -35,7 +35,7 @@ const PatUser = () => {
                 >
                     <CircularProgress color="inherit" />
                 </Backdrop>
-                {profile && <><Card sx={{ margin: "auto", width: "60vw", minWidth: "400px", padding: "15px 20px", display: "flex" }}>
+                {profile !== null && <><Card sx={{ margin: "auto", width: "60vw", minWidth: "400px", padding: "15px 20px", display: "flex" }}>
                     <div style={{ display: "flex" }}>
                         <Avatar sx={{ bgcolor: "red", width: 100, height: 100 }} aria-label="recipe">
 

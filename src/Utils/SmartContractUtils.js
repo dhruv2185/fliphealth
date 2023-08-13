@@ -533,7 +533,7 @@ const uploadRecordsByDiagnostic = async (data, accountAddress, patientAddress) =
     try {
         const res = await diagContract.methods.uploadRecordsDiagnostic(
             patientAddress,
-            data.org, String(data.date), String(data.doctorname), String(data.documentName), String(data.path), String(data.cid), String(data.docType)).send({
+            data.org, String(data.date), String(data.documentName), String(data.doctorname), String(data.path), String(data.cid), String(data.docType)).send({
                 from: accountAddress,
                 gas: 3000000
             });
