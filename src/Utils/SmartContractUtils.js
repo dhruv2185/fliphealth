@@ -449,6 +449,7 @@ const getDiagProfile = async (address, accountAddress) => {
             gas: 3000000
         });
         console.log(res);
+        res.myAdd = address;
         return res;
     } catch (error) {
         console.log(error)

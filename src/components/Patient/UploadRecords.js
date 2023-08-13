@@ -146,7 +146,7 @@ const UploadRecords = () => {
                 <MenuItem value={"Report"}>Report</MenuItem>
                 <MenuItem value={"Prescription"}>Prescription</MenuItem>
                 <MenuItem value={"Mediclaim"}>MediClaim</MenuItem>
-            </Select></FormControl><MuiFileInput error={fileErr} sx={{ width: "40vw", maxWidth: "405px", minWidth: "250px" }} label="Upload File(*.pdf, *.jpg, *.png) " value={file} onChange={handleFileChange} /><Box sx={{ display: "flex", gap: "20px", justifyContent: "center", padding: "20px" }}><Button type="submit" variant='contained'>SUBMIT</Button><Button onClick={resetHandler} type="reset" color='neutral' variant='outlined'>DISCARD</Button></Box></Box></Container></>)
+            </Select></FormControl><MuiFileInput error={fileErr} sx={{ width: "40vw", maxWidth: "405px", minWidth: "250px" }} label="Upload File" value={file} onChange={handleFileChange} /><Box sx={{ display: "flex", gap: "20px", justifyContent: "center", padding: "20px" }}><Button type="submit" variant='contained'>SUBMIT</Button><Button onClick={resetHandler} type="reset" color='neutral' variant='outlined'>DISCARD</Button></Box></Box></Container></>)
 }
 
 export default UploadRecords;
