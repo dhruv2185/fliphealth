@@ -3,32 +3,42 @@ import React, { useEffect } from 'react';
 import DoctorAccessBox from './DoctorAccessBox';
 import { useSelector } from 'react-redux';
 import { getDoctorsOfHospital } from '../../Utils/SmartContractUtils';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import { enqueueSnackbar } from 'notistack';
 
 const ViewDoctors = () => {
 
     const [doctors, setDoctors] = React.useState([]);
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [refresh, setRefresh] = React.useState(false);
     const accountAddress = useSelector(state => state.accountAddress);
-    useEffect(() => {
-        const getDoctors = async (accountAddress) => {
-            // const res = await getDoctorsOfHospital("accountAddress");
-            const res = await getDoctorsOfHospital("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
-            setDoctors(res[0].map(doc => {
-                if (doc.name !== '') {
-                    return doc;
-                }
-                return null;
-            }))
-            console.log(doctors)
+    const getDoctors = async (accountAddress) => {
+        const res = await getDoctorsOfHospital(accountAddress);
+        if (res.message) {
+            enqueueSnackbar(res.message, { variant: "error" });
+        } else {
+            const newRes = res.filter((doc) => doc["name"] !== "");
+            setDoctors(newRes);
         }
+        setIsLoading(false);
+    }
+    useEffect(() => {
         getDoctors(accountAddress)
-    }, [])
-
+    }, [refresh, accountAddress])
 
     return (
         <>
             <Container component="main" maxWidth="s" minWidth="xs"><CssBaseline />
+                <Backdrop
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={isLoading}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>
-                    {doctors !== [] && doctors.map(doc => <DoctorAccessBox data={doc} />)}{doctors === [] && <h3>No Doctors Available</h3>}</Box>
+                    {doctors !== [] && doctors.map((doc) => (doc["name"] !== "" && <DoctorAccessBox key={doc["address"]} data={doc} setRefresh={setRefresh} refresh={refresh} setIsLoading={setIsLoading} />))}
+                    {doctors.length === 0 && <h3>No Doctors Available</h3>}</Box>
             </Container>
         </>
     );

@@ -1,21 +1,35 @@
 import { Avatar, Button, Card } from '@mui/material';
 import React from 'react';
-import { removeDoctorFromHospital } from '../../Utils/SmartContractUtils';
-import { useNavigate } from 'react-router';
+import { removeDoctorFromHospital, revokeAllAccessOfDoctor } from '../../Utils/SmartContractUtils';
+import { useSelector } from 'react-redux';
+import { enqueueSnackbar } from 'notistack';
 
 const DoctorAccessBox = (props) => {
-    const { data } = props;
-    const navigate = useNavigate();
+    const accountAddress = useSelector(state => state.accountAddress);
+    const { data, setRefresh, refresh, setIsLoading } = props;
     const handleRemove = async () => {
-        // const res = await removeDoctorFromHospital("doctorAddress", "accountAddress");
-        const res = await removeDoctorFromHospital("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
-        navigate("/Dashboard");
-        console.log(res);
+        setIsLoading(true);
+        const res = await removeDoctorFromHospital(data.myAdd, accountAddress);
+        if (res.message) {
+            enqueueSnackbar(res.message, { variant: "error" });
+        }
+        else {
+            enqueueSnackbar("Doctor Removed Successfully", { variant: "success" });
+        }
+        setRefresh(!refresh);
+        setIsLoading(false);
     }
-
     const handleRevoke = async () => {
-        const res = await removeDoctorFromHospital("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
-        console.log(res);
+        setIsLoading(true);
+        const res = await revokeAllAccessOfDoctor(data.myAdd, accountAddress);
+        if (res.message) {
+            enqueueSnackbar(res.message, { variant: "error" });
+        }
+        else {
+            enqueueSnackbar("Doctor Access Revoked Successfully", { variant: "success" });
+        }
+        setRefresh(!refresh);
+        setIsLoading(false);
     }
 
     return (
@@ -25,7 +39,7 @@ const DoctorAccessBox = (props) => {
                     <Avatar sx={{ bgcolor: "red", margin: "auto" }} aria-label="recipe">
                         {data.name[0]}
                     </Avatar>
-                    <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >Dr. {data.name}</p><p style={{ color: "grey", lineHeight: "18px" }}>{data.degreeName} | GR : {data.grNum}</p></div>
+                    <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >Dr. {data.name}</p><p style={{ color: "grey", lineHeight: "18px" }}>{data.degreeName} | GR : {Number(data.grNum)}</p></div>
 
                 </div>
                 <div style={{ margin: "auto 15px" }}>

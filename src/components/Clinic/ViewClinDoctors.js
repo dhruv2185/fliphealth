@@ -4,6 +4,8 @@ import ClinDocBox from './ClinDocBox';
 import { getDoctorsOfClinic } from '../../Utils/SmartContractUtils';
 import { useSelector } from 'react-redux';
 import { enqueueSnackbar } from 'notistack';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const ViewClinDoctors = () => {
 
@@ -19,6 +21,7 @@ const ViewClinDoctors = () => {
         else {
             setDoctors(res);
         }
+        setIsLoading(false);
     }
     useState(() => {
         fetchDoctors(accountAddress);
@@ -26,7 +29,14 @@ const ViewClinDoctors = () => {
 
     return (
         <>
-            <Container component="main" maxWidth="s" minWidth="xs"><CssBaseline />
+            <Container component="main" maxWidth="s" minWidth="xs">
+                <CssBaseline />
+                <Backdrop
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={isLoading}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>
                     {doctors && doctors.map((doctor, index) => {
                         if (doctor["name"] !== "") {
