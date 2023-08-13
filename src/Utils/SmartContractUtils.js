@@ -625,6 +625,61 @@ const getClinicProfile = async (cliAddress, accountAddress) => {
     }
 }
 
+const exitFromClinic = async (accountAddress) => {
+    try {
+        const res = await clinicContract.methods.exitFromClinic().send({
+            from: accountAddress,
+            gas: 3000000
+        });
+        console.log(res);
+        return res
+    } catch (error) {
+        console.log(error);
+        const errObject = {
+            message: "Failed to exit from clinic, Please check your balance or try again later",
+        }
+        return errObject;
+    }
+}
+
+const getOrgOfDoctor = async (accountAddress) => {
+    try {
+        const orgAddress = await hospitalContract.methods.organization(accountAddress).call({
+            from: accountAddress,
+            gas: 3000000
+        });
+        let hospitalProfile = {
+            hospname: ""
+        };
+        if (orgAddress !== "0x0000000000000000000000000000000000000000") {
+            hospitalProfile = await hospitalContract.methods.hospitals(orgAddress).call({
+                from: accountAddress,
+                gas: 3000000
+            });
+        }
+        let clinicProfile = {
+            name: ""
+        };
+        const clinicAddress = await clinicContract.methods.DoctorToClinic(accountAddress).call({
+            from: accountAddress,
+            gas: 3000000
+        });
+        if (clinicAddress !== "0x0000000000000000000000000000000000000000") {
+            clinicProfile = await clinicContract.methods.ClinicIndex(clinicAddress).call({
+                from: accountAddress,
+                gas: 3000000
+            });
+        }
+        return { hospitalProfile, clinicProfile };
+    }
+    catch (error) {
+        console.log(error);
+        const errObject = {
+            message: "Failed to fetch organisations, Please reload the page or try again later",
+        }
+        return errObject;
+    }
+}
 
 export {
     registerDoctor,
@@ -639,7 +694,7 @@ export {
     removeDoctorFromHospital, addDoctorToHospital, getDoctorsOfHospital, getHospitalProfile, revokeAllAccessOfDoctor, registerHospital,
     registerDiagnostic, getDiagnosticOfPatient, getHealthRecordsOfPatient, getAllDiagnostics, getDiagProfile, getPatientsOfDiagnostic, grantAccessToDiagnostic, revokeAccessOfDiagnostic, getDiagnosticForPatient, uploadRecordsByDiagnostic, deleteDocument,
     registerClinic, enrollInClinicForDoctor, getDoctorsOfClinic,
-    getClinicProfile
+    getClinicProfile, exitFromClinic, getOrgOfDoctor
 }
 
 

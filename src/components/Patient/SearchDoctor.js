@@ -17,9 +17,6 @@ const SearchDoctor = () => {
     const [grantedDoctors, setGrantedDoctors] = useState([]);
 
     const getByAddress = async (search) => {
-        // const res = searchDoctorByAddress(
-        // enteredAddress, loggedInAddress
-        // )
         setIsLoading(true);
         const res = await searchDoctorByAddress(
             search,
@@ -58,10 +55,6 @@ const SearchDoctor = () => {
         setIsLoading(false);
     }
     const getByName = async (search) => {
-        // const result = await searchDoctorByName(
-        //     "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029"
-        //     // or loggedInAddress
-        // )
         setIsLoading(true);
         const res = await searchDoctorByName(
             accountAddress
@@ -81,15 +74,6 @@ const SearchDoctor = () => {
         const result = newres.filter(
             item => (search !== "" && regex.test(item["name"]))
         )
-        // to filter out the already granted doctors
-        // const fetchDoctors = async () => {
-        //     const res = await getAllDoctorsForAPatient('0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029')
-        //     // const res = await getAllDoctorsForAPatient('loggedInAddress')
-        //     setDoctors(res);
-        //     console.log(doctors);
-        // }
-
-        // further regex logic
         console.log(result)
         setSearchResults(result);
         setIsLoading(false);
@@ -98,7 +82,6 @@ const SearchDoctor = () => {
     const searchHandler = (e) => {
         e.preventDefault();
         // if by address
-
         fetchDoctors();
         if (searchType === "address") {
             getByAddress(search.current.value);
@@ -133,7 +116,6 @@ const SearchDoctor = () => {
             >
                 <MenuItem value={"name"}>Name</MenuItem>
                 <MenuItem value={"address"}>Address</MenuItem>
-
             </Select></FormControl>
                     <InputBase
                         sx={{ ml: 1, flex: 1 }}

@@ -12,11 +12,6 @@ contract clinic is doctor {
     mapping(address => address) internal DoctorToClinic; // doctor address to clinic address
     mapping(address => Clinic) public ClinicIndex; // doctor address to clinic struct
 
-    // register Clinic
-    // view all doctors of clininc
-    // view all clinics for doctors
-    // add organisation abd clinic to doctorProfile
-
     function registerClinic(
         string memory _name,
         uint128 _phone,
@@ -44,5 +39,9 @@ contract clinic is doctor {
             }
         }
         return (myDoctors);
+    }
+
+    function exitFromClinic() external {
+        delete DoctorToClinic[msg.sender];
     }
 }
