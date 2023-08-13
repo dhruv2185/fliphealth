@@ -24,7 +24,6 @@ contract diagnostics is clinic {
         returns (PatientProfile[] memory)
     {
         uint patientCount = DiagnosticAccessList[msg.sender].length;
-        // add a response if patientCount is 0
         PatientProfile[] memory patients = new PatientProfile[](patientCount);
         for (uint i = 0; i < patientCount; i++) {
             address currPatAddress = DiagnosticAccessList[msg.sender][i];
@@ -43,32 +42,47 @@ contract diagnostics is clinic {
     function getAllDiagnostics()
         external
         view
-        returns (Diagnostic[] memory, address[] memory)
+        returns (DiagnosticProfile[] memory)
     {
         uint256 numDiagnostics = diagnostics.length;
-        Diagnostic[] memory allDiagnostics = new Diagnostic[](numDiagnostics);
+        DiagnosticProfile[] memory allDiagnostics = new DiagnosticProfile[](
+            numDiagnostics
+        );
         for (uint256 i = 0; i < numDiagnostics; i++) {
             address diagnosticAddress = diagnostics[i];
             Diagnostic memory curr = DiagnosticIndex[diagnosticAddress];
-            allDiagnostics[i] = curr;
+            allDiagnostics[i] = DiagnosticProfile(
+                curr.Diagname,
+                curr.email,
+                curr.phone,
+                curr.license,
+                diagnosticAddress
+            );
         }
-        return (allDiagnostics, diagnostics);
+        return (allDiagnostics);
     }
 
     function getDiagnosticsForUser()
         external
         view
-        returns (Diagnostic[] memory, uint)
+        returns (DiagnosticProfile[] memory)
     {
         uint count = 0;
-        Diagnostic[] memory authDiagnostic = new Diagnostic[](50);
+        DiagnosticProfile[] memory authDiagnostic = new DiagnosticProfile[](50);
         for (uint i = 0; i < diagnostics.length; i++) {
             if (isAuthorizedDiagnostic(msg.sender, diagnostics[i])) {
-                authDiagnostic[count] = DiagnosticIndex[diagnostics[i]];
+                Diagnostic memory curr = DiagnosticIndex[diagnostics[i]];
+                authDiagnostic[count] = DiagnosticProfile(
+                    curr.Diagname,
+                    curr.email,
+                    curr.phone,
+                    curr.license,
+                    diagnostics[i]
+                );
                 count++;
             }
         }
-        return (authDiagnostic, count);
+        return (authDiagnostic);
     }
 
     function uploadRecordsDiagnostic(
@@ -106,7 +120,7 @@ contract diagnostics is clinic {
                 return i;
             }
         }
-        return Diagnostics.length; // User address not found in the array
+        return Diagnostics.length;
     }
 
     function revokeAccessDiagnostic(address _diagnostic) external {

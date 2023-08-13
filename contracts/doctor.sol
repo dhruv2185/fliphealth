@@ -56,11 +56,7 @@ contract doctor is patient {
         return allDoctors;
     }
 
-    function getDoctorsForUser()
-        external
-        view
-        returns (DocProfile[] memory, uint)
-    {
+    function getDoctorsForUser() external view returns (DocProfile[] memory) {
         uint count = 0;
         DocProfile[] memory authDoctors = new DocProfile[](50);
         for (uint i = 0; i < doctors.length; i++) {
@@ -69,6 +65,6 @@ contract doctor is patient {
                 count++;
             }
         }
-        return (authDoctors, count);
+        return (authDoctors);
     }
 }
