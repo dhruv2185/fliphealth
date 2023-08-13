@@ -405,9 +405,9 @@ const getDiagnosticOfPatient = async (accountAddress) => {
     }
 }
 
-const getHealthRecordsOfPatient = async (accountAddress) => {
+const getHealthRecordsOfPatient = async (patAddress, accountAddress) => {
     try {
-        const res = await diagContract.methods.getHealthRecordsDiagnostic(accountAddress).call({
+        const res = await diagContract.methods.getHealthRecordsDiagnostic(patAddress).call({
             from: accountAddress,
             gas: 3000000
         });
