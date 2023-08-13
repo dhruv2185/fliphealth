@@ -2,8 +2,9 @@ import { Avatar, Button, Card } from '@mui/material'
 import React, { useState } from 'react'
 import ViewPatDocs from './ViewPatDocs'
 
-function PatientBox() {
+function PatientBox(props) {
     const [open, setOpen] = useState(false);
+    const { patient } = props;
     const openRecords = () => {
         setOpen(true);
     }
@@ -11,12 +12,12 @@ function PatientBox() {
         <> <Card sx={{ width: "60vw", minWidth: "400px", padding: "5px 20px", display: "flex", justifyContent: "space-between" }}>
             <div style={{ display: "flex" }}>
                 <Avatar sx={{ bgcolor: "red", margin: "auto" }} aria-label="recipe">
-                    R
+                    {patient["name"][0]}
                 </Avatar>
-                <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >Kishun Patil</p><p style={{ color: "grey", lineHeight: "18px" }}>Male | Age : 69 yrs</p></div>
+                <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{patient["name"]}</p><p style={{ color: "grey", lineHeight: "18px" }}>{patient["gender"]} | Age : {Number(patient["age"])} yrs</p></div>
             </div>
             <Button onClick={openRecords} variant="contained" style={{ margin: "auto 15px" }}>VIEW RECORDS</Button>
-        </Card><ViewPatDocs open={open} setOpen={setOpen} /></>
+        </Card><ViewPatDocs open={open} setOpen={setOpen} patientAddress={patient.myAdd} /></>
     )
 }
 

@@ -13,20 +13,21 @@ const DiagPatients = () => {
     const [patients, setPatients] = React.useState(null);
     const accountAddress = useSelector(state => state.accountAddress);
 
-    const getPatients = async (accountAddress) => {
-        const res = await getPatientsOfDiagnostic(accountAddress);
-        if (res.message) {
-            enqueueSnackbar(res.message, { variant: "error" });
-        }
-        else {
-            setPatients(res);
-        }
-        setIsLoading(false);
-        console.log(res);
-    }
+
 
     useEffect(() => {
-        getPatients(accountAddress);
+        const getPatients = async () => {
+            const res = await getPatientsOfDiagnostic(accountAddress);
+            if (res.message) {
+                enqueueSnackbar(res.message, { variant: "error" });
+            }
+            else {
+                setPatients(res);
+            }
+            setIsLoading(false);
+            console.log(res);
+        }
+        getPatients();
     }, [accountAddress]);
 
     return (
@@ -39,11 +40,11 @@ const DiagPatients = () => {
                     <CircularProgress color="inherit" />
                 </Backdrop>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>
-                    {patients && patients.map((patient, index) => {
+                    {patients !== null && patients.map((patient, index) => {
                         return <DiagPatientBox key={index} patient={patient} />
                     })
                     }
-                    {patients && patients.length === 0 && <p>No Patients Found</p>}
+                    {patients !== null && patients.length === 0 && <p>No Patients Found</p>}
                 </Box>
             </Container>
         </>
