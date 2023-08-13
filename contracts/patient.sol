@@ -55,6 +55,14 @@ contract patient {
         address myAdd;
     }
 
+    struct DiagnosticProfile {
+        string name;
+        string email;
+        uint128 phone;
+        string license;
+        address myAdd;
+    }
+
     address[] internal doctors;
     address[] internal diagnostics;
     mapping(address => Diagnostic) public DiagnosticIndex;

@@ -33,7 +33,7 @@ contract clinic is doctor {
     function getAllDoctorsForClinic()
         external
         view
-        returns (DocProfile[] memory, uint16)
+        returns (DocProfile[] memory)
     {
         uint16 count = 0;
         DocProfile[] memory myDoctors = new DocProfile[](25);
@@ -43,6 +43,6 @@ contract clinic is doctor {
                 count++;
             }
         }
-        return (myDoctors, count);
+        return (myDoctors);
     }
 }
