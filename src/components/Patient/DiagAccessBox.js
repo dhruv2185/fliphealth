@@ -5,10 +5,10 @@ import { enqueueSnackbar } from 'notistack';
 import { useSelector } from 'react-redux';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 const DiagAccessBox = (props) => {
-    const { refresh, setrefresh, data } = props;
+    const { refresh, setRefresh, data } = props;
     const accountAddress = useSelector(state => state.accountAddress);
     const handleRevoke = async () => {
-        const res = revokeAccessOfDiagnostic(data.myAdd, accountAddress);
+        const res = await revokeAccessOfDiagnostic(data.myAdd, accountAddress);
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
         }
@@ -16,7 +16,7 @@ const DiagAccessBox = (props) => {
             enqueueSnackbar("Diagnostic Access Revoked!", { variant: "success" });
         }
 
-        setrefresh(!refresh);
+        setRefresh(!refresh);
     }
     const handleCopy = async () => {
         await navigator.clipboard.writeText(data.myAdd);
@@ -30,7 +30,7 @@ const DiagAccessBox = (props) => {
                     <Avatar sx={{ bgcolor: "red", margin: "auto" }} aria-label="recipe">
                         {data.name[0]}
                     </Avatar>
-                    <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{data.name}</p><p style={{ color: "grey", lineHeight: "18px" }}>E-mail : {data.email} | Phone : {data.phone}</p></div>
+                    <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{data.name}</p><p style={{ color: "grey", lineHeight: "18px" }}>E-mail : {data.email} | Phone : {Number(data.phone)}</p></div>
                 </div>
                 <div style={{ margin: "auto 15px" }}>
                     <IconButton onClick={handleCopy}><ContentCopyIcon /></IconButton>

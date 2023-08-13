@@ -31,6 +31,7 @@ const SearchDoctor = () => {
         else {
             setSearchResults([res]);
         }
+        console.log(res)
         setIsLoading(false);
 
     }
@@ -114,7 +115,7 @@ const SearchDoctor = () => {
     }
     return (
         <>
-            <Container component="main" maxWidth="s" minWidth="xs" sx={{ minHeight: "50vh" }}><CssBaseline /><Backdrop
+            <Container component="main" maxwidth="s" minwidth="xs" sx={{ minHeight: "50vh" }}><CssBaseline /><Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={isLoading}
             >
@@ -145,7 +146,7 @@ const SearchDoctor = () => {
                     </IconButton>
 
                 </Paper>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{searchResults.length !== 0 && searchResults.map(item => <SearchDocResult data={item} grantedDoctors={grantedDoctors} />)}
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{searchResults.length !== 0 && searchResults.map((item, index) => <SearchDocResult key={index} data={item} grantedDoctors={grantedDoctors} isLoading={isLoading} setIsLoading={setIsLoading} />)}
                     {searchResults.length === 0 && search.current.value === "" && <h3>ENTER A SEARCH QUERY</h3>}
                     {searchResults.length === 0 && search.current.value !== "" && <h3>NO RESULTS FOUND</h3>}</Box>
             </Container>

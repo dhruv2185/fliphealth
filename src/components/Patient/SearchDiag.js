@@ -13,7 +13,7 @@ const SearchDiag = () => {
     const search = useRef("");
     const [searchType, setSearchType] = useState('name');
     const [results, setResults] = useState([]);
-    const [grantedDiag, setGrantedDoctors] = useState([]);
+    const [grantedDiag, setGrantedDiag] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const handleChange = (event) => {
         setSearchType(event.target.value);
@@ -25,7 +25,6 @@ const SearchDiag = () => {
             enqueueSnackbar(result.message, { variant: "error" })
         }
         else {
-            result.address = address;
             setResults([result]);
         }
         setIsLoading(false);
@@ -40,7 +39,17 @@ const SearchDiag = () => {
             enqueueSnackbar(res.message, { variant: "error" });
         }
         else {
-            setGrantedDoctors(res);
+            const newres = (res.filter(item => item["myAdd"] !== "0x0000000000000000000000000000000000000000")).map(item => {
+                return {
+                    name: item["name"],
+                    email: item["email"],
+                    phone: item["phone"],
+                    license: item["license"],
+                    myAdd: item["myAdd"]
+                }
+            })
+            setGrantedDiag(newres);
+            console.log(newres)
         }
         setIsLoading(false);
         // const res = await getDiagnosticForPatient('accountAddress')
@@ -53,23 +62,13 @@ const SearchDiag = () => {
         setIsLoading(true);
         const res = await getAllDiagnostics(accountAddress);
         const regex = new RegExp(name, "gi");
-        const newres = [];
-        for (let i = 0; i < res[0].length; i++) {
-            newres.push({
-                Diagname: res[0][i].Diagname,
-                email: res[0][i].email,
-                phone: Number(res[0][i].phone),
-                license: res[0][i].license,
-            })
-        }
-        for (let i = 0; i < res[1].length; i++) {
-            newres[i].address = res[1][i];
-        }
-        const result = newres.filter(
-            item => (name !== '' && regex.test(item.Diagname))
+
+
+        const result = res.filter(
+            item => (name !== '' && regex.test(item["name"]))
         )
         setResults(result);
-        console.log(results);
+        console.log(result);
         setIsLoading(false);
     }
     const searchHandler = (e) => {
@@ -103,7 +102,7 @@ const SearchDiag = () => {
     }
     return (
         <>
-            <Container component="main" maxWidth="s" minWidth="xs" sx={{ minHeight: "50vh" }}><CssBaseline /><Backdrop
+            <Container component="main" maxwidth="s" minwidth="xs" sx={{ minHeight: "50vh" }}><CssBaseline /><Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={isLoading}
             >
@@ -135,7 +134,7 @@ const SearchDiag = () => {
 
                 </Paper>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>
-                    {results.length !== 0 && results.map(item => <SearchDiagResult data={item} />)}
+                    {results.length !== 0 && results.map((item, index) => <SearchDiagResult key={index} data={item} grantedDiag={grantedDiag} isLoading={isLoading} setIsLoading={setIsLoading} />)}
                     {results.length === 0 && search.current.value === '' && <h3>ENTER A SEARCH QUERY</h3>}
                     {results.length === 0 && search.current.value !== '' && <h3>NO RESULTS FOUND</h3>}
                 </Box>
