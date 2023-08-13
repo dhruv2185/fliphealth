@@ -41,7 +41,19 @@ const SearchDoctor = () => {
             enqueueSnackbar(res.message, { variant: "error" });
         }
         else {
-            setGrantedDoctors(res);
+            const newres = (res.filter(item => item.myAdd !== "0x0000000000000000000000000000000000000000")).map(item => {
+
+                return {
+                    name: item["name"],
+                    degreeName: item["degreeName"],
+                    age: item["age"],
+                    grNum: item["grNum"],
+                    myAdd: item["myAdd"]
+                }
+
+            })
+            setGrantedDoctors(newres);
+            console.log(newres)
         }
         setIsLoading(false);
     }
@@ -78,7 +90,7 @@ const SearchDoctor = () => {
         // }
 
         // further regex logic
-
+        console.log(result)
         setSearchResults(result);
         setIsLoading(false);
 
@@ -134,7 +146,7 @@ const SearchDoctor = () => {
                     </IconButton>
 
                 </Paper>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{searchResults.length !== 0 && searchResults.map(item => <SearchDocResult data={item} />)}
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{searchResults.length !== 0 && searchResults.map(item => <SearchDocResult data={item} grantedDoctors={grantedDoctors} />)}
                     {searchResults.length === 0 && search.current.value === "" && <h3>ENTER A SEARCH QUERY</h3>}
                     {searchResults.length === 0 && search.current.value !== "" && <h3>NO RESULTS FOUND</h3>}</Box>
             </Container>

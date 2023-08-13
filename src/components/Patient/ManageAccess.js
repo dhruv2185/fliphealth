@@ -6,6 +6,7 @@ import { getAllDoctorsForAPatient, getDiagnosticForPatient } from '../../Utils/S
 import { useSelector } from 'react-redux';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import { enqueueSnackbar } from 'notistack';
 
 const ManageAccess = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -16,18 +17,31 @@ const ManageAccess = () => {
     const fetchDoctors = async () => {
         setIsLoading(true);
         const res = await getAllDoctorsForAPatient(accountAddress)
+        if (res.message) {
+            enqueueSnackbar(res.message, { variant: "error" });
+        } else {
+            const newres = res.filter(item => item.myAdd !== "0x0000000000000000000000000000000000000000");
+            setDoctors(newres);
+        }
+
         // const res = await getAllDoctorsForAPatient('loggedInAddress')
-        const newres = res[0].filter(item => item.myAdd !== "0x0000000000000000000000000000000000000000");
-        setDoctors(newres);
+
         setIsLoading(false);
     }
     const fetchDiagnostics = async () => {
         setIsLoading(true);
-        const res = await getDiagnosticForPatient(accountAddress)
-        const newres = res[0].filter(item => item.myAdd !== "0x0000000000000000000000000000000000000000");
+        const res = await getDiagnosticForPatient(accountAddress);
+        if (res.message) {
+            enqueueSnackbar(res.message, { variant: "error" });
+        }
+        else {
+            const newres = res.filter(item => item.myAdd !== "0x0000000000000000000000000000000000000000");
+            setDiagnostics(newres);
+        }
+
         // const res = await getDiagnosticForPatient('accountAddress')
         // will return an array of objects and count of diagnostics sent
-        setDiagnostics(newres);
+
         setIsLoading(false);
         console.log(diagnostics);
     }

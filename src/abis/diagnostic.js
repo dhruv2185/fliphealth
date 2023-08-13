@@ -70,6 +70,52 @@ export const diagABI = [
     {
         "inputs": [
             {
+                "internalType": "address",
+                "name": "_doctor",
+                "type": "address"
+            }
+        ],
+        "name": "DocProfileReturn",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint16",
+                        "name": "age",
+                        "type": "uint16"
+                    },
+                    {
+                        "internalType": "uint64",
+                        "name": "grNum",
+                        "type": "uint64"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "degreeName",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "myAdd",
+                        "type": "address"
+                    }
+                ],
+                "internalType": "struct patient.DocProfile",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
                 "internalType": "string",
                 "name": "_org",
                 "type": "string"
@@ -144,7 +190,7 @@ export const diagABI = [
                 "components": [
                     {
                         "internalType": "string",
-                        "name": "Diagname",
+                        "name": "name",
                         "type": "string"
                     },
                     {
@@ -161,16 +207,16 @@ export const diagABI = [
                         "internalType": "string",
                         "name": "license",
                         "type": "string"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "myAdd",
+                        "type": "address"
                     }
                 ],
-                "internalType": "struct patient.Diagnostic[]",
+                "internalType": "struct patient.DiagnosticProfile[]",
                 "name": "",
                 "type": "tuple[]"
-            },
-            {
-                "internalType": "address[]",
-                "name": "",
-                "type": "address[]"
             }
         ],
         "stateMutability": "view",
@@ -269,7 +315,7 @@ export const diagABI = [
                 "components": [
                     {
                         "internalType": "string",
-                        "name": "Diagname",
+                        "name": "name",
                         "type": "string"
                     },
                     {
@@ -286,16 +332,16 @@ export const diagABI = [
                         "internalType": "string",
                         "name": "license",
                         "type": "string"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "myAdd",
+                        "type": "address"
                     }
                 ],
-                "internalType": "struct patient.Diagnostic[]",
+                "internalType": "struct patient.DiagnosticProfile[]",
                 "name": "",
                 "type": "tuple[]"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
             }
         ],
         "stateMutability": "view",
@@ -391,11 +437,6 @@ export const diagABI = [
                 "internalType": "struct patient.DocProfile[]",
                 "name": "",
                 "type": "tuple[]"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
             }
         ],
         "stateMutability": "view",

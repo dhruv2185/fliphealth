@@ -87,7 +87,7 @@ const RecordCard = (props) => {
                         {data.organisation}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        {new Date(data.date).toLocaleDateString() + " " + new Date(data.date).toLocaleTimeString()}
+                        {new Date(data.date).toLocaleDateString() + " " + new Date(data.date).toLocaleTimeString("en-IN")}
                     </Typography>
                 </CardContent>
                 <CardActions sx={{ display: "flex", justifyContent: "center" }}>
