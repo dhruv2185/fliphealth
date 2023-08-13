@@ -65,9 +65,9 @@ const ManageAccess = () => {
                 <CircularProgress color="inherit" />
             </Backdrop>
                 <center><h3>DOCTORS</h3></center>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{doctors.length !== 0 && doctors.map((item, index) => <UserAccessBox key={index} setRefresh={setRefresh} refresh={refresh} data={item} />)}{doctors.length === 0 && <h2>No Doctors Found</h2>}</Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{doctors.length !== 0 && doctors.map((item, index) => <UserAccessBox key={index} setRefresh={setRefresh} refresh={refresh} data={item} />)}{doctors.length === 0 && <h5>No Doctors Found</h5>}</Box>
                 <center><h3>DIAGNOSTICS</h3></center>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{diagnostics.length === 0 && <h2>No Diagnostics Found</h2>}{diagnostics.length !== 0 && diagnostics.map((item, index) => <DiagAccessBox key={index} setRefresh={setRefresh} refresh={refresh} data={item} />)}</Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{diagnostics.length === 0 && <h5>No Diagnostics Found</h5>}{diagnostics.length !== 0 && diagnostics.map((item, index) => <DiagAccessBox key={index} setRefresh={setRefresh} refresh={refresh} data={item} />)}</Box>
             </Container>
         </>
     );

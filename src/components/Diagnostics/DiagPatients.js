@@ -31,7 +31,7 @@ const DiagPatients = () => {
 
     return (
         <>
-            <Container component="main" maxWidth="s" minWidth="xs"><CssBaseline />
+            <Container component="main" maxwidth="s" minwidth="xs"><CssBaseline />
                 <Backdrop
                     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                     open={isLoading}
