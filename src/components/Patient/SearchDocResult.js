@@ -37,7 +37,11 @@ function SearchDocResult(props) {
     }
     // grantAccessOnPress();
     const handleGranted = () => {
-        enqueueSnackbar("Access already GRANTED", { variant: "warning" });
+        enqueueSnackbar("Access already GRANTED!", { variant: "warning" });
+    }
+    const handleCopy = async () => {
+        await navigator.clipboard.writeText(data.myAdd);
+        enqueueSnackbar("Address Copied!", { variant: "success" });
     }
     return (
         <>
@@ -48,7 +52,7 @@ function SearchDocResult(props) {
                     </Avatar>
                     <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{data.name}</p><p style={{ color: "grey", lineHeight: "18px" }}>{data.degreeName} | GR : {Number(data.grNum)}</p></div>
                 </div>
-                <div style={{ margin: "auto 15px" }}><IconButton><ContentCopyIcon /></IconButton>{!accessGranted && <Button onClick={grantAccessOnPress} variant="contained" style={{ margin: "auto 15px" }}>Grant Access</Button>}
+                <div style={{ margin: "auto 15px" }}><IconButton onClick={handleCopy}><ContentCopyIcon /></IconButton>{!accessGranted && <Button onClick={grantAccessOnPress} variant="contained" style={{ margin: "auto 15px" }}>Grant Access</Button>}
                     {accessGranted && <Button onClick={handleGranted} variant="outlined" style={{ margin: "auto 15px" }}>Access Granted</Button>}</div>
             </Card>
         </>
