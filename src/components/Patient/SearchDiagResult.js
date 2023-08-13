@@ -1,9 +1,9 @@
 import React from 'react';
-import { Avatar, Button, Card } from '@mui/material'
+import { Avatar, Button, Card, IconButton } from '@mui/material'
 import { useSelector } from 'react-redux';
 import { enqueueSnackbar } from 'notistack';
 import { grantAccessToDiagnostic } from '../../Utils/SmartContractUtils';
-
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 const SearchDiagResult = (props) => {
     const data = props.data;
     const accountAddress = useSelector(state => state.accountAddress);
@@ -24,7 +24,8 @@ const SearchDiagResult = (props) => {
                     </Avatar>
                     <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{data.Diagname}</p><p style={{ color: "grey", lineHeight: "18px" }}>E-mail : {data.email} | Phone : {data.phone}</p></div>
                 </div>
-                <Button onClick={handleGrant} variant="contained" style={{ margin: "auto 15px" }}>Grant Access</Button>
+                <div style={{ margin: "auto 15px" }}><IconButton><ContentCopyIcon /></IconButton><Button onClick={handleGrant} variant="contained" style={{ margin: "auto 15px" }}>Grant Access</Button></div>
+
             </Card>
         </>
     );

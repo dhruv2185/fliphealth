@@ -1,20 +1,26 @@
 import { Container, CssBaseline, IconButton, InputBase, Paper, Box, Select, FormControl, InputLabel, MenuItem } from '@mui/material';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchDocResult from './SearchDocResult';
 import { searchDoctorByAddress, searchDoctorByName, getAllDoctorsForAPatient } from '../../Utils/SmartContractUtils';
 import { useSelector } from 'react-redux';
 import { enqueueSnackbar } from 'notistack';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const SearchDoctor = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const accountAddress = useSelector(state => state.accountAddress);
     const search = useRef("");
     const [searchType, setSearchType] = useState('name');
     const [searchResults, setSearchResults] = useState([]);
+    const [grantedDoctors, setGrantedDoctors] = useState([]);
+
     const getByAddress = async (search) => {
         // const res = searchDoctorByAddress(
         // enteredAddress, loggedInAddress
         // )
+        setIsLoading(true);
         const res = await searchDoctorByAddress(
             search,
             accountAddress
@@ -25,13 +31,38 @@ const SearchDoctor = () => {
         else {
             setSearchResults([res]);
         }
+        setIsLoading(false);
 
+    }
+    const fetchDoctors = async () => {
+        setIsLoading(true);
+        const res = await getAllDoctorsForAPatient(accountAddress);
+        if (res.message) {
+            enqueueSnackbar(res.message, { variant: "error" });
+        }
+        else {
+            const newres = (res.filter(item => item.myAdd !== "0x0000000000000000000000000000000000000000")).map(item => {
+
+                return {
+                    name: item["name"],
+                    degreeName: item["degreeName"],
+                    age: item["age"],
+                    grNum: item["grNum"],
+                    myAdd: item["myAdd"]
+                }
+
+            })
+            setGrantedDoctors(newres);
+            console.log(newres)
+        }
+        setIsLoading(false);
     }
     const getByName = async (search) => {
         // const result = await searchDoctorByName(
         //     "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029"
         //     // or loggedInAddress
         // )
+        setIsLoading(true);
         const res = await searchDoctorByName(
             accountAddress
         )
@@ -59,13 +90,16 @@ const SearchDoctor = () => {
         // }
 
         // further regex logic
-
+        console.log(result)
         setSearchResults(result);
+        setIsLoading(false);
 
     }
     const searchHandler = (e) => {
         e.preventDefault();
         // if by address
+
+        fetchDoctors();
         if (searchType === "address") {
             getByAddress(search.current.value);
         }
@@ -74,13 +108,19 @@ const SearchDoctor = () => {
             getByName(search.current.value);
         }
 
+
     }
     const handleChange = (event) => {
         setSearchType(event.target.value);
     }
     return (
         <>
-            <Container component="main" maxWidth="s" minWidth="xs" sx={{ minHeight: "50vh" }}><CssBaseline /><Paper onSubmit={searchHandler}
+            <Container component="main" maxWidth="s" minWidth="xs" sx={{ minHeight: "50vh" }}><CssBaseline /><Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={isLoading}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop><Paper onSubmit={searchHandler}
                 component="form"
                 sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, margin: '20px auto' }}
             >   <FormControl ><InputLabel id="demo-simple-select-label">Search By</InputLabel><Select
@@ -95,18 +135,18 @@ const SearchDoctor = () => {
                 <MenuItem value={"address"}>Address</MenuItem>
 
             </Select></FormControl>
-                <InputBase
-                    sx={{ ml: 1, flex: 1 }}
-                    inputRef={search}
-                    placeholder="Search"
-                    inputProps={{ 'aria-label': 'search ' }}
-                />
-                <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
-                    <SearchIcon />
-                </IconButton>
+                    <InputBase
+                        sx={{ ml: 1, flex: 1 }}
+                        inputRef={search}
+                        placeholder="Search"
+                        inputProps={{ 'aria-label': 'search ' }}
+                    />
+                    <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+                        <SearchIcon />
+                    </IconButton>
 
-            </Paper>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{searchResults.length !== 0 && searchResults.map(item => <SearchDocResult data={item} />)}
+                </Paper>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{searchResults.length !== 0 && searchResults.map(item => <SearchDocResult data={item} grantedDoctors={grantedDoctors} />)}
                     {searchResults.length === 0 && search.current.value === "" && <h3>ENTER A SEARCH QUERY</h3>}
                     {searchResults.length === 0 && search.current.value !== "" && <h3>NO RESULTS FOUND</h3>}</Box>
             </Container>

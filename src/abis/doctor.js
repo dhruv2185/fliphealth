@@ -36,6 +36,52 @@ export const doctorABI = [
     {
         "inputs": [
             {
+                "internalType": "address",
+                "name": "_doctor",
+                "type": "address"
+            }
+        ],
+        "name": "DocProfileReturn",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint16",
+                        "name": "age",
+                        "type": "uint16"
+                    },
+                    {
+                        "internalType": "uint64",
+                        "name": "grNum",
+                        "type": "uint64"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "degreeName",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "myAdd",
+                        "type": "address"
+                    }
+                ],
+                "internalType": "struct patient.DocProfile",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
                 "internalType": "string",
                 "name": "_org",
                 "type": "string"
@@ -219,11 +265,6 @@ export const doctorABI = [
                 "internalType": "struct patient.DocProfile[]",
                 "name": "",
                 "type": "tuple[]"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
             }
         ],
         "stateMutability": "view",
