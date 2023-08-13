@@ -32,7 +32,7 @@ const DocUser = () => {
             enqueueSnackbar(res.message, { variant: "error" });
         }
         else {
-            enqueueSnackbar("Clinic Added Successfully", { variant: "success" });
+            enqueueSnackbar("Removed from Clinic successfully", { variant: "success" });
         }
     }
 
