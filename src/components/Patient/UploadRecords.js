@@ -32,7 +32,6 @@ const UploadRecords = () => {
         setDocType(event.target.value);
     };
     const handleFileChange = (val) => {
-        console.log(val)
         setFile(val)
         setFileErr(false);
     }
@@ -46,15 +45,15 @@ const UploadRecords = () => {
             setFileErr(true);
         }
         else {
-            console.log("uploading");
-            console.log(ipfs);
-            console.log(file);
+            // console.log("uploading");
+            // console.log(ipfs);
+            // console.log(file);
             setIsLoading(true);
             try {
                 const result = await ipfs.add(file);
                 // const result = await ipfs.pin.rm(file.cid);
-                console.log(result);
-                console.log("uploaded");
+                // console.log(result);
+                // console.log("uploaded");
                 const data = {
                     org: orgName.current.value,
                     date: new Date(),
@@ -90,7 +89,7 @@ const UploadRecords = () => {
     }
 
 
-    return (<><Container component="main" maxwidth="s" minWidth="xs"><CssBaseline />
+    return (<><Container component="main" maxwidth="s" minwidth="xs"><CssBaseline />
         <Backdrop
             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={isLoading}
@@ -103,6 +102,7 @@ const UploadRecords = () => {
             alignItems: 'center',
             gap: "20px"
         }}>  <TextField
+                autoComplete='off'
                 margin="normal"
                 required
                 fullWidth
@@ -113,6 +113,7 @@ const UploadRecords = () => {
                 inputRef={recordname}
                 sx={{ width: "40vw", maxWidth: "405px", minWidth: "250px" }}
             /><TextField
+                autoComplete='off'
                 margin="normal"
                 required
                 fullWidth
@@ -123,6 +124,7 @@ const UploadRecords = () => {
                 inputRef={docName}
                 sx={{ width: "40vw", maxWidth: "405px", minWidth: "250px", marginTop: "0" }}
             /><TextField
+                autoComplete='off'
                 margin="normal"
                 required
                 fullWidth

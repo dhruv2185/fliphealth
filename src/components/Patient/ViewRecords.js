@@ -7,6 +7,7 @@ import { enqueueSnackbar } from 'notistack';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
+
 const ViewRecords = () => {
     const accountAddress = useSelector(state => state.accountAddress);
     const [records, setRecords] = useState([]);
@@ -39,7 +40,7 @@ const ViewRecords = () => {
             >
                 <CircularProgress color="inherit" />
             </Backdrop><div style={{ display: "flex", gap: "30px", flexWrap: "wrap", justifyContent: "center" }} >
-                    {records.length === 0 && <h1>No Records Found</h1>}
+                    {records.length === 0 && <div style={{ height: "70vh", }}><h1 style={{ margin: "30vh 30vw" }}>No Records Found</h1></div>}
                     {records.length !== 0 && records.map((record, index) => {
                         return <RecordCard key={index} data={record} refresh={refresh} setRefresh={setRefresh} />
                     })}

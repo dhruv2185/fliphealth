@@ -11,19 +11,20 @@ const PatUser = () => {
     const [profile, setProfile] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
+        const fetchProfile = async () => {
+            const res = await getPatientOwnProfile(accountAddress);
+            if (res.message) {
+                enqueueSnackbar(res.message, { variant: "error" });
+            }
+            else {
+                setProfile(res);
+            }
+            setIsLoading(false);
+            console.log(res);
+        }
         fetchProfile();
     }, [accountAddress]);
-    const fetchProfile = async () => {
-        const res = await getPatientOwnProfile(accountAddress);
-        if (res.message) {
-            enqueueSnackbar(res.message, { variant: "error" });
-        }
-        else {
-            setProfile(res);
-        }
-        setIsLoading(false);
-        console.log(res);
-    }
+
 
     return (
         <>

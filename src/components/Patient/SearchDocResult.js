@@ -1,9 +1,9 @@
-import { Avatar, Button, Card } from '@mui/material'
+import { Avatar, Button, Card, IconButton } from '@mui/material'
 import React from 'react';
 import { grantAccessToDoctor } from '../../Utils/SmartContractUtils';
 import { useSelector } from 'react-redux';
 import { enqueueSnackbar } from 'notistack';
-
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 function SearchDocResult(props) {
     const accountAddress = useSelector(state => state.accountAddress)
     const data = props.data;
@@ -35,7 +35,7 @@ function SearchDocResult(props) {
                     </Avatar>
                     <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{data.name}</p><p style={{ color: "grey", lineHeight: "18px" }}>{data.degreeName} | GR : {Number(data.grNum)}</p></div>
                 </div>
-                <Button onClick={grantAccessOnPress} variant="contained" style={{ margin: "auto 15px" }}>Grant Access</Button>
+                <div style={{ margin: "auto 15px" }}><IconButton><ContentCopyIcon /></IconButton><Button onClick={grantAccessOnPress} variant="contained" style={{ margin: "auto 15px" }}>Grant Access</Button></div>
             </Card>
         </>
     )

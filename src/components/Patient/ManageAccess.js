@@ -4,26 +4,31 @@ import UserAccessBox from './UserAccessBox';
 import DiagAccessBox from './DiagAccessBox';
 import { getAllDoctorsForAPatient, getDiagnosticForPatient } from '../../Utils/SmartContractUtils';
 import { useSelector } from 'react-redux';
-
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const ManageAccess = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const accountAddress = useSelector(state => state.accountAddress);
     const [doctors, setDoctors] = useState([]);
     const [diagnostics, setDiagnostics] = useState([]);
     const [refresh, setRefresh] = useState(0);
     const fetchDoctors = async () => {
+        setIsLoading(true);
         const res = await getAllDoctorsForAPatient(accountAddress)
         // const res = await getAllDoctorsForAPatient('loggedInAddress')
-        const newres = res[0].filter(item => item.name !== "");
+        const newres = res[0].filter(item => item.myAdd !== "0x0000000000000000000000000000000000000000");
         setDoctors(newres);
-        console.log(newres);
+        setIsLoading(false);
     }
     const fetchDiagnostics = async () => {
+        setIsLoading(true);
         const res = await getDiagnosticForPatient(accountAddress)
-        const newres = res[0].filter(item => item.phone !== 0);
+        const newres = res[0].filter(item => item.myAdd !== "0x0000000000000000000000000000000000000000");
         // const res = await getDiagnosticForPatient('accountAddress')
         // will return an array of objects and count of diagnostics sent
         setDiagnostics(newres);
+        setIsLoading(false);
         console.log(diagnostics);
     }
     useEffect(() => {
@@ -31,6 +36,7 @@ const ManageAccess = () => {
 
         fetchDoctors();
         fetchDiagnostics();
+
     }, [refresh])
 
 
@@ -38,11 +44,16 @@ const ManageAccess = () => {
 
     return (
         <>
-            <Container component="main" maxWidth="s" minWidth="xs"><CssBaseline />
+            <Container component="main" maxWidth="s" minwidth="xs"><CssBaseline /><Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={isLoading}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
                 <center><h3>DOCTORS</h3></center>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}><UserAccessBox setRefresh={setRefresh} refresh={refresh} /></Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{doctors.length !== 0 && doctors.map((item, index) => <UserAccessBox key={index} setRefresh={setRefresh} refresh={refresh} data={item} />)}{doctors.length === 0 && <h2>No Doctors Found</h2>}</Box>
                 <center><h3>DIAGNOSTICS</h3></center>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}><DiagAccessBox setRefresh={setRefresh} refresh={refresh} /></Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{diagnostics.length === 0 && <h2>No Diagnostics Found</h2>}{diagnostics.length !== 0 && diagnostics.map((item, index) => <DiagAccessBox key={index} setRefresh={setRefresh} refresh={refresh} data={item} />)}</Box>
             </Container>
         </>
     );
