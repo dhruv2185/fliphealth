@@ -27,6 +27,26 @@ const DiagUpload = () => {
     const docName = useRef();
     const orgName = useRef();
     const patientAddress = useRef();
+    const [recordNameError, setRecordNameError] = useState({
+        error: false,
+        message: ''
+    });
+    const [docNameError, setDocNameError] = useState({
+        error: false,
+        message: ''
+    });
+    const [orgNameError, setOrgNameError] = useState({
+        error: false,
+        message: ''
+    });
+    const [docTypeError, setDocTypeError] = useState({
+        error: false,
+        message: ''
+    });
+    const [patientAddressError, setPatientAddressError] = useState({
+        error: false,
+        message: ''
+    });
     const handleChange = (event) => {
         setDocType(event.target.value);
     };
@@ -42,6 +62,75 @@ const DiagUpload = () => {
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
+        const flag = 0;
+        if (recordname.current.value === '') {
+            setRecordNameError({
+                error: true,
+                message: 'Record Name is required'
+            });
+            flag = 1;
+        }
+        else {
+            setRecordNameError({
+                error: false,
+                message: ''
+            });
+        }
+        if (docName.current.value === '') {
+            setDocNameError({
+                error: true,
+                message: 'Doctor Name is required'
+            });
+            flag = 1;
+        }
+        else {
+            setDocNameError({
+                error: false,
+                message: ''
+            });
+        }
+        if (orgName.current.value === '') {
+            setOrgNameError({
+                error: true,
+                message: 'Organisation Name is required'
+            });
+            flag = 1;
+        }
+        else {
+            setOrgNameError({
+                error: false,
+                message: ''
+            });
+        }
+        if (docType === '') {
+            setDocTypeError({
+                error: true,
+                message: 'Document Type is required'
+            });
+            flag = 1;
+        }
+        else {
+            setDocTypeError({
+                error: false,
+                message: ''
+            });
+        }
+        if (patientAddress.current.value === '') {
+            setPatientAddressError({
+                error: true,
+                message: 'Patient Address is required'
+            });
+            flag = 1;
+        }
+        else {
+            setPatientAddressError({
+                error: false,
+                message: ''
+            });
+        }
+        if (flag === 1) {
+            return;
+        }
         if (file === null) {
             setFileErr(true);
         }
@@ -97,7 +186,6 @@ const DiagUpload = () => {
                     gap: "20px"
                 }}>  <TextField
                         margin="normal"
-                        required
                         fullWidth
                         name="patientaddress"
                         label="Patient Address"
@@ -105,9 +193,10 @@ const DiagUpload = () => {
                         id="patientaddress"
                         inputRef={patientAddress}
                         sx={{ width: "40vw", maxWidth: "405px", minWidth: "250px" }}
+                        error={patientAddressError.error}
+                        helperText={patientAddressError.message}
                     /><TextField
                         margin="normal"
-                        required
                         fullWidth
                         name="name"
                         label="Record Name"
@@ -115,9 +204,10 @@ const DiagUpload = () => {
                         id="name"
                         inputRef={recordname}
                         sx={{ width: "40vw", maxWidth: "405px", minWidth: "250px", marginTop: "0" }}
+                        error={recordNameError.error}
+                        helperText={recordNameError.message}
                     /><TextField
                         margin="normal"
-                        required
                         fullWidth
                         name="docname"
                         label="Doctor or Issuer's Name"
@@ -125,10 +215,11 @@ const DiagUpload = () => {
                         id="docname"
                         inputRef={docName}
                         sx={{ width: "40vw", maxWidth: "405px", minWidth: "250px", marginTop: "0" }}
+                        error={docNameError.error}
+                        helperText={docNameError.message}
                     /><TextField
                         autoComplete='off'
                         margin="normal"
-                        required
                         fullWidth
                         name="orgname"
                         label="Organisation's Name"
@@ -136,6 +227,8 @@ const DiagUpload = () => {
                         id="orgname"
                         inputRef={orgName}
                         sx={{ width: "40vw", maxWidth: "405px", minWidth: "250px", marginTop: "0" }}
+                        error={orgNameError.error}
+                        helperText={orgNameError.message}
                     />
                     <FormControl sx={{ width: "40vw", maxWidth: "405px", minWidth: "250px" }}><InputLabel id="demo-simple-select-label">Record Type *</InputLabel><Select
                         labelId="demo-simple-select-label"
@@ -143,7 +236,8 @@ const DiagUpload = () => {
                         value={docType}
                         label="Record Type *"
                         onChange={handleChange}
-                        required
+                        error={docTypeError.error}
+                        helperText={docTypeError.message}
                     >
                         <MenuItem value={"certificate"}>Certificate</MenuItem>
                         <MenuItem value={"report"}>Report</MenuItem>
