@@ -37,15 +37,42 @@ const DoctorLogin = () => {
     const specialisation = useRef();
     const [gender, setgender] = useState('');
     const [accounts, setAccounts] = useState([]);
-    const [abhaError, setAbhaError] = useState(false);
-    const [aadharError, setAadharError] = useState(false);
-    const [grnumberError, setGrnumberError] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [nameError, setNameError] = useState(false);
-    const [ageError, setAgeError] = useState(false);
-    const [phoneError, setPhoneError] = useState(false);
-    const [specialisationError, setSpecialisationError] = useState(false);
-    const [genderError, setGenderError] = useState(false);
+    const [abhaError, setAbhaError] = useState({
+        error: false,
+        message: ""
+    });
+    const [aadharError, setAadharError] = useState({
+        error: false,
+        message: ""
+    });
+    const [grnumberError, setGrnumberError] = useState({
+        error: false,
+        message: ""
+    });
+    const [emailError, setEmailError] = useState({
+        error: false,
+        message: ""
+    });
+    const [nameError, setNameError] = useState({
+        error: false,
+        message: ""
+    });
+    const [ageError, setAgeError] = useState({
+        error: false,
+        message: ""
+    });
+    const [phoneError, setPhoneError] = useState({
+        error: false,
+        message: ""
+    });
+    const [specialisationError, setSpecialisationError] = useState({
+        error: false,
+        message: ""
+    });
+    const [genderError, setGenderError] = useState({
+        error: false,
+        message: ""
+    });
     const handleGenderChange = (event) => {
         setgender(event.target.value);
     };
@@ -75,45 +102,129 @@ const DoctorLogin = () => {
         let flag = 0;
         // check if all fields are filled
         if (data.name === "") {
-            setNameError(true);
+            setNameError({
+                error: true,
+                message: "Name cannot be empty"
+            });
             flag = 1;
         }
-        if (data.age === "" || isNaN(data.age)) {
-            setAgeError(true);
+        else {
+            setNameError({
+                error: false,
+                message: ""
+            });
+        }
+        if (data.age === "" || isNaN(data.age) || Number(data.age) < 18 || Number(data.age) > 100) {
+            setAgeError({
+                error: true,
+                message: "Age should be between 18 and 100"
+            });
             flag = 1;
         }
-        if (data.phone === "" || isNaN(data.phone)) {
-            setPhoneError(true);
+        else {
+            setAgeError({
+                error: false,
+                message: ""
+            });
+        }
+        if (data.phone === "" || data.phone.length !== 10 || isNaN(data.phone)) {
+            setPhoneError({
+                error: true,
+                message: "Phone number should be of 10 digits"
+            });
             flag = 1;
+        }
+        else {
+            setPhoneError({
+                error: false,
+                message: ""
+            });
         }
         if (data.gender === "") {
-            setGenderError(true);
+            setGenderError({
+                error: true,
+                message: "Select one of the above values"
+            });
             flag = 1;
+        }
+        else {
+            setGenderError({
+                error: false,
+                message: ""
+            });
         }
         if (data.abha.length !== 14 || isNaN(data.abha)) {
-            setAbhaError(true);
+            setAbhaError({
+                error: true,
+                message: "ABHA ID should be of 14 digits"
+            });
             flag = 1;
+        }
+        else {
+            setAbhaError({
+                error: false,
+                message: ""
+            });
         }
         if (data.aadhar.length !== 12 || isNaN(data.aadhar)) {
-            setAadharError(true);
+            setAadharError({
+                error: true,
+                message: "Aadhar number should be of 12 digits"
+            });
             flag = 1;
         }
+        else {
+            setAadharError({
+                error: false,
+                message: ""
+            });
+        }
         if (data.grnumber.length !== 7 || !data.grnumber.includes('G-')) {
-            setGrnumberError(true);
+            setGrnumberError({
+                error: true,
+                message: "GR Number should be of 7 characters with 5 digits at the end and should start with G-"
+            });
             flag = 1;
         }
         // check if last five chat of grnumber is a number
         if (isNaN(data.grnumber.slice(-5))) {
-            setGrnumberError(true);
+            setGrnumberError({
+                error: true,
+                message: "GR Number should be of 7 characters with 5 digits at the end and should start with G-"
+            });
             flag = 1;
+        }
+        else {
+            setGrnumberError({
+                error: false,
+                message: ""
+            });
         }
         if (!data.email.includes('@')) {
-            setEmailError(true);
+            setEmailError({
+                error: true,
+                message: "Enter a valid email address"
+            });
             flag = 1;
         }
+        else {
+            setEmailError({
+                error: false,
+                message: ""
+            });
+        }
         if (data.specialisation === "") {
-            setSpecialisationError(true);
+            setSpecialisationError({
+                error: true,
+                message: "Select one of the above values"
+            });
             flag = 1;
+        }
+        else {
+            setSpecialisationError({
+                error: false,
+                message: ""
+            });
         }
         if (flag === 1) {
             return;
@@ -178,8 +289,8 @@ const DoctorLogin = () => {
                                 type="text"
                                 id="name"
                                 inputRef={name}
-                                error={nameError}
-                                helperText={"Name cannot be empty!"}
+                                error={nameError.error}
+                                helperText={nameError.message}
                             />
                                 <TextField
                                     margin="normal"
@@ -190,8 +301,8 @@ const DoctorLogin = () => {
                                     inputProps={{ inputMode: "numeric", min: "1", max: "120" }}
                                     id="age"
                                     inputRef={age}
-                                    error={ageError}
-                                    helperText={"Enter a valid number!"}
+                                    error={ageError.error}
+                                    helperText={ageError.message}
                                 />
                             </Box>
                             <FormControl fullWidth sx={{ marginTop: "8px 0" }} ><InputLabel id="demo-simple-select-label">Gender * </InputLabel><Select
@@ -200,8 +311,8 @@ const DoctorLogin = () => {
                                 value={gender}
                                 label="Gender"
                                 onChange={handleGenderChange}
-                                error={genderError}
-                                helperText={"Select one of the values!"}
+                                error={genderError.error}
+                                helperText={genderError.message}
                             >
                                 <MenuItem value={"male"}>Male</MenuItem>
                                 <MenuItem value={"female"}>Female</MenuItem>
@@ -215,8 +326,8 @@ const DoctorLogin = () => {
                                 name="email"
                                 type='text'
                                 inputRef={email}
-                                error={emailError}
-                                helperText={"Enter a valid email address!"}
+                                error={emailError.error}
+                                helperText={emailError.message}
                             />
                             <TextField
                                 margin="normal"
@@ -226,8 +337,8 @@ const DoctorLogin = () => {
                                 name="phone"
                                 type='text'
                                 inputRef={phone}
-                                error={phoneError}
-                                helperText={"Enter a valid mobile number!"}
+                                error={phoneError.error}
+                                helperText={phoneError.message}
                             />
                             <TextField
                                 margin="normal"
@@ -236,8 +347,8 @@ const DoctorLogin = () => {
                                 label="ABHA ID"
                                 name="abhaID"
                                 inputRef={abha}
-                                error={abhaError}
-                                helperText={"Enter a valid 14 digit ABHA ID!"}
+                                error={abhaError.error}
+                                helperText={abhaError.message}
                             />
                             <TextField
                                 margin="normal"
@@ -247,8 +358,8 @@ const DoctorLogin = () => {
                                 type="text"
                                 id="aadhar"
                                 inputRef={aadhar}
-                                error={aadharError}
-                                helperText={"Enter a valid 12 digit AADHAAR ID!"}
+                                error={aadharError.error}
+                                helperText={aadharError.message}
                             />
                             <TextField
                                 margin="normal"
@@ -257,8 +368,8 @@ const DoctorLogin = () => {
                                 label="General Registration (G.R.) Number"
                                 name="grnumber"
                                 inputRef={grnumber}
-                                error={grnumberError}
-                                helperText={"Enter a valid GR Number!"}
+                                error={grnumberError.error}
+                                helperText={grnumberError.message}
                             />
                             <TextField
                                 margin="normal"
@@ -267,8 +378,8 @@ const DoctorLogin = () => {
                                 label="Specialisation"
                                 name="specialisation"
                                 inputRef={specialisation}
-                                error={specialisationError}
-                                helperText={"Specialisation cannot be empty!"}
+                                error={specialisationError.error}
+                                helperText={specialisationError.message}
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
@@ -296,7 +407,6 @@ const DoctorLogin = () => {
                             </Grid>
                         </Box>
                     </Box>
-
                 </Container><Footer /></>}
         </>
     );

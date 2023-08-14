@@ -35,13 +35,34 @@ const PatientLogin = () => {
     const aadhar = useRef();
     const [gender, setgender] = useState('');
     const [accounts, setAccounts] = useState([]);
-    const [nameError, setNameError] = useState(false);
-    const [ageError, setAgeError] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [phoneError, setPhoneError] = useState(false);
-    const [abhaError, setAbhaError] = useState(false);
-    const [aadharError, setAadharError] = useState(false);
-    const [genderError, setGenderError] = useState(false);
+    const [nameError, setNameError] = useState({
+        error: false,
+        message: ""
+    });
+    const [ageError, setAgeError] = useState({
+        error: false,
+        message: ""
+    });
+    const [emailError, setEmailError] = useState({
+        error: false,
+        message: ""
+    });
+    const [phoneError, setPhoneError] = useState({
+        error: false,
+        message: ""
+    });
+    const [abhaError, setAbhaError] = useState({
+        error: false,
+        message: ""
+    });
+    const [aadharError, setAadharError] = useState({
+        error: false,
+        message: ""
+    });
+    const [genderError, setGenderError] = useState({
+        error: false,
+        message: ""
+    });
     const handleGenderChange = (event) => {
         setgender(event.target.value);
     };
@@ -70,32 +91,95 @@ const PatientLogin = () => {
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
         let flag = 0;
         if (data.name === "") {
-            setNameError(true);
+            setNameError({
+                error: true,
+                message: "Name cannot be empty!"
+            });
             flag = 1;
         }
-        if (data.age === "" || isNaN(data.age)) {
-            setAgeError(true);
+        else {
+            setNameError({
+                error: false,
+                message: ""
+            });
+        }
+        if (data.age === "" || isNaN(data.age) || Number(data.age) < 0 || Number(data.age) > 100) {
+            setAgeError({
+                error: true,
+                message: "Age cannot be empty!"
+            });
             flag = 1;
+        }
+        else {
+            setAgeError({
+                error: false,
+                message: ""
+            });
         }
         if (data.phone === "" || isNaN(data.phone)) {
-            setPhoneError(true);
+            setPhoneError({
+                error: true,
+                message: "Phone cannot be empty!"
+            });
             flag = 1;
+        }
+        else {
+            setPhoneError({
+                error: false,
+                message: ""
+            });
         }
         if ((data.abha).length !== 14 || isNaN(data.abha)) {
-            setAbhaError(true);
+            setAbhaError({
+                error: true,
+                message: "ABHA ID cannot be empty!"
+            });
             flag = 1;
+        }
+        else {
+            setAbhaError({
+                error: false,
+                message: ""
+            });
         }
         if ((data.aadhar).length !== 12 || isNaN(data.aadhar)) {
-            setAadharError(true);
+            setAadharError({
+                error: true,
+                message: "Aadhar ID cannot be empty!"
+            });
             flag = 1;
+        }
+        else {
+            setAadharError({
+                error: false,
+                message: ""
+            });
         }
         if (data.email === "" || !data.email.includes('@')) {
-            setEmailError(true);
+            setEmailError({
+                error: true,
+                message: "Email cannot be empty!"
+            });
             flag = 1;
         }
+        else {
+            setEmailError({
+                error: false,
+                message: ""
+            });
+        }
         if (data.gender === "") {
-            setGenderError(true);
+            setGenderError({
+                error: true,
+                message: "Select one of the above values"
+            });
             flag = 1;
+        }
+        else {
+            setGenderError({
+                error: false,
+                message: ""
+            });
         }
         if (flag === 1) {
             return;
@@ -151,18 +235,17 @@ const PatientLogin = () => {
                         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, maxWidth: "600px", marginBottom: "60px" }}>
                             <Box component="div" sx={{ display: "flex", gap: "5px" }}><TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 name="name"
                                 label="Name"
                                 type="text"
                                 id="name"
                                 inputRef={name}
-                                error={nameError}
+                                error={nameError.error}
+                                helperText={nameError.message}
                             />
                                 <TextField
                                     margin="normal"
-                                    required
                                     fullWidth
                                     name="age"
                                     label="Age"
@@ -170,7 +253,8 @@ const PatientLogin = () => {
                                     inputProps={{ inputMode: "numeric", min: "1", max: "120" }}
                                     id="age"
                                     inputRef={age}
-                                    error={ageError}
+                                    error={ageError.error}
+                                    helperText={ageError.message}
                                 />
                             </Box>
                             <FormControl fullWidth sx={{ marginTop: "8px 0" }} ><InputLabel id="demo-simple-select-label">Gender * </InputLabel><Select
@@ -179,8 +263,8 @@ const PatientLogin = () => {
                                 value={gender}
                                 label="Gender"
                                 onChange={handleGenderChange}
-                                error={genderError}
-                                required
+                                error={genderError.error}
+                                helperText={genderError.message}
                             >
                                 <MenuItem value={"male"}>Male</MenuItem>
                                 <MenuItem value={"female"}>Female</MenuItem>
@@ -188,47 +272,47 @@ const PatientLogin = () => {
                             </Select></FormControl>
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="email"
                                 label="E-mail"
                                 name="email"
                                 type='email'
                                 inputRef={email}
-                                error={emailError}
+                                error={emailError.error}
+                                helperText={emailError.message}
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="phone"
                                 label="Mobile Number"
                                 name="phone"
                                 type='text'
                                 inputRef={phone}
-                                error={phoneError}
+                                error={phoneError.error}
+                                helperText={phoneError.message}
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="abha"
                                 type='text'
                                 label="ABHA ID"
                                 name="abhaID"
                                 inputRef={abha}
-                                error={abhaError}
+                                error={abhaError.error}
+                                helperText={abhaError.message}
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 name="aadhar"
                                 label="AADHAR ID"
                                 type="text"
                                 id="aadhar"
                                 inputRef={aadhar}
-                                error={aadharError}
+                                error={aadharError.error}
+                                helperText={aadharError.message}
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
@@ -256,7 +340,6 @@ const PatientLogin = () => {
                             </Grid>
                         </Box>
                     </Box>
-
                 </Container><Footer /></>}
         </>
     );

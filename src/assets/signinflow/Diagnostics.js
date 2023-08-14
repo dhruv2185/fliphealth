@@ -30,10 +30,22 @@ const Diagnostics = () => {
     const email = useRef();
     const phone = useRef();
     const license = useRef();
-    const [nameError, setNameError] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [phoneError, setPhoneError] = useState(false);
-    const [licenseError, setLicenseError] = useState(false);
+    const [nameError, setNameError] = useState({
+        error: false,
+        message: ""
+    });
+    const [emailError, setEmailError] = useState({
+        error: false,
+        message: ""
+    });
+    const [phoneError, setPhoneError] = useState({
+        error: false,
+        message: ""
+    });
+    const [licenseError, setLicenseError] = useState({
+        error: false,
+        message: ""
+    });
     const [accounts, setAccounts] = useState([]);
     useEffect(() => {
 
@@ -60,20 +72,56 @@ const Diagnostics = () => {
         const data = { name: name.current.value, phone: phone.current.value, email: email.current.value, license: license.current.value };
         const flag = 0;
         if (data.name === "") {
-            setNameError(true);
+            setNameError({
+                error: true,
+                message: "Name cannot be empty!"
+            });
             flag = 1;
+        }
+        else {
+            setNameError({
+                error: false,
+                message: ""
+            });
         }
         if (data.phone === "" || isNaN(data.phone)) {
-            setPhoneError(true);
+            setPhoneError({
+                error: true,
+                message: "Enter a valid mobile number!"
+            });
             flag = 1;
+        }
+        else {
+            setPhoneError({
+                error: false,
+                message: ""
+            });
         }
         if (data.email === "" || !data.email.includes('@')) {
-            setEmailError(true);
+            setEmailError({
+                error: true,
+                message: "Enter a valid email address!"
+            });
             flag = 1;
         }
+        else {
+            setEmailError({
+                error: false,
+                message: ""
+            });
+        }
         if (data.license === "") {
-            setLicenseError(true);
+            setLicenseError({
+                error: true,
+                message: "Enter a valid license number!"
+            });
             flag = 1;
+        }
+        else {
+            setLicenseError({
+                error: false,
+                message: ""
+            });
         }
         if (flag === 1) {
             return;
@@ -114,8 +162,8 @@ const Diagnostics = () => {
                                 type="text"
                                 id="name"
                                 inputRef={name}
-                                error={nameError}
-                                helperText={"Name cannot be empty!"}
+                                error={nameError.error}
+                                helperText={nameError.message}
                             />
                             <TextField
                                 margin="normal"
@@ -125,8 +173,8 @@ const Diagnostics = () => {
                                 name="email"
                                 type='text'
                                 inputRef={email}
-                                error={emailError}
-                                helperText="Enter a valid email address!"
+                                error={emailError.error}
+                                helperText={emailError.message}
                             />
                             <TextField
                                 margin="normal"
@@ -136,8 +184,8 @@ const Diagnostics = () => {
                                 name="phone"
                                 type='text'
                                 inputRef={phone}
-                                error={phoneError}
-                                helperText="Enter a valid mobile number!"
+                                error={phoneError.error}
+                                helperText={phoneError.message}
                             />
                             <TextField
                                 margin="normal"
@@ -146,8 +194,8 @@ const Diagnostics = () => {
                                 label="License"
                                 name="license"
                                 inputRef={license}
-                                error={licenseError}
-                                helperText="Enter valid license number!"
+                                error={licenseError.error}
+                                helperText={licenseError.message}
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}

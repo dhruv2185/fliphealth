@@ -29,10 +29,22 @@ const HospitalLogin = () => {
     const email = useRef();
     const phone = useRef();
     const license = useRef();
-    const [nameError, setNameError] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [phoneError, setPhoneError] = useState(false);
-    const [licenseError, setLicenseError] = useState(false);
+    const [nameError, setNameError] = useState({
+        error: false,
+        message: ""
+    });
+    const [emailError, setEmailError] = useState({
+        error: false,
+        message: ""
+    });
+    const [phoneError, setPhoneError] = useState({
+        error: false,
+        message: ""
+    });
+    const [licenseError, setLicenseError] = useState({
+        error: false,
+        message: ""
+    });
     const [accounts, setAccounts] = useState([]);
     useEffect(() => {
 
@@ -59,20 +71,56 @@ const HospitalLogin = () => {
         const data = { name: name.current.value, phone: phone.current.value, email: email.current.value, license: license.current.value };
         let flag = 0;
         if (data.name === "") {
-            setNameError(true);
+            setNameError({
+                error: true,
+                message: "Name cannot be empty!"
+            });
             flag = 1;
         }
-        if (data.phone === "" || isNaN(data.phone)) {
-            setPhoneError(true);
+        else {
+            setNameError({
+                error: false,
+                message: ""
+            });
+        }
+        if (data.phone === "" || data.phone.length !== 10 || isNaN(data.phone)) {
+            setPhoneError({
+                error: true,
+                message: "Phone number cannot be empty and must be a number!"
+            });
             flag = 1;
+        }
+        else {
+            setPhoneError({
+                error: false,
+                message: ""
+            });
         }
         if (data.email === "" || !data.email.includes('@')) {
-            setEmailError(true);
+            setEmailError({
+                error: true,
+                message: "Email cannot be empty and must be a valid email address!"
+            });
             flag = 1;
         }
+        else {
+            setEmailError({
+                error: false,
+                message: ""
+            });
+        }
         if (data.license === "") {
-            setLicenseError(true);
+            setLicenseError({
+                error: true,
+                message: "License cannot be empty!"
+            });
             flag = 1;
+        }
+        else {
+            setLicenseError({
+                error: false,
+                message: ""
+            });
         }
         if (flag === 1) {
             return;
@@ -113,8 +161,8 @@ const HospitalLogin = () => {
                                 type="text"
                                 id="name"
                                 inputRef={name}
-                                error={nameError}
-                                helperText={"Name cannot be empty!"}
+                                error={nameError.error}
+                                helperText={nameError.message}
                             />
                             <TextField
                                 margin="normal"
@@ -124,8 +172,8 @@ const HospitalLogin = () => {
                                 name="email"
                                 type='email'
                                 inputRef={email}
-                                error={emailError}
-                                helperText={"Enter a valid email address!"}
+                                error={emailError.error}
+                                helperText={emailError.message}
                             />
                             <TextField
                                 margin="normal"
@@ -135,8 +183,8 @@ const HospitalLogin = () => {
                                 name="phone"
                                 type='text'
                                 inputRef={phone}
-                                error={phoneError}
-                                helperText={"Enter a valid phone number!"}
+                                error={phoneError.error}
+                                helperText={phoneError.message}
                             />
                             <TextField
                                 margin="normal"
@@ -145,8 +193,8 @@ const HospitalLogin = () => {
                                 label="License"
                                 name="license"
                                 inputRef={license}
-                                error={licenseError}
-                                helperText={"Enter a valid license number!"}
+                                error={licenseError.error}
+                                helperText={licenseError.message}
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
@@ -169,7 +217,6 @@ const HospitalLogin = () => {
                             </Grid>
                         </Box>
                     </Box>
-
                 </Container><Footer /></>}
         </>
     );

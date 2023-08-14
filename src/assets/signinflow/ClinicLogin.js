@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import Web3 from 'web3';
 import { useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Button from '@mui/material/Button';
@@ -29,10 +28,22 @@ const ClinicLogin = () => {
     const email = useRef();
     const phone = useRef();
     const location = useRef();
-    const [nameError, setNameError] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [phoneError, setPhoneError] = useState(false);
-    const [locationError, setLocationError] = useState(false);
+    const [nameError, setNameError] = useState({
+        error: false,
+        message: ""
+    });
+    const [emailError, setEmailError] = useState({
+        error: false,
+        message: ""
+    });
+    const [phoneError, setPhoneError] = useState({
+        error: false,
+        message: ""
+    });
+    const [locationError, setLocationError] = useState({
+        error: false,
+        message: ""
+    });
     const [accounts, setAccounts] = useState([]);
     useEffect(() => {
         // Asking if metamask is already present or not
@@ -49,29 +60,63 @@ const ClinicLogin = () => {
         } else {
             enqueueSnackbar("Please install Metamask to Proceed!", { variant: "error" });
             navigate("/");
-
         }
     }, [])
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // add field for degree name
         const data = { name: name.current.value, phone: phone.current.value, email: email.current.value, location: location.current.value };
         let flag = 0;
         if (data.name === "") {
-            setNameError(true);
+            setNameError({
+                error: true,
+                message: "Name cannot be empty!"
+            });
             flag = 1;
+        }
+        else {
+            setNameError({
+                error: false,
+                message: ""
+            });
         }
         if (data.phone === "" || isNaN(data.phone)) {
-            setPhoneError(true);
+            setPhoneError({
+                error: true,
+                message: "Enter a valid mobile number!"
+            })
             flag = 1;
+        }
+        else {
+            setPhoneError({
+                error: false,
+                message: ""
+            })
         }
         if (data.email === "" || !data.email.includes('@')) {
-            setEmailError(true);
+            setEmailError({
+                error: true,
+                message: "Enter a valid email address!"
+            })
             flag = 1;
         }
+        else {
+            setEmailError({
+                error: false,
+                message: ""
+            })
+        }
         if (data.location === "") {
-            setLocationError(true);
+            setLocationError({
+                error: true,
+                message: "Location cannot be empty!"
+            });
             flag = 1;
+        }
+        else {
+            setLocationError({
+                error: false,
+                message: ""
+            });
         }
         if (flag === 1) {
             return;
@@ -117,8 +162,8 @@ const ClinicLogin = () => {
                                 type="text"
                                 id="name"
                                 inputRef={name}
-                                error={nameError}
-                                helperText={"Name cannot be empty!"}
+                                error={nameError.error}
+                                helperText={nameError.message}
                             />
                             <TextField
                                 margin="normal"
@@ -128,8 +173,8 @@ const ClinicLogin = () => {
                                 name="email"
                                 type='email'
                                 inputRef={email}
-                                error={emailError}
-                                helperText="Enter a valid email address!"
+                                error={emailError.error}
+                                helperText={emailError.message}
                             />
                             <TextField
                                 margin="normal"
@@ -139,8 +184,8 @@ const ClinicLogin = () => {
                                 name="phone"
                                 type='text'
                                 inputRef={phone}
-                                error={phoneError}
-                                helperText={"Enter a valid mobile number!"}
+                                error={phoneError.error}
+                                helperText={phoneError.message}
                             />
                             <TextField
                                 margin="normal"
@@ -149,8 +194,8 @@ const ClinicLogin = () => {
                                 label="Location"
                                 name="location"
                                 inputRef={location}
-                                error={locationError}
-                                helperText="Location cannot be empty!"
+                                error={locationError.error}
+                                helperText={locationError.message}
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
