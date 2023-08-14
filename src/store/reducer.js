@@ -3,19 +3,25 @@ const initialState = {
     authenticated: false,
     accountType: null,
     accountAddress: null,
-    profile: {}
+    profile: {
+        name: ""
+    }
 }
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "LOGIN":
             return {
                 ...state,
+                authenticated: true,
                 ...action.payload
             };
         case "LOGOUT":
             return {
                 ...state,
                 authenticated: false,
+                accountType: null,
+                accountAddress: null,
+                profile: null
             }
         case "UPDATE":
             return {

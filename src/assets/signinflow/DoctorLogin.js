@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Web3 from 'web3';
 import { useState } from 'react';
 import Navbar from '../../components/Navbar';
@@ -18,7 +18,7 @@ import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { registerDoctor } from '../../Utils/SmartContractUtils';
+import { getDoctorOwnProfile, registerDoctor } from '../../Utils/SmartContractUtils';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 // import { generateOtp, verifyOTP } from '../../Utils/AadhaarVerification';
@@ -27,6 +27,7 @@ const DoctorLogin = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
+    const dispatch = useDispatch();
     const name = useRef();
     const age = useRef();
     const email = useRef();
@@ -81,9 +82,40 @@ const DoctorLogin = () => {
         // Asking if metamask is already present or not
         if (window.ethereum) {
             window.ethereum
-                .request({ method: "eth_requestAccounts" })
+                .request({ method: "eth_requestAccounts" }).then((res) => {
+                    if (res.length === 0) {
+                        enqueueSnackbar("Please connect at least one account to continue!", { variant: "error" })
+                        navigate("/");
+                    }
+                    else {
+                        return res;
+                    }
+                })
                 .then((res) => {
                     setAccounts(res);
+                    const authenticate = async () => {
+                        const getProfile = await getDoctorOwnProfile(res[0]);
+                        if (!getProfile || getProfile["name"] === "") {
+                            return;
+                        }
+                        else {
+                            const profile = {
+                                name: getProfile["name"],
+                                age: getProfile["age"],
+                                email: getProfile["email"],
+                                abhaId: getProfile["abhaId"],
+                                aadharId: getProfile["aadharId"],
+                                mobile: getProfile["mobile"],
+                                gender: getProfile["gender"],
+                                grNumber: getProfile["grNum"],
+                                degreeName: getProfile["degreeName"]
+                            }
+                            enqueueSnackbar(`Welcome, ${profile.name}`);
+                            dispatch({ type: "LOGIN", payload: { accountType: "DOCTOR", accountAddress: res[0], profile: profile } })
+                            navigate("/Dashboard");
+                        }
+                    }
+                    authenticate();
                     setIsLoading(false)
                 }).catch(err => {
                     enqueueSnackbar("Please Log in to Metamask to Proceed!", { variant: "error" });
@@ -251,7 +283,33 @@ const DoctorLogin = () => {
         // note the format and create a new data object to be sent to the smart contract
 
         // const res = await registerDoctor(data, accounts[0]);
-        const res = await registerDoctor(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
+        const res = await registerDoctor(data, accounts[0]);
+        if (res.message) {
+            enqueueSnackbar(res.message, { variant: "error" });
+        }
+        else {
+            const getProfile = await getDoctorOwnProfile(accounts[0]);
+            if (getProfile.message) {
+                enqueueSnackbar(getProfile.message, { variant: "error" });
+            }
+            else {
+                const profile = {
+                    name: getProfile["name"],
+                    age: getProfile["age"],
+                    email: getProfile["email"],
+                    abhaId: getProfile["abhaId"],
+                    aadharId: getProfile["aadharId"],
+                    mobile: getProfile["mobile"],
+                    gender: getProfile["gender"],
+                    grNumber: getProfile["grNum"],
+                    degreeName: getProfile["degreeName"]
+                }
+                enqueueSnackbar(`Welcome, ${profile.name}`);
+                dispatch({ type: "LOGIN", payload: { accountType: "DOCTOR", accountAddress: accounts[0], profile: profile } })
+                navigate("/Dashboard");
+            }
+
+        }
         console.log(res);
     };
     useEffect(() => {

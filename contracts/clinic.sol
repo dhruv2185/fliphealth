@@ -9,7 +9,7 @@ contract clinic is doctor {
         string location;
     }
 
-    mapping(address => address) internal DoctorToClinic; // doctor address to clinic address
+    mapping(address => address) public DoctorToClinic; // doctor address to clinic address
     mapping(address => Clinic) public ClinicIndex; // doctor address to clinic struct
 
     function registerClinic(

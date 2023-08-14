@@ -92,7 +92,7 @@ const ViewPatDocs = (props) => {
             >
                 <CircularProgress color="inherit" />
             </Backdrop>
-            <h2 id="parent-modal-title">Kishun Patil's Records</h2>
+            <h2 id="parent-modal-title">Patient's Records</h2>
             <p id="parent-modal-description">
                 Here, you can access Patient's Records.
             </p><Container component="main" maxWidth="s" minWidth="xs"><CssBaseline /><div style={{ display: "flex", gap: "30px", flexWrap: "wrap", justifyContent: "center" }} >

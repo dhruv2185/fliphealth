@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Web3 from 'web3';
 import { useState } from 'react';
 import Navbar from '../../components/Navbar';
@@ -18,7 +18,7 @@ import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { register_patient } from '../../Utils/SmartContractUtils';
+import { getPatientOwnProfile, register_patient } from '../../Utils/SmartContractUtils';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 // import { generateOtp, verifyOTP } from '../../Utils/AadhaarVerification';
@@ -26,6 +26,7 @@ import { useSnackbar } from 'notistack';
 const PatientLogin = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const name = useRef();
     const age = useRef();
@@ -70,11 +71,41 @@ const PatientLogin = () => {
 
         // Asking if metamask is already present or not
         if (window.ethereum) {
+            enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to LOGIN!", { variant: "info" })
             window.ethereum
                 .request({ method: "eth_requestAccounts" })
                 .then((res) => {
+                    if (res.length === 0) {
+                        enqueueSnackbar("Please connect at least one account to continue!", { variant: "error" })
+                        navigate("/");
+                    }
+                    else {
+                        return res;
+                    }
+                }).then((res) => {
                     setAccounts(res);
-                    console.log(accounts);
+                    // console.log(accounts);
+                    const authenticate = async () => {
+                        const getProfile = await getPatientOwnProfile(res[0]);
+                        if (!getProfile || getProfile["name"] === "") {
+                            return;
+                        }
+                        else {
+                            const profile = {
+                                name: getProfile["name"],
+                                age: getProfile["age"],
+                                email: getProfile["email"],
+                                abhaId: getProfile["abhaId"],
+                                aadharId: getProfile["aadharId"],
+                                mobile: getProfile["mobile"],
+                                gender: getProfile["gender"]
+                            }
+                            enqueueSnackbar(`Welcome, ${profile.name}`);
+                            dispatch({ type: "LOGIN", payload: { accountType: "PATIENT", accountAddress: res[0], profile: profile } })
+                            navigate("/Dashboard");
+                        }
+                    }
+                    authenticate();
                     setIsLoading(false)
                 }).catch(err => {
                     enqueueSnackbar("Please Log in to Metamask to Proceed!", { variant: "error" });
@@ -83,7 +114,6 @@ const PatientLogin = () => {
         } else {
             enqueueSnackbar("Please install Metamask to Proceed!", { variant: "error" });
             navigate("/");
-
         }
     }, [])
     const handleSubmit = async (event) => {
@@ -206,10 +236,34 @@ const PatientLogin = () => {
         // note the format and create a new data object to be sent to the smart contract
 
         const res = await register_patient(data, accounts[0]);
+        if (res.message) {
+            enqueueSnackbar(res.message, { variant: "error" });
+        }
+        else {
+            const getProfile = await getPatientOwnProfile(accounts[0]);
+            if (getProfile.message) {
+                enqueueSnackbar(getProfile.message, { variant: "error" });
+            }
+            else {
+                const profile = {
+                    name: getProfile["name"],
+                    age: getProfile["age"],
+                    email: getProfile["email"],
+                    abhaId: getProfile["abhaId"],
+                    aadharId: getProfile["aadharId"],
+                    mobile: getProfile["mobile"],
+                    gender: getProfile["gender"]
+                }
+                enqueueSnackbar(`Welcome, ${profile.name}`);
+                dispatch({ type: "LOGIN", payload: { accountType: "PATIENT", accountAddress: accounts[0], profile: profile } })
+                navigate("/Dashboard");
+            }
+
+        }
         console.log(res);
 
     };
-    enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })
+
     return (
         <>
             {isLoading && <Box sx={{ display: 'flex', position: "absolute", top: "48%", left: "48%" }}>
@@ -314,10 +368,7 @@ const PatientLogin = () => {
                                 error={aadharError.error}
                                 helperText={aadharError.message}
                             />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
-                            />
+
                             <Button
                                 type="submit"
                                 fullWidth
@@ -327,11 +378,7 @@ const PatientLogin = () => {
                                 Sign Up
                             </Button>
                             <Grid container>
-                                <Grid item xs>
-                                    <Link href="#" variant="body2">
-                                        Forgot password?
-                                    </Link>
-                                </Grid>
+
                                 <Grid item>
                                     <Link href="https://healthid.ndhm.gov.in/register" variant="body2" target="_blank">
                                         {"Don't have an ABHA ID? Create Now!"}

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Avatar, Card, Container, CssBaseline, IconButton, InputBase } from '@mui/material';
+import { Avatar, Card, Container, CssBaseline, IconButton, InputBase, Button } from '@mui/material';
 import { enrollInClinicForDoctor, exitFromClinic, getDoctorOwnProfile, getOrgOfDoctor } from '../../Utils/SmartContractUtils';
 import { useSelector } from 'react-redux';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { enqueueSnackbar } from 'notistack';
-import SearchIcon from '@mui/icons-material/Search';
 
+import AddIcon from '@mui/icons-material/Add';
 const DocUser = () => {
 
     const [docProfile, setDocProfile] = useState(null);
@@ -15,7 +15,7 @@ const DocUser = () => {
     const [cli, setCli] = useState("");
     const [hosp, setHosp] = useState("")
     const search = useRef("");
-
+    const [refresh, setRefresh] = useState(false);
     const handleAdd = async () => {
         const res = await enrollInClinicForDoctor(search.current.value, accountAddress);
         if (res.message) {
@@ -24,6 +24,7 @@ const DocUser = () => {
         else {
             enqueueSnackbar("Clinic Added Successfully", { variant: "success" });
         }
+        setRefresh(!refresh);
     }
 
     const handleExit = async () => {
@@ -34,6 +35,7 @@ const DocUser = () => {
         else {
             enqueueSnackbar("Removed from Clinic successfully", { variant: "success" });
         }
+        setRefresh(!refresh);
     }
 
     const fetchOrgs = async () => {
@@ -66,7 +68,7 @@ const DocUser = () => {
         }
         fetchProfile();
         fetchOrgs();
-    }, [accountAddress])
+    }, [accountAddress, refresh])
 
 
     return (
@@ -100,17 +102,18 @@ const DocUser = () => {
                             <h4 style={{ color: "grey" }}>Phone Number : </h4>
                             <b><h4>{Number(docProfile["mobile"])}</h4></b>
                         </div>
-                        {cli === "NA" && <><InputBase
-                            sx={{ ml: 1, flex: 1 }}
-                            inputRef={search}
-                            placeholder="Add Clinic"
-                            inputProps={{ 'aria-label': 'search ' }} /><IconButton type="submit" sx={{ p: '10px' }} onClick={handleAdd} aria-label="search">
-                                <SearchIcon />
-                            </IconButton></>}
-                        {cli !== "" && cli !== "NA" && <IconButton type="submit" sx={{ p: '10px' }} onClick={handleExit} aria-label="search">
-                            Exit From Clinic
-                            <SearchIcon />
-                        </IconButton>}
+                        <center>
+                            {cli === "NA" && <><InputBase
+                                sx={{ ml: 1, flex: 1, minWidth: "410px", backgroundColor: "#595959", padding: 1, borderRadius: "5px" }}
+                                inputRef={search}
+                                placeholder="Add Clinic (Address)"
+                                inputProps={{ 'aria-label': 'search ' }} /><IconButton type="submit" sx={{ p: '10px' }} onClick={handleAdd} aria-label="search">
+                                    <AddIcon />
+                                </IconButton></>}
+                            {cli !== "" && cli !== "NA" && <Button type="submit" sx={{ p: '10px' }} onClick={handleExit} color="neutral" variant="outlined">
+                                Exit From Clinic
+
+                            </Button>}</center>
                     </Card></>}
             </Container>
         </>

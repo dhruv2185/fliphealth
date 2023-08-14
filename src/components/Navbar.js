@@ -23,6 +23,7 @@ const user = ['Doctor', 'Patient', 'Hospital', 'Clinic', 'Diagnostics'];
 
 function Navbar() {
     const isLoggedIn = useSelector(state => state.authenticated);
+    const profile = useSelector(state => state.profile);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -185,7 +186,9 @@ function Navbar() {
                     {isLoggedIn && <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar>
+                                    {profile.name[0]}
+                                </Avatar>
                             </IconButton>
                         </Tooltip>
                         <Menu
