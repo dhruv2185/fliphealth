@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Web3 from 'web3';
 import { useState } from 'react';
 import Navbar from '../../components/Navbar';
@@ -19,11 +19,13 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import { getHospitalProfile, registerHospital } from '../../Utils/SmartContractUtils';
 
 
 const HospitalLogin = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const name = useRef();
     const email = useRef();
@@ -50,10 +52,40 @@ const HospitalLogin = () => {
 
         // Asking if metamask is already present or not
         if (window.ethereum) {
+            enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to LOGIN!", { variant: "info" })
             window.ethereum
-                .request({ method: "eth_requestAccounts" })
+                .request({ method: "eth_requestAccounts" }).then((res) => {
+                    if (res.length === 0) {
+                        enqueueSnackbar("Please connect at least one account to continue!", { variant: "error" })
+                        navigate("/");
+                    }
+                    else {
+                        return res;
+                    }
+                })
                 .then((res) => {
                     setAccounts(res);
+                    const authenticate = async () => {
+                        const getProfile = await getHospitalProfile(res[0]);
+                        if (!getProfile || getProfile["hospname"] === "") {
+                            return;
+                        }
+                        else {
+                            const profile = {
+                                name: getProfile["hospname"],
+
+                                email: getProfile["email"],
+
+
+                                mobile: getProfile["phone"],
+                                license: getProfile["license"],
+                            }
+                            enqueueSnackbar(`Welcome, ${profile.name}`);
+                            dispatch({ type: "LOGIN", payload: { accountType: "HOSPITAL", accountAddress: res[0], profile: profile } })
+                            navigate("/Dashboard");
+                        }
+                    }
+                    authenticate();
                     setIsLoading(false)
                 }).catch(err => {
                     enqueueSnackbar("Please Log in to Metamask to Proceed!", { variant: "error" });
@@ -125,11 +157,33 @@ const HospitalLogin = () => {
         if (flag === 1) {
             return;
         }
-        // const res = await registerHospital(data, accounts[0]);
-        // const res = await registerHospital(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
-        // console.log(res);
+        const res = await registerHospital(data, accounts[0]);
+        if (res.message) {
+            enqueueSnackbar(res.message, { variant: "error" });
+        }
+        else {
+            const getProfile = await getHospitalProfile(accounts[0]);
+            if (getProfile.message) {
+                enqueueSnackbar(getProfile.message, { variant: "error" });
+            }
+            else {
+                const profile = {
+                    name: getProfile["hospname"],
+
+                    email: getProfile["email"],
+
+
+                    mobile: getProfile["phone"],
+                    license: getProfile["license"],
+                }
+                enqueueSnackbar(`Welcome, ${profile.name}`);
+                dispatch({ type: "LOGIN", payload: { accountType: "HOSPITAL", accountAddress: accounts[0], profile: profile } })
+                navigate("/Dashboard");
+            }
+
+        }
     };
-    enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })
+
     return (
         <>
             {isLoading && <Box sx={{ display: 'flex', position: "absolute", top: "48%", left: "48%" }}>
@@ -222,5 +276,6 @@ const HospitalLogin = () => {
     );
 
 }
+
 
 export default HospitalLogin;

@@ -19,7 +19,8 @@ const ViewClinDoctors = () => {
             enqueueSnackbar(res.message, { variant: "error" });
         }
         else {
-            setDoctors(res);
+            const newres = res.filter(item => item.myAdd !== "0x0000000000000000000000000000000000000000");
+            setDoctors(newres);
         }
         setIsLoading(false);
     }
@@ -45,7 +46,8 @@ const ViewClinDoctors = () => {
                             );
                         }
                     })
-                    }
+                    }{!doctors && <h5>Failed to load data. Please reload the page OR switch tabs!</h5>}
+                    {doctors && doctors.length === 0 && <h5>No Doctors Found!</h5>}
                 </Box>
             </Container>
         </>

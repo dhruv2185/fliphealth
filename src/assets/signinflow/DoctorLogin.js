@@ -81,6 +81,7 @@ const DoctorLogin = () => {
 
         // Asking if metamask is already present or not
         if (window.ethereum) {
+            enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to LOGIN!", { variant: "info" })
             window.ethereum
                 .request({ method: "eth_requestAccounts" }).then((res) => {
                     if (res.length === 0) {
@@ -365,9 +366,9 @@ const DoctorLogin = () => {
                                 error={genderError.error}
                                 helperText={genderError.message}
                             >
-                                <MenuItem value={"male"}>Male</MenuItem>
-                                <MenuItem value={"female"}>Female</MenuItem>
-                                <MenuItem value={"other"}>Other</MenuItem>
+                                <MenuItem value={"Male"}>Male</MenuItem>
+                                <MenuItem value={"Female"}>Female</MenuItem>
+                                <MenuItem value={"Other"}>Other</MenuItem>
                             </Select></FormControl>
                             <TextField
                                 margin="normal"

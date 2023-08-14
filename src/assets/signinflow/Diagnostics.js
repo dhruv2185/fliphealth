@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Web3 from 'web3';
 import { useState } from 'react';
 import Navbar from '../../components/Navbar';
@@ -17,7 +17,7 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
-import { registerDiagnostic } from '../../Utils/SmartContractUtils';
+import { getDiagProfile, registerDiagnostic } from '../../Utils/SmartContractUtils';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
@@ -25,6 +25,7 @@ import { useSnackbar } from 'notistack';
 const Diagnostics = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const name = useRef();
     const email = useRef();
@@ -51,10 +52,40 @@ const Diagnostics = () => {
 
         // Asking if metamask is already present or not
         if (window.ethereum) {
+            enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })
             window.ethereum
-                .request({ method: "eth_requestAccounts" })
+                .request({ method: "eth_requestAccounts" }).then((res) => {
+                    if (res.length === 0) {
+                        enqueueSnackbar("Please connect at least one account to continue!", { variant: "error" })
+                        navigate("/");
+                    }
+                    else {
+                        return res;
+                    }
+                })
                 .then((res) => {
                     setAccounts(res);
+                    const authenticate = async () => {
+                        const getProfile = await getDiagProfile(res[0]);
+                        if (!getProfile || getProfile["Diagname"] === "") {
+                            return;
+                        }
+                        else {
+                            const profile = {
+                                name: getProfile["Diagname"],
+
+                                email: getProfile["email"],
+
+
+                                mobile: getProfile["phone"],
+                                license: getProfile["license"],
+                            }
+                            enqueueSnackbar(`Welcome, ${profile.name}`);
+                            dispatch({ type: "LOGIN", payload: { accountType: "DIAGNOSTICS", accountAddress: res[0], profile: profile } })
+                            navigate("/Dashboard");
+                        }
+                    }
+                    authenticate();
                     setIsLoading(false)
                 }).catch(err => {
                     enqueueSnackbar("Please Log in to Metamask to Proceed!", { variant: "error" });
@@ -126,11 +157,34 @@ const Diagnostics = () => {
         if (flag === 1) {
             return;
         }
-        // const res = await registerDiagnostic(data, accounts[0]);
-        const res = await registerDiagnostic(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
-        console.log(res);
+        const res = await registerDiagnostic(data, accounts[0]);
+        if (res.message) {
+            enqueueSnackbar(res.message, { variant: "error" });
+        }
+        else {
+            const getProfile = await getDiagProfile(accounts[0]);
+            if (getProfile.message) {
+                enqueueSnackbar(getProfile.message, { variant: "error" });
+            }
+            else {
+                const profile = {
+                    name: getProfile["Diagname"],
+
+                    email: getProfile["email"],
+
+
+                    mobile: getProfile["phone"],
+                    license: getProfile["license"],
+                }
+                enqueueSnackbar(`Welcome, ${profile.name}`);
+                dispatch({ type: "LOGIN", payload: { accountType: "DIAGNOSTICS", accountAddress: accounts[0], profile: profile } })
+                navigate("/Dashboard");
+            }
+
+        }
+        // console.log(res);
     };
-    enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })
+
     return (
         <>
             {isLoading && <Box sx={{ display: 'flex', position: "absolute", top: "48%", left: "48%" }}>
