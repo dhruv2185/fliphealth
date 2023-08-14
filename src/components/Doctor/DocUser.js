@@ -84,7 +84,7 @@ const DocUser = () => {
                         <Avatar sx={{ bgcolor: "red", width: 100, height: 100, fontSize: 50 }} aria-label="recipe">
                             {docProfile["name"][0]}
                         </Avatar>
-                        <div style={{ margin: "auto 60px", lineHeight: "16px" }}><p >{docProfile["name"]}</p><p style={{ color: "grey" }}>{docProfile["degreeName"]}</p><p style={{ color: "grey" }}>G.R. : {Number(docProfile["grNum"])}</p></div>
+                        <div style={{ margin: "auto 60px", lineHeight: "16px" }}><p >{docProfile["name"]}</p><p style={{ color: "grey" }}>{docProfile["degreeName"]}</p><p style={{ color: "grey" }}>G.R. : G-{Number(docProfile["grNum"])}</p></div>
                     </div>
                 </Card>
 

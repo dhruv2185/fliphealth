@@ -130,7 +130,8 @@ const DoctorLogin = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         // add field for degree name
-        const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, grnumber: grnumber.current.value, gender: gender, specialisation: specialisation.current.value };
+        const onlyNumber = Number(grnumber.current.value.substring(2));
+        const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, grnumber: onlyNumber, gender: gender, specialisation: specialisation.current.value };
         let flag = 0;
         // check if all fields are filled
         if (data.name === "") {
@@ -211,18 +212,10 @@ const DoctorLogin = () => {
                 message: ""
             });
         }
-        if (data.grnumber.length !== 7 || !data.grnumber.includes('G-')) {
+        if (grnumber.current.value === "" || (grnumber.current.value.length !== 7) || !grnumber.current.value.startsWith("G-")) {
             setGrnumberError({
                 error: true,
-                message: "GR Number should be of 7 characters with 5 digits at the end and should start with G-"
-            });
-            flag = 1;
-        }
-        // check if last five chat of grnumber is a number
-        if (isNaN(data.grnumber.slice(-5))) {
-            setGrnumberError({
-                error: true,
-                message: "GR Number should be of 7 characters with 5 digits at the end and should start with G-"
+                message: "GR Number should be of 5 digits and start with G-"
             });
             flag = 1;
         }
@@ -248,7 +241,7 @@ const DoctorLogin = () => {
         if (data.specialisation === "") {
             setSpecialisationError({
                 error: true,
-                message: "Select one of the above values"
+                message: "Specialisation cannot be empty"
             });
             flag = 1;
         }
@@ -295,7 +288,7 @@ const DoctorLogin = () => {
             else {
                 const profile = {
                     name: getProfile["name"],
-                    age: getProfile["age"],
+                    age: Number(getProfile["age"]),
                     email: getProfile["email"],
                     abhaId: getProfile["abhaId"],
                     aadharId: getProfile["aadharId"],
@@ -425,6 +418,7 @@ const DoctorLogin = () => {
                                 id="GR-number"
                                 label="General Registration (G.R.) Number"
                                 name="grnumber"
+                                type='text'
                                 inputRef={grnumber}
                                 error={grnumberError.error}
                                 helperText={grnumberError.message}

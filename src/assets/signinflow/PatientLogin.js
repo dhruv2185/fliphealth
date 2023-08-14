@@ -93,7 +93,7 @@ const PatientLogin = () => {
                         else {
                             const profile = {
                                 name: getProfile["name"],
-                                age: getProfile["age"],
+                                age: Number(getProfile["age"]),
                                 email: getProfile["email"],
                                 abhaId: getProfile["abhaId"],
                                 aadharId: getProfile["aadharId"],
