@@ -13,21 +13,46 @@ import HospitalLogin from './assets/signinflow/HospitalLogin';
 import ClinicLogin from './assets/signinflow/ClinicLogin';
 import About from './assets/About';
 import Contact from './assets/Contact';
-import { SnackbarProvider } from 'notistack';
+
 import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { enqueueSnackbar } from 'notistack';
 
 
 
 function App() {
-
-  const dispatch = useDispatch();
-  dispatch({
-    type: "UPDATE", payload: {
-      accountAddress: "0x81fc1C1f5210a9C5bD3D291fd6279Aa8705eC475", accountType: "HOSPITAL", authenticated: true, profile: {
-        name: "omkar Wadu", age: "18", abhaId: 867, aadharId: 7858, gender: "male", mobile: "342424", email: "omkar@hotmail.com"
-      }
+  useEffect(() => {
+    if (window.ethereum) {
+      window.ethereum.on('chainChanged', () => window.location.reload());
+      window.ethereum.on('accountsChanged', () => window.location.reload());
     }
-  })
+  }, [window.ethereum])
+  useEffect(() => {
+    function onlineHandler() {
+      enqueueSnackbar("You are online", { variant: "success" });
+    }
+
+    function offlineHandler() {
+      enqueueSnackbar("You are offline", { variant: "error" });
+    }
+
+    window.addEventListener("online", onlineHandler);
+    window.addEventListener("offline", offlineHandler);
+
+
+    return () => {
+      window.removeEventListener("online", onlineHandler);
+      window.removeEventListener("offline", offlineHandler);
+    };
+  }, []);
+  const dispatch = useDispatch();
+  // dispatch({
+  //   type: "UPDATE", payload: {
+  //     accountAddress: "0x81fc1C1f5210a9C5bD3D291fd6279Aa8705eC475", accountType: "HOSPITAL", authenticated: true, profile: {
+  //       name: "omkar Wadu", age: "18", abhaId: 867, aadharId: 7858, gender: "male", mobile: "342424", email: "omkar@hotmail.com"
+  //     }
+  //   }
+  // })
   const darkTheme = createTheme({
     palette: {
       mode: 'dark',
@@ -41,22 +66,22 @@ function App() {
   return (
     <>
       <ThemeProvider theme={darkTheme}>
-        <SnackbarProvider>
-          <Router>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/Dashboard" element={<Profile />} />
-              <Route path="/Patient/SignIn" element={<PatientLogin />} />
-              <Route path="/Doctor/SignIn" element={<DoctorLogin />} />
-              <Route path="/Diagnostics/SignIn" element={<Diagnostics />} />
-              <Route path="/Clinic/SignIn" element={<ClinicLogin />} />
-              <Route path="/Hospital/SignIn" element={<HospitalLogin />} />
-              <Route path="/About" element={<About />} />
-              <Route path="/Contact" element={<Contact />} />
+
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/Dashboard" element={<Profile />} />
+            <Route path="/Patient/SignIn" element={<PatientLogin />} />
+            <Route path="/Doctor/SignIn" element={<DoctorLogin />} />
+            <Route path="/Diagnostics/SignIn" element={<Diagnostics />} />
+            <Route path="/Clinic/SignIn" element={<ClinicLogin />} />
+            <Route path="/Hospital/SignIn" element={<HospitalLogin />} />
+            <Route path="/About" element={<About />} />
+            <Route path="/Contact" element={<Contact />} />
 
 
-            </Routes>
-          </Router></SnackbarProvider>
+          </Routes>
+        </Router>
       </ThemeProvider>
     </>
   );

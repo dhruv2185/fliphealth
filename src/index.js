@@ -5,14 +5,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from "./store/reducer";
 import { Provider } from 'react-redux';
-
+import { SnackbarProvider } from 'notistack';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
 
   <Provider store={store}>
-    <App />
+    <SnackbarProvider autoHideDuration={3000}>
+      <App /></SnackbarProvider>
   </Provider>
 );
 

@@ -50,11 +50,41 @@ const PatientLogin = () => {
 
         // Asking if metamask is already present or not
         if (window.ethereum) {
+            enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to LOGIN!", { variant: "info" })
             window.ethereum
                 .request({ method: "eth_requestAccounts" })
                 .then((res) => {
+                    if (res.length === 0) {
+                        enqueueSnackbar("Please connect at least one account to continue!", { variant: "error" })
+                        navigate("/");
+                    }
+                    else {
+                        return res;
+                    }
+                }).then((res) => {
                     setAccounts(res);
-                    console.log(accounts);
+                    // console.log(accounts);
+                    const authenticate = async () => {
+                        const getProfile = await getPatientOwnProfile(res[0]);
+                        if (!getProfile || getProfile["name"] === "") {
+                            return;
+                        }
+                        else {
+                            const profile = {
+                                name: getProfile["name"],
+                                age: getProfile["age"],
+                                email: getProfile["email"],
+                                abhaId: getProfile["abhaId"],
+                                aadharId: getProfile["aadharId"],
+                                mobile: getProfile["mobile"],
+                                gender: getProfile["gender"]
+                            }
+                            enqueueSnackbar(`Welcome, ${profile.name}`);
+                            dispatch({ type: "LOGIN", payload: { accountType: "PATIENT", accountAddress: res[0], profile: profile } })
+                            navigate("/Dashboard");
+                        }
+                    }
+                    authenticate();
                     setIsLoading(false)
                 }).catch(err => {
                     enqueueSnackbar("Please Log in to Metamask to Proceed!", { variant: "error" });
@@ -73,29 +103,50 @@ const PatientLogin = () => {
             setNameError(true);
             flag = 1;
         }
+        else {
+            setNameError(false);
+        }
         if (data.age === "" || isNaN(data.age)) {
             setAgeError(true);
             flag = 1;
+        }
+        else {
+            setAgeError(false);
         }
         if (data.phone === "" || isNaN(data.phone)) {
             setPhoneError(true);
             flag = 1;
         }
+        else {
+            setPhoneError(false);
+        }
         if ((data.abha).length !== 14 || isNaN(data.abha)) {
             setAbhaError(true);
             flag = 1;
+        }
+        else {
+            setAbhaError(false);
         }
         if ((data.aadhar).length !== 12 || isNaN(data.aadhar)) {
             setAadharError(true);
             flag = 1;
         }
+        else {
+            setAadharError(false);
+        }
         if (data.email === "" || !data.email.includes('@')) {
             setEmailError(true);
             flag = 1;
         }
+        else {
+            setEmailError(false);
+        }
         if (data.gender === "") {
             setGenderError(true);
             flag = 1;
+        }
+        else {
+            setGenderError(false);
         }
         if (flag === 1) {
             return;
@@ -149,7 +200,7 @@ const PatientLogin = () => {
         console.log(res);
 
     };
-    enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })
+
     return (
         <>
             {isLoading && <Box sx={{ display: 'flex', position: "absolute", top: "48%", left: "48%" }}>
@@ -175,7 +226,7 @@ const PatientLogin = () => {
                         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, maxWidth: "600px", marginBottom: "60px" }}>
                             <Box component="div" sx={{ display: "flex", gap: "5px" }}><TextField
                                 margin="normal"
-                                required
+
                                 fullWidth
                                 name="name"
                                 label="Name"
@@ -186,7 +237,7 @@ const PatientLogin = () => {
                             />
                                 <TextField
                                     margin="normal"
-                                    required
+
                                     fullWidth
                                     name="age"
                                     label="Age"
@@ -204,7 +255,7 @@ const PatientLogin = () => {
                                 label="Gender"
                                 onChange={handleGenderChange}
                                 error={genderError}
-                                required
+
                             >
                                 <MenuItem value={"male"}>Male</MenuItem>
                                 <MenuItem value={"female"}>Female</MenuItem>
@@ -212,7 +263,7 @@ const PatientLogin = () => {
                             </Select></FormControl>
                             <TextField
                                 margin="normal"
-                                required
+
                                 fullWidth
                                 id="email"
                                 label="E-mail"
@@ -223,7 +274,7 @@ const PatientLogin = () => {
                             />
                             <TextField
                                 margin="normal"
-                                required
+
                                 fullWidth
                                 id="phone"
                                 label="Mobile Number"
@@ -234,7 +285,7 @@ const PatientLogin = () => {
                             />
                             <TextField
                                 margin="normal"
-                                required
+
                                 fullWidth
                                 id="abha"
                                 type='text'
@@ -245,7 +296,7 @@ const PatientLogin = () => {
                             />
                             <TextField
                                 margin="normal"
-                                required
+
                                 fullWidth
                                 name="aadhar"
                                 label="AADHAR ID"
@@ -254,10 +305,7 @@ const PatientLogin = () => {
                                 inputRef={aadhar}
                                 error={aadharError}
                             />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
-                            />
+
                             <Button
                                 type="submit"
                                 fullWidth
@@ -267,11 +315,7 @@ const PatientLogin = () => {
                                 Sign Up
                             </Button>
                             <Grid container>
-                                <Grid item xs>
-                                    <Link href="#" variant="body2">
-                                        Forgot password?
-                                    </Link>
-                                </Grid>
+
                                 <Grid item>
                                     <Link href="https://healthid.ndhm.gov.in/register" variant="body2" target="_blank">
                                         {"Don't have an ABHA ID? Create Now!"}

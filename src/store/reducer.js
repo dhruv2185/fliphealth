@@ -3,7 +3,9 @@ const initialState = {
     authenticated: false,
     accountType: null,
     accountAddress: null,
-    profile: {}
+    profile: {
+        name: ""
+    }
 }
 const reducer = (state = initialState, action) => {
     switch (action.type) {
