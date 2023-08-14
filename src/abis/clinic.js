@@ -184,6 +184,13 @@ export const clinicABI = [
     },
     {
         "inputs": [],
+        "name": "exitFromClinic",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
         "name": "getAllDoctors",
         "outputs": [
             {

@@ -184,6 +184,13 @@ export const diagABI = [
     },
     {
         "inputs": [],
+        "name": "exitFromClinic",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
         "name": "getAllDiagnostics",
         "outputs": [
             {
@@ -297,11 +304,6 @@ export const diagABI = [
                 "internalType": "struct patient.DocProfile[]",
                 "name": "",
                 "type": "tuple[]"
-            },
-            {
-                "internalType": "uint16",
-                "name": "",
-                "type": "uint16"
             }
         ],
         "stateMutability": "view",

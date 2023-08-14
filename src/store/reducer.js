@@ -10,12 +10,16 @@ const reducer = (state = initialState, action) => {
         case "LOGIN":
             return {
                 ...state,
+                authenticated: true,
                 ...action.payload
             };
         case "LOGOUT":
             return {
                 ...state,
                 authenticated: false,
+                accountType: null,
+                accountAddress: null,
+                profile: null
             }
         case "UPDATE":
             return {
