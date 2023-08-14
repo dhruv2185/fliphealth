@@ -27,11 +27,13 @@ const Diagnostics = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
     const name = useRef();
-
     const email = useRef();
     const phone = useRef();
-
     const license = useRef();
+    const [nameError, setNameError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [phoneError, setPhoneError] = useState(false);
+    const [licenseError, setLicenseError] = useState(false);
     const [accounts, setAccounts] = useState([]);
     useEffect(() => {
 
@@ -56,7 +58,26 @@ const Diagnostics = () => {
         event.preventDefault();
         // add field for degree name
         const data = { name: name.current.value, phone: phone.current.value, email: email.current.value, license: license.current.value };
-
+        const flag = 0;
+        if (data.name === "") {
+            setNameError(true);
+            flag = 1;
+        }
+        if (data.phone === "" || isNaN(data.phone)) {
+            setPhoneError(true);
+            flag = 1;
+        }
+        if (data.email === "" || !data.email.includes('@')) {
+            setEmailError(true);
+            flag = 1;
+        }
+        if (data.license === "") {
+            setLicenseError(true);
+            flag = 1;
+        }
+        if (flag === 1) {
+            return;
+        }
         // const res = await registerDiagnostic(data, accounts[0]);
         const res = await registerDiagnostic(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
         console.log(res);
@@ -87,43 +108,46 @@ const Diagnostics = () => {
                         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, maxWidth: "600px", marginBottom: "60px" }}>
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 name="name"
                                 label="Name"
                                 type="text"
                                 id="name"
                                 inputRef={name}
+                                error={nameError}
+                                helperText={"Name cannot be empty!"}
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="email"
                                 label="E-mail"
                                 name="email"
-                                type='email'
+                                type='text'
                                 inputRef={email}
+                                error={emailError}
+                                helperText="Enter a valid email address!"
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="phone"
                                 label="Mobile Number"
                                 name="phone"
                                 type='text'
                                 inputRef={phone}
+                                error={phoneError}
+                                helperText="Enter a valid mobile number!"
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="license"
                                 label="License"
                                 name="license"
                                 inputRef={license}
-
+                                error={licenseError}
+                                helperText="Enter valid license number!"
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}

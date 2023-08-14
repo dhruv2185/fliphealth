@@ -33,10 +33,19 @@ const DoctorLogin = () => {
     const phone = useRef();
     const abha = useRef();
     const aadhar = useRef();
-    const grnumber = useRef();
+    const grnumber = useRef("G-");
     const specialisation = useRef();
     const [gender, setgender] = useState('');
     const [accounts, setAccounts] = useState([]);
+    const [abhaError, setAbhaError] = useState(false);
+    const [aadharError, setAadharError] = useState(false);
+    const [grnumberError, setGrnumberError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [nameError, setNameError] = useState(false);
+    const [ageError, setAgeError] = useState(false);
+    const [phoneError, setPhoneError] = useState(false);
+    const [specialisationError, setSpecialisationError] = useState(false);
+    const [genderError, setGenderError] = useState(false);
     const handleGenderChange = (event) => {
         setgender(event.target.value);
     };
@@ -63,7 +72,52 @@ const DoctorLogin = () => {
         event.preventDefault();
         // add field for degree name
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, grnumber: grnumber.current.value, gender: gender, specialisation: specialisation.current.value };
-
+        let flag = 0;
+        // check if all fields are filled
+        if (data.name === "") {
+            setNameError(true);
+            flag = 1;
+        }
+        if (data.age === "" || isNaN(data.age)) {
+            setAgeError(true);
+            flag = 1;
+        }
+        if (data.phone === "" || isNaN(data.phone)) {
+            setPhoneError(true);
+            flag = 1;
+        }
+        if (data.gender === "") {
+            setGenderError(true);
+            flag = 1;
+        }
+        if (data.abha.length !== 14 || isNaN(data.abha)) {
+            setAbhaError(true);
+            flag = 1;
+        }
+        if (data.aadhar.length !== 12 || isNaN(data.aadhar)) {
+            setAadharError(true);
+            flag = 1;
+        }
+        if (data.grnumber.length !== 7 || !data.grnumber.includes('G-')) {
+            setGrnumberError(true);
+            flag = 1;
+        }
+        // check if last five chat of grnumber is a number
+        if (isNaN(data.grnumber.slice(-5))) {
+            setGrnumberError(true);
+            flag = 1;
+        }
+        if (!data.email.includes('@')) {
+            setEmailError(true);
+            flag = 1;
+        }
+        if (data.specialisation === "") {
+            setSpecialisationError(true);
+            flag = 1;
+        }
+        if (flag === 1) {
+            return;
+        }
         // accessToken to be stored in the redux store
         // let accessToken;
         // const result = await generateOtp(data.aadhar, accessToken);
@@ -89,7 +143,10 @@ const DoctorLogin = () => {
         const res = await registerDoctor(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
         console.log(res);
     };
-    enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })
+    useEffect(() => {
+        enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })
+    }, [])
+
     return (
         <>
             {isLoading && <Box sx={{ display: 'flex', position: "absolute", top: "48%", left: "48%" }}>
@@ -115,17 +172,17 @@ const DoctorLogin = () => {
                         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, maxWidth: "600px", marginBottom: "60px" }}>
                             <Box component="div" sx={{ display: "flex", gap: "5px" }}><TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 name="name"
                                 label="Name"
                                 type="text"
                                 id="name"
                                 inputRef={name}
+                                error={nameError}
+                                helperText={"Name cannot be empty!"}
                             />
                                 <TextField
                                     margin="normal"
-                                    required
                                     fullWidth
                                     name="age"
                                     label="Age"
@@ -133,6 +190,8 @@ const DoctorLogin = () => {
                                     inputProps={{ inputMode: "numeric", min: "1", max: "120" }}
                                     id="age"
                                     inputRef={age}
+                                    error={ageError}
+                                    helperText={"Enter a valid number!"}
                                 />
                             </Box>
                             <FormControl fullWidth sx={{ marginTop: "8px 0" }} ><InputLabel id="demo-simple-select-label">Gender * </InputLabel><Select
@@ -141,7 +200,8 @@ const DoctorLogin = () => {
                                 value={gender}
                                 label="Gender"
                                 onChange={handleGenderChange}
-                                required
+                                error={genderError}
+                                helperText={"Select one of the values!"}
                             >
                                 <MenuItem value={"male"}>Male</MenuItem>
                                 <MenuItem value={"female"}>Female</MenuItem>
@@ -149,62 +209,66 @@ const DoctorLogin = () => {
                             </Select></FormControl>
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="email"
                                 label="E-mail"
                                 name="email"
-                                type='email'
+                                type='text'
                                 inputRef={email}
+                                error={emailError}
+                                helperText={"Enter a valid email address!"}
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="phone"
                                 label="Mobile Number"
                                 name="phone"
                                 type='text'
                                 inputRef={phone}
+                                error={phoneError}
+                                helperText={"Enter a valid mobile number!"}
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="abha"
                                 label="ABHA ID"
                                 name="abhaID"
                                 inputRef={abha}
+                                error={abhaError}
+                                helperText={"Enter a valid 14 digit ABHA ID!"}
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 name="aadhar"
                                 label="AADHAR ID"
                                 type="text"
                                 id="aadhar"
                                 inputRef={aadhar}
+                                error={aadharError}
+                                helperText={"Enter a valid 12 digit AADHAAR ID!"}
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="GR-number"
                                 label="General Registration (G.R.) Number"
                                 name="grnumber"
                                 inputRef={grnumber}
-
+                                error={grnumberError}
+                                helperText={"Enter a valid GR Number!"}
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="specialisation"
                                 label="Specialisation"
                                 name="specialisation"
                                 inputRef={specialisation}
-
+                                error={specialisationError}
+                                helperText={"Specialisation cannot be empty!"}
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}

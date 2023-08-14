@@ -29,6 +29,10 @@ const HospitalLogin = () => {
     const email = useRef();
     const phone = useRef();
     const license = useRef();
+    const [nameError, setNameError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [phoneError, setPhoneError] = useState(false);
+    const [licenseError, setLicenseError] = useState(false);
     const [accounts, setAccounts] = useState([]);
     useEffect(() => {
 
@@ -53,7 +57,26 @@ const HospitalLogin = () => {
         event.preventDefault();
         // add field for degree name
         const data = { name: name.current.value, phone: phone.current.value, email: email.current.value, license: license.current.value };
-
+        let flag = 0;
+        if (data.name === "") {
+            setNameError(true);
+            flag = 1;
+        }
+        if (data.phone === "" || isNaN(data.phone)) {
+            setPhoneError(true);
+            flag = 1;
+        }
+        if (data.email === "" || !data.email.includes('@')) {
+            setEmailError(true);
+            flag = 1;
+        }
+        if (data.license === "") {
+            setLicenseError(true);
+            flag = 1;
+        }
+        if (flag === 1) {
+            return;
+        }
         // const res = await registerHospital(data, accounts[0]);
         // const res = await registerHospital(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
         // console.log(res);
@@ -84,43 +107,46 @@ const HospitalLogin = () => {
                         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, maxWidth: "600px", marginBottom: "60px" }}>
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 name="name"
                                 label="Name"
                                 type="text"
                                 id="name"
                                 inputRef={name}
+                                error={nameError}
+                                helperText={"Name cannot be empty!"}
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="email"
                                 label="E-mail"
                                 name="email"
                                 type='email'
                                 inputRef={email}
+                                error={emailError}
+                                helperText={"Enter a valid email address!"}
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="phone"
                                 label="Mobile Number"
                                 name="phone"
                                 type='text'
                                 inputRef={phone}
+                                error={phoneError}
+                                helperText={"Enter a valid phone number!"}
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="license"
                                 label="License"
                                 name="license"
                                 inputRef={license}
-
+                                error={licenseError}
+                                helperText={"Enter a valid license number!"}
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}

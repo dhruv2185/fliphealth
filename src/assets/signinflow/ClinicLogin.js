@@ -26,14 +26,15 @@ const ClinicLogin = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
     const name = useRef();
-
     const email = useRef();
     const phone = useRef();
-
     const location = useRef();
+    const [nameError, setNameError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [phoneError, setPhoneError] = useState(false);
+    const [locationError, setLocationError] = useState(false);
     const [accounts, setAccounts] = useState([]);
     useEffect(() => {
-
         // Asking if metamask is already present or not
         if (window.ethereum) {
             window.ethereum
@@ -55,16 +56,39 @@ const ClinicLogin = () => {
         event.preventDefault();
         // add field for degree name
         const data = { name: name.current.value, phone: phone.current.value, email: email.current.value, location: location.current.value };
-
+        let flag = 0;
+        if (data.name === "") {
+            setNameError(true);
+            flag = 1;
+        }
+        if (data.phone === "" || isNaN(data.phone)) {
+            setPhoneError(true);
+            flag = 1;
+        }
+        if (data.email === "" || !data.email.includes('@')) {
+            setEmailError(true);
+            flag = 1;
+        }
+        if (data.location === "") {
+            setLocationError(true);
+            flag = 1;
+        }
+        if (flag === 1) {
+            return;
+        }
         // const res = await registerClinic(data, accounts[0]);
         // const res = await registerClinic(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
         // console.log(res);
     };
-    enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })
+    useEffect(
+        () => {
+            enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })
+        }, []
+    )
+
     return (
         <>
             {isLoading && <Box sx={{ position: "absolute", top: "48%", left: "48%" }}>
-
                 <CircularProgress />
             </Box>}
             {!isLoading && <><Navbar />
@@ -87,43 +111,46 @@ const ClinicLogin = () => {
                         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, maxWidth: "600px", marginBottom: "60px" }}>
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 name="name"
                                 label="Name"
                                 type="text"
                                 id="name"
                                 inputRef={name}
+                                error={nameError}
+                                helperText={"Name cannot be empty!"}
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="email"
                                 label="E-mail"
                                 name="email"
                                 type='email'
                                 inputRef={email}
+                                error={emailError}
+                                helperText="Enter a valid email address!"
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="phone"
                                 label="Mobile Number"
                                 name="phone"
                                 type='text'
                                 inputRef={phone}
+                                error={phoneError}
+                                helperText={"Enter a valid mobile number!"}
                             />
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 id="location"
                                 label="Location"
                                 name="location"
                                 inputRef={location}
-
+                                error={locationError}
+                                helperText="Location cannot be empty!"
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
@@ -146,7 +173,6 @@ const ClinicLogin = () => {
                             </Grid>
                         </Box>
                     </Box>
-
                 </Container><Footer /></>}
         </>
     );

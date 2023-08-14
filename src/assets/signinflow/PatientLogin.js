@@ -36,6 +36,13 @@ const PatientLogin = () => {
     const aadhar = useRef();
     const [gender, setgender] = useState('');
     const [accounts, setAccounts] = useState([]);
+    const [nameError, setNameError] = useState(false);
+    const [ageError, setAgeError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [phoneError, setPhoneError] = useState(false);
+    const [abhaError, setAbhaError] = useState(false);
+    const [aadharError, setAadharError] = useState(false);
+    const [genderError, setGenderError] = useState(false);
     const handleGenderChange = (event) => {
         setgender(event.target.value);
     };
@@ -61,7 +68,38 @@ const PatientLogin = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
-
+        let flag = 0;
+        if (data.name === "") {
+            setNameError(true);
+            flag = 1;
+        }
+        if (data.age === "" || isNaN(data.age)) {
+            setAgeError(true);
+            flag = 1;
+        }
+        if (data.phone === "" || isNaN(data.phone)) {
+            setPhoneError(true);
+            flag = 1;
+        }
+        if ((data.abha).length !== 14 || isNaN(data.abha)) {
+            setAbhaError(true);
+            flag = 1;
+        }
+        if ((data.aadhar).length !== 12 || isNaN(data.aadhar)) {
+            setAadharError(true);
+            flag = 1;
+        }
+        if (data.email === "" || !data.email.includes('@')) {
+            setEmailError(true);
+            flag = 1;
+        }
+        if (data.gender === "") {
+            setGenderError(true);
+            flag = 1;
+        }
+        if (flag === 1) {
+            return;
+        }
         // accessToken to be stored in the redux store
         // let accessToken;
         // const result = await generateOtp(data.aadhar, accessToken);
@@ -144,6 +182,7 @@ const PatientLogin = () => {
                                 type="text"
                                 id="name"
                                 inputRef={name}
+                                error={nameError}
                             />
                                 <TextField
                                     margin="normal"
@@ -155,6 +194,7 @@ const PatientLogin = () => {
                                     inputProps={{ inputMode: "numeric", min: "1", max: "120" }}
                                     id="age"
                                     inputRef={age}
+                                    error={ageError}
                                 />
                             </Box>
                             <FormControl fullWidth sx={{ marginTop: "8px 0" }} ><InputLabel id="demo-simple-select-label">Gender * </InputLabel><Select
@@ -163,6 +203,7 @@ const PatientLogin = () => {
                                 value={gender}
                                 label="Gender"
                                 onChange={handleGenderChange}
+                                error={genderError}
                                 required
                             >
                                 <MenuItem value={"male"}>Male</MenuItem>
@@ -178,6 +219,7 @@ const PatientLogin = () => {
                                 name="email"
                                 type='email'
                                 inputRef={email}
+                                error={emailError}
                             />
                             <TextField
                                 margin="normal"
@@ -188,15 +230,18 @@ const PatientLogin = () => {
                                 name="phone"
                                 type='text'
                                 inputRef={phone}
+                                error={phoneError}
                             />
                             <TextField
                                 margin="normal"
                                 required
                                 fullWidth
                                 id="abha"
+                                type='text'
                                 label="ABHA ID"
                                 name="abhaID"
                                 inputRef={abha}
+                                error={abhaError}
                             />
                             <TextField
                                 margin="normal"
@@ -207,6 +252,7 @@ const PatientLogin = () => {
                                 type="text"
                                 id="aadhar"
                                 inputRef={aadhar}
+                                error={aadharError}
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
