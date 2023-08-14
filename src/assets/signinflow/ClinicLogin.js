@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Button from '@mui/material/Button';
@@ -18,11 +18,13 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import { getClinicProfile, registerClinic } from '../../Utils/SmartContractUtils';
 
 
 const ClinicLogin = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const name = useRef();
     const email = useRef();
@@ -48,10 +50,40 @@ const ClinicLogin = () => {
     useEffect(() => {
         // Asking if metamask is already present or not
         if (window.ethereum) {
+            enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })
             window.ethereum
-                .request({ method: "eth_requestAccounts" })
+                .request({ method: "eth_requestAccounts" }).then((res) => {
+                    if (res.length === 0) {
+                        enqueueSnackbar("Please connect at least one account to continue!", { variant: "error" })
+                        navigate("/");
+                    }
+                    else {
+                        return res;
+                    }
+                })
                 .then((res) => {
                     setAccounts(res);
+                    const authenticate = async () => {
+                        const getProfile = await getClinicProfile(res[0]);
+                        if (!getProfile || getProfile["name"] === "") {
+                            return;
+                        }
+                        else {
+                            const profile = {
+                                name: getProfile["name"],
+
+                                email: getProfile["email"],
+
+
+                                mobile: getProfile["phone"],
+                                location: getProfile["location"],
+                            }
+                            enqueueSnackbar(`Welcome, ${profile.name}`);
+                            dispatch({ type: "LOGIN", payload: { accountType: "CLINIC", accountAddress: res[0], profile: profile } })
+                            navigate("/Dashboard");
+                        }
+                    }
+                    authenticate();
                     setIsLoading(false)
                 }).catch(err => {
                     enqueueSnackbar("Please Log in to Metamask to Proceed!", { variant: "error" });
@@ -121,15 +153,34 @@ const ClinicLogin = () => {
         if (flag === 1) {
             return;
         }
-        // const res = await registerClinic(data, accounts[0]);
-        // const res = await registerClinic(data, '0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029');
+        const res = await registerClinic(data, accounts[0]);
+        if (res.message) {
+            enqueueSnackbar(res.message, { variant: "error" });
+        }
+        else {
+            const getProfile = await getClinicProfile(accounts[0]);
+            if (getProfile.message) {
+                enqueueSnackbar(getProfile.message, { variant: "error" });
+            }
+            else {
+                const profile = {
+                    name: getProfile["name"],
+
+                    email: getProfile["email"],
+
+
+                    mobile: getProfile["phone"],
+                    location: getProfile["location"],
+                }
+                enqueueSnackbar(`Welcome, ${profile.name}`);
+                dispatch({ type: "LOGIN", payload: { accountType: "CLINIC", accountAddress: accounts[0], profile: profile } })
+                navigate("/Dashboard");
+            }
+
+        }
         // console.log(res);
     };
-    useEffect(
-        () => {
-            enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })
-        }, []
-    )
+
 
     return (
         <>

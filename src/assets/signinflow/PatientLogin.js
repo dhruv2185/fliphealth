@@ -320,9 +320,9 @@ const PatientLogin = () => {
                                 error={genderError.error}
                                 helperText={genderError.message}
                             >
-                                <MenuItem value={"male"}>Male</MenuItem>
-                                <MenuItem value={"female"}>Female</MenuItem>
-                                <MenuItem value={"other"}>Other</MenuItem>
+                                <MenuItem value={"Male"}>Male</MenuItem>
+                                <MenuItem value={"Female"}>Female</MenuItem>
+                                <MenuItem value={"Other"}>Other</MenuItem>
                             </Select></FormControl>
                             <TextField
                                 margin="normal"

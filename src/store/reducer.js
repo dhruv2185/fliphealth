@@ -21,7 +21,7 @@ const reducer = (state = initialState, action) => {
                 authenticated: false,
                 accountType: null,
                 accountAddress: null,
-                profile: null
+                profile: { name: "" }
             }
         case "UPDATE":
             return {
