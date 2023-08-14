@@ -328,7 +328,7 @@ const getHospitalProfile = async (accountAddress) => {
 
 const revokeAllAccessOfDoctor = async (docAddress, accountAddress) => {
     try {
-        const res = await hospitalContract.methods.revokeAllAccess(docAddress).send({
+        const res = await hospitalContract.methods.revokeAccessToAll(docAddress).send({
             from: accountAddress,
             gas: 3000000
         });
