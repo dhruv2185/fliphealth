@@ -7,6 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { enqueueSnackbar } from 'notistack';
 
 import AddIcon from '@mui/icons-material/Add';
+import ConfirmDialog from '../ConfirmDialog';
 const DocUser = () => {
 
     const [docProfile, setDocProfile] = useState(null);
@@ -16,6 +17,8 @@ const DocUser = () => {
     const [hosp, setHosp] = useState("")
     const search = useRef("");
     const [refresh, setRefresh] = useState(false);
+    const [confirm1, setConfirm1] = useState(false);
+    const [confirm2, setConfirm2] = useState(false);
     const handleAdd = async () => {
         const res = await enrollInClinicForDoctor(search.current.value, accountAddress);
         if (res.message) {
@@ -72,7 +75,8 @@ const DocUser = () => {
 
 
     return (
-        <>
+        <><ConfirmDialog open={confirm1} setOpen={setConfirm1} onConfirm={handleAdd} title={"ADD to Clinic"} children={"Are you sure you want to ADD yourself to this clinic?"} />
+            <ConfirmDialog open={confirm2} setOpen={setConfirm2} onConfirm={handleExit} title={"Leave Clinic"} children={"Are you sure you want to LEAVE your CURRENT Clinic?"} />
             <Container component="main" maxwidth="s" minwidth="xs"><CssBaseline /><Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={isLoading}
@@ -107,10 +111,15 @@ const DocUser = () => {
                                 sx={{ ml: 1, flex: 1, minWidth: "410px", backgroundColor: "#595959", padding: 1, borderRadius: "5px" }}
                                 inputRef={search}
                                 placeholder="Add Clinic (Address)"
-                                inputProps={{ 'aria-label': 'search ' }} /><IconButton type="submit" sx={{ p: '10px' }} onClick={handleAdd} aria-label="search">
+                                inputProps={{ 'aria-label': 'search ' }} /><IconButton type="submit" sx={{ p: '10px' }} onClick={() => {
+                                    setConfirm1(true);
+                                }} aria-label="search">
                                     <AddIcon />
                                 </IconButton></>}
-                            {cli !== "" && cli !== "NA" && <Button type="submit" sx={{ p: '10px' }} onClick={handleExit} color="neutral" variant="outlined">
+                            {cli !== "" && cli !== "NA" && <Button type="submit" sx={{ p: '10px' }} onClick={() => {
+                                setConfirm2(true);
+
+                            }} color="neutral" variant="outlined">
                                 Exit From Clinic
 
                             </Button>}</center>

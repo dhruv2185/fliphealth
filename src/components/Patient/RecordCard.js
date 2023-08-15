@@ -14,6 +14,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useSelector } from 'react-redux';
 import { enqueueSnackbar } from 'notistack';
+import ConfirmDialog from '../ConfirmDialog';
 const projectId = process.env.REACT_APP_PROJECT_ID;
 const projectSecretKey = process.env.REACT_APP_PROJECT_KEY;
 const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
@@ -23,6 +24,7 @@ const RecordCard = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const accountAddress = useSelector(state => state.accountAddress);
     const { refresh, setRefresh, data } = props;
+    const [confirm, setConfirm] = useState(false);
     const ipfs = ipfsHttpClient({
         url: "https://ipfs.infura.io:5001",
         headers: {
@@ -60,7 +62,7 @@ const RecordCard = (props) => {
     }
 
     return (
-        <>
+        <><ConfirmDialog open={confirm} setOpen={setConfirm} onConfirm={handleRemove} title={"Delete Record"} children={"Are you sure you want to DELETE this record?"} />
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={isLoading}
@@ -91,7 +93,9 @@ const RecordCard = (props) => {
                 </CardContent>
                 <CardActions sx={{ display: "flex", justifyContent: "center" }}>
                     <a href={`https://skywalker.infura-ipfs.io/ipfs/${data.documentPath}`} target='_blank' rel='noreferrer'><IconButton><VisibilityIcon /></IconButton></a>
-                    <IconButton onClick={handleRemove}><DeleteIcon /></IconButton>
+                    <IconButton onClick={() => {
+                        setConfirm(true);
+                    }}><DeleteIcon /></IconButton>
                 </CardActions>
             </Card>
         </>

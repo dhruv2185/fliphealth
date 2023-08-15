@@ -57,7 +57,7 @@ const UploadRecords = () => {
     }
     const onSubmitHandler = async (event) => {
         event.preventDefault();
-        const flag = 0;
+        let flag = 0;
         if (recordname.current.value === "") {
             setRecordNameError({
                 error: true,
