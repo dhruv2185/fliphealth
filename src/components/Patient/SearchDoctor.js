@@ -15,7 +15,7 @@ const SearchDoctor = () => {
     const [searchType, setSearchType] = useState('name');
     const [searchResults, setSearchResults] = useState([]);
     const [grantedDoctors, setGrantedDoctors] = useState([]);
-
+    console.log(search.current.value)
     const getByAddress = async (search) => {
         setIsLoading(true);
         const res = await searchDoctorByAddress(
@@ -129,8 +129,8 @@ const SearchDoctor = () => {
 
                 </Paper>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>{searchResults.length !== 0 && searchResults.map((item, index) => <SearchDocResult key={index} data={item} grantedDoctors={grantedDoctors} isLoading={isLoading} setIsLoading={setIsLoading} />)}
-                    {searchResults.length === 0 && search.current.value === "" && <h5>ENTER A SEARCH QUERY</h5>}
-                    {searchResults.length === 0 && search.current.value !== "" && <h5>NO RESULTS FOUND</h5>}</Box>
+                    {searchResults.length === 0 && !search.current.value && <h5>ENTER A SEARCH QUERY</h5>}
+                    {searchResults.length === 0 && search.current.value && <h5>NO RESULTS FOUND</h5>}</Box>
             </Container>
         </>
     );

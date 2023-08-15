@@ -306,9 +306,7 @@ const DoctorLogin = () => {
         }
         console.log(res);
     };
-    useEffect(() => {
-        enqueueSnackbar("Please give access to only one account at a time, otherwise, the first account selected in Metamask would be used to login!", { variant: "info" })
-    }, [])
+
 
     return (
         <>
