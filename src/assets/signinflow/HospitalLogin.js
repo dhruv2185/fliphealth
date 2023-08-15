@@ -20,12 +20,14 @@ import Footer from '../../components/Footer';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { getHospitalProfile, registerHospital } from '../../Utils/SmartContractUtils';
+import ConfirmDialog from '../../components/ConfirmDialog';
 
 
 const HospitalLogin = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [confirm, setConfirm] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const name = useRef();
     const email = useRef();
@@ -97,8 +99,8 @@ const HospitalLogin = () => {
 
         }
     }, [])
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const handleSubmit = async () => {
+
         // add field for degree name
         const data = { name: name.current.value, phone: phone.current.value, email: email.current.value, license: license.current.value };
         let flag = 0;
@@ -192,6 +194,7 @@ const HospitalLogin = () => {
             {!isLoading && <><Navbar />
                 <Container component="main" maxWidth="s">
                     <CssBaseline />
+                    <ConfirmDialog open={confirm} setOpen={setConfirm} title={"Confirm Registration"} children={"Would you like to register. You will be charged 0.1 ETH for this transaction."} onConfirm={handleSubmit} />
                     <Box
                         sx={{
                             marginTop: 8,
@@ -206,7 +209,7 @@ const HospitalLogin = () => {
                         <Typography component="h1" variant="h5">
                             Sign up as a Hospital
                         </Typography>
-                        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, maxWidth: "600px", marginBottom: "60px" }}>
+                        <Box component="form" sx={{ mt: 1, maxWidth: "600px", marginBottom: "60px" }}>
                             <TextField
                                 margin="normal"
                                 fullWidth
@@ -255,7 +258,7 @@ const HospitalLogin = () => {
                                 label="Remember me"
                             />
                             <Button
-                                type="submit"
+                                onClick={() => setConfirm(true)}
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}

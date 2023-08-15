@@ -1,12 +1,15 @@
 import { Avatar, Button, Card } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { removeDoctorFromHospital, revokeAllAccessOfDoctor } from '../../Utils/SmartContractUtils';
 import { useSelector } from 'react-redux';
 import { enqueueSnackbar } from 'notistack';
+import ConfirmDialog from '../ConfirmDialog';
 
 const DoctorAccessBox = (props) => {
     const accountAddress = useSelector(state => state.accountAddress);
     const { data, setRefresh, refresh, setIsLoading } = props;
+    const [confirm1, setConfirm1] = useState(false);
+    const [confirm2, setConfirm2] = useState(false);
     const handleRemove = async () => {
         setIsLoading(true);
         const res = await removeDoctorFromHospital(data.myAdd, accountAddress);
@@ -38,6 +41,8 @@ const DoctorAccessBox = (props) => {
 
     return (
         <>
+            <ConfirmDialog open={confirm1} setOpen={setConfirm1} onConfirm={handleRemove} title={"Remove Doctor"} children={"Are you sure you want to REMOVE this Doctor from your hospital?"} />
+            <ConfirmDialog open={confirm2} setOpen={setConfirm2} onConfirm={handleRevoke} title={"Revoke Access"} children={"Are you sure you want to REMOVE and REVOKE the access of this Doctor from ALL the patients?"} />
             <Card sx={{ width: "60vw", minWidth: "400px", padding: "5px 20px", display: "flex", justifyContent: "space-between" }}>
                 <div style={{ display: "flex" }}>
                     <Avatar sx={{ bgcolor: "red", margin: "auto" }} aria-label="recipe">
@@ -47,8 +52,12 @@ const DoctorAccessBox = (props) => {
 
                 </div>
                 <div style={{ margin: "auto 15px" }}>
-                    <Button variant="outlined" color='neutral' style={{ margin: "auto 5px" }} onClick={handleRemove}>Remove</Button>
-                    <Button variant="contained" color='neutral' style={{ margin: "auto 5px" }} onClick={handleRevoke}>Revoke Access</Button></div>
+                    <Button variant="outlined" color='neutral' style={{ margin: "auto 5px" }} onClick={() => {
+                        setConfirm1(true);
+                    }}>Remove</Button>
+                    <Button variant="contained" color='neutral' style={{ margin: "auto 5px" }} onClick={() => {
+                        setConfirm2(true);
+                    }}>Revoke Access</Button></div>
             </Card>
         </>
     );
