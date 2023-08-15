@@ -352,7 +352,8 @@ const registerHospital = async (data, accountAddress) => {
             data.license
         ).send({
             from: accountAddress,
-            gas: 3000000
+            gas: 3000000,
+            value: web3.utils.toWei('0.1', 'ether')
         });
         console.log(res);
         return res;
