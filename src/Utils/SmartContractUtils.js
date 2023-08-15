@@ -649,6 +649,7 @@ const getOrgOfDoctor = async (accountAddress) => {
             from: accountAddress,
             gas: 3000000
         });
+        console.log(orgAddress);
         let hospitalProfile = {
             hospname: ""
         };
@@ -665,6 +666,7 @@ const getOrgOfDoctor = async (accountAddress) => {
             from: accountAddress,
             gas: 3000000
         });
+        console.log(clinicAddress);
         if (clinicAddress !== "0x0000000000000000000000000000000000000000") {
             clinicProfile = await clinicContract.methods.ClinicIndex(clinicAddress).call({
                 from: accountAddress,

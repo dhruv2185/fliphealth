@@ -162,7 +162,7 @@ const PatientLogin = () => {
         if ((data.abha).length !== 14 || isNaN(data.abha)) {
             setAbhaError({
                 error: true,
-                message: "ABHA ID cannot be empty!"
+                message: "ABHA ID should be a valid 14 digit number"
             });
             flag = 1;
         }
@@ -175,7 +175,7 @@ const PatientLogin = () => {
         if ((data.aadhar).length !== 12 || isNaN(data.aadhar)) {
             setAadharError({
                 error: true,
-                message: "Aadhar ID cannot be empty!"
+                message: "Aadhar ID should be a valid 12 digit number"
             });
             flag = 1;
         }

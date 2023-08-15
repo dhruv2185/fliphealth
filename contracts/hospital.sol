@@ -1,8 +1,8 @@
 pragma solidity ^0.8.0;
-import "./doctor.sol";
 import "./diagnostics.sol";
+import "./Ownable.sol";
 
-contract hospital is diagnostics {
+contract hospital is diagnostics, Ownable {
     struct Hospital {
         string hospname;
         string email;
