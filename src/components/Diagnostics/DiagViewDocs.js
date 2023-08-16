@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, CssBaseline, IconButton, Modal, InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
@@ -13,114 +13,10 @@ import { useSelector } from 'react-redux';
 import DiagRecordCard from './DiagRecordCard';
 
 
-const data = [
-    {
-        organisation: "City General Hospital",
-        date: "2023-08-16",
-        doctorName: "Dr. Smith",
-        documentName: "Lab Test Results",
-        documentPath: "/documents/lab_results.pdf",
-        documentCid: "QmXqYzAbCdEf12345",
-        owner: "0xAbCdEf0123456789",
-        documentType: "Medical Report"
-    },
-    {
-        organisation: "Healthcare Clinic",
-        date: "2023-08-14",
-        doctorName: "Dr. Johnson",
-        documentName: "Prescription",
-        documentPath: "/documents/prescription.pdf",
-        documentCid: "XyZwAbCdEf67890",
-        owner: "0x1234567890AbCdEf",
-        documentType: "Prescription"
-    },
-    {
-        organisation: "Specialty Medical Center",
-        date: "2023-08-10",
-        doctorName: "Dr. Martinez",
-        documentName: "Radiology Report",
-        documentPath: "/documents/radiology_report.pdf",
-        documentCid: "WvUtAbCdEf45678",
-        owner: "0x67890AbCdEf12345",
-        documentType: "Medical Imaging"
-    },
-    {
-        organisation: "Healthy Life Clinic",
-        date: "2023-08-09",
-        doctorName: "Dr. Adams",
-        documentName: "Blood Test Results",
-        documentPath: "/documents/blood_results.pdf",
-        documentCid: "PqRsAbCdEf23456",
-        owner: "0xAbCdEf5678901234",
-        documentType: "Medical Report"
-    },
-    {
-        organisation: "MediCare Center",
-        date: "2023-08-07",
-        doctorName: "Dr. White",
-        documentName: "Follow-up Notes",
-        documentPath: "/documents/followup_notes.pdf",
-        documentCid: "MnOpAbCdEf78901",
-        owner: "0x5678901234AbCdEf",
-        documentType: "Notes"
-    },
-    {
-        organisation: "Wellness Hospital",
-        date: "2023-08-05",
-        doctorName: "Dr. Brown",
-        documentName: "MRI Scan Report",
-        documentPath: "/documents/mri_report.pdf",
-        documentCid: "KlMnAbCdEf34567",
-        owner: "0xAbCdEf7890123456",
-        documentType: "Medical Imaging"
-    },
-    {
-        organisation: "Family Health Clinic",
-        date: "2023-08-02",
-        doctorName: "Dr. Wilson",
-        documentName: "Vaccination Record",
-        documentPath: "/documents/vaccine_record.pdf",
-        documentCid: "EfGhAbCdIj23456",
-        owner: "0x89012345AbCdEf67",
-        documentType: "Immunization"
-    },
-    {
-        organisation: "Cardio Care Center",
-        date: "2023-07-28",
-        doctorName: "Dr. Taylor",
-        documentName: "EKG Results",
-        documentPath: "/documents/ekg_results.pdf",
-        documentCid: "BcDeAbCdEf45678",
-        owner: "0x34567890AbCdEf12",
-        documentType: "Medical Report"
-    },
-    {
-        organisation: "Dental Excellence Clinic",
-        date: "2023-07-25",
-        doctorName: "Dr. Harris",
-        documentName: "Dental X-rays",
-        documentPath: "/documents/dental_xrays.pdf",
-        documentCid: "ZyXwAbCdEf12345",
-        owner: "0xAbCdEf6789012345",
-        documentType: "Dental Imaging"
-    },
-    {
-        organisation: "Eye Care Institute",
-        date: "2023-07-22",
-        doctorName: "Dr. Turner",
-        documentName: "Eye Exam Report",
-        documentPath: "/documents/eye_exam_report.pdf",
-        documentCid: "XwYzAbCdEf78901",
-        owner: "0x67890123AbCdEf45",
-        documentType: "Medical Report"
-    }
-]
-
 const DiagViewDocs = (props) => {
     const accountAddress = useSelector(state => state.accountAddress);
     const [isLoading, setIsLoading] = useState(false);
     const { open, setOpen, patientAddress } = props;
-    const searchText = useRef();
     const handleClose = (event, reason) => {
         if (reason === "backdropClick") {
             return;
@@ -151,6 +47,8 @@ const DiagViewDocs = (props) => {
     };
 
     const [records, setRecords] = useState([]);
+    const [allRecords, setAllRecords] = useState([]);
+    const [searchText, setSearchText] = useState([]);
 
     useEffect(() => {
         const getRecords = async () => {
@@ -163,6 +61,7 @@ const DiagViewDocs = (props) => {
             }
             else {
                 setRecords(res);
+                setAllRecords(res);
                 console.log(res);
             }
             setIsLoading(false);
@@ -172,14 +71,17 @@ const DiagViewDocs = (props) => {
     }, [patientAddress, accountAddress]);
 
     useEffect(() => {
-        if (searchText.current.value !== "") {
-            const regex = new RegExp(searchText, 'gi');
+        if (searchText !== "") {
+            const regex = new RegExp(searchText, 'i');
             console.log(regex);
-            const res = data.filter((item) => item.organisation.match(regex));
+            const res = allRecords.filter((item) => (regex.test(item.organisation) || regex.test(item.doctorName) || regex.test(item.documentName) || regex.test(item.doumentType)));
             console.log(res);
-            return res;
+            setRecords(res);
         }
-    }, [searchText.current.value])
+        else {
+            setRecords(allRecords)
+        }
+    }, [searchText, allRecords])
 
     return (
         <>
@@ -216,9 +118,12 @@ const DiagViewDocs = (props) => {
                         </div>
                         <InputBase
                             sx={{ ml: 1, flex: 1 }}
-                            inputRef={searchText}
                             placeholder="Search"
                             inputProps={{ 'aria-label': 'search ' }}
+                            value={searchText}
+                            onChange={(event) => {
+                                setSearchText(event.target.value)
+                            }}
                         />
                         <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
                             <SearchIcon />

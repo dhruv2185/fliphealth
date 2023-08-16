@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Container, CssBaseline, IconButton, Modal } from '@mui/material';
+import { Container, CssBaseline, IconButton, Modal, InputBase, } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
 import { getRecordsOfUser } from '../../Utils/SmartContractUtils';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@emotion/react';
 
 import CloseIcon from '@mui/icons-material/Close';
-
 
 import { useSelector } from 'react-redux';
 import Backdrop from '@mui/material/Backdrop';
@@ -47,6 +47,8 @@ const ViewPatDocs = (props) => {
     };
 
     const [records, setRecords] = useState([]);
+    const [allRecords, setAllRecords] = useState([]);
+    const [searchText, setSearchText] = useState([]);
 
     useEffect(() => {
         const getRecords = async () => {
@@ -57,6 +59,7 @@ const ViewPatDocs = (props) => {
             }
             else {
                 setRecords(res);
+                setAllRecords(res);
                 console.log(res);
             }
             setIsLoading(false);
@@ -64,12 +67,18 @@ const ViewPatDocs = (props) => {
         getRecords();
     }, [patientAddress, accountAddress]);
 
-    //     // const res = await getRecordsOfUser(patientAddress, doctorAddress)
-    //     console.log(res[0].date);
-    //     setRecords(records);
-    // }
-    // getRecords();
-
+    useEffect(() => {
+        if (searchText !== "") {
+            const regex = new RegExp(searchText, 'i');
+            console.log(regex);
+            const res = allRecords.filter((item) => (regex.test(item.organisation) || regex.test(item.doctorName) || regex.test(item.documentName) || regex.test(item.doumentType)));
+            console.log(res);
+            setRecords(res);
+        }
+        else {
+            setRecords(allRecords)
+        }
+    }, [searchText, allRecords])
 
     return <><Modal open={open}
         onClose={handleClose}
@@ -100,7 +109,22 @@ const ViewPatDocs = (props) => {
                 {records.length !== 0 && records.map((record, index) => {
                     return <DiagRecordCard key={index} data={record} />
                 })}
-            </div></Container></Box></Modal></>
+            </div>
+                <InputBase
+                    sx={{ ml: 1, flex: 1 }}
+                    placeholder="Search"
+                    inputProps={{ 'aria-label': 'search ' }}
+                    value={searchText}
+                    onChange={(event) => {
+                        setSearchText(event.target.value)
+                    }}
+                />
+                <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+                    <SearchIcon />
+                </IconButton>
+            </Container>
+        </Box>
+    </Modal></>
 }
 
 export default ViewPatDocs;

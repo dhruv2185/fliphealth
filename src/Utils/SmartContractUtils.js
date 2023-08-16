@@ -97,7 +97,6 @@ const getDoctorOwnProfile = async (accountAddress) => {
     }
 }
 
-
 const getPatientsForADoctor = async (accountAddress) => {
     try {
         const result = await doctorContract.methods.getPatients().call({
