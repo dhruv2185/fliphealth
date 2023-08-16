@@ -1,8 +1,10 @@
 pragma solidity ^0.8.0;
+
 import "./diagnostics.sol";
 import "./Ownable.sol";
 
 contract hospital is diagnostics, Ownable {
+    uint cost = 0.1 ether;
     struct Hospital {
         string hospname;
         string email;
@@ -22,15 +24,13 @@ contract hospital is diagnostics, Ownable {
         view
         returns (DocProfile[] memory)
     {
-        uint16 count = 0;
-        DocProfile[] memory myDoctors = new DocProfile[](25);
+        DocProfile[] memory myDoctors = new DocProfile[](50);
         for (uint i = 0; i < doctors.length; i++) {
             if (organization[doctors[i]] == msg.sender) {
-                myDoctors[count] = DocProfileReturn(doctors[i]);
-                count++;
+                myDoctors[i] = DocProfileReturn(doctors[i]);
             }
         }
-        return (myDoctors);
+        return myDoctors;
     }
 
     function registerHospital(
@@ -38,7 +38,8 @@ contract hospital is diagnostics, Ownable {
         string memory _email,
         uint _phone,
         string memory _license
-    ) external {
+    ) external payable {
+        require(msg.value == cost);
         hospitals[msg.sender] = Hospital(
             _hospname,
             _email,
@@ -53,11 +54,20 @@ contract hospital is diagnostics, Ownable {
         delete organization[_doctor];
     }
 
-    function addDoctorTOHospital(address _doctor) external {
+    function addHospital(address _doctor) external {
         organization[_doctor] = msg.sender;
     }
 
     function revokeAccessToAll(address _doctor) external {
         delete accessList[_doctor];
+    }
+
+    function withdraw() external onlyOwner {
+        address payable _owner = payable(owner());
+        _owner.transfer(address(this).balance);
+    }
+
+    function setCost(uint _fee) external onlyOwner {
+        cost = _fee;
     }
 }
