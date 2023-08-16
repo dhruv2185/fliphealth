@@ -36,7 +36,7 @@ const ViewRecords = () => {
         if (searchText !== "") {
             const regex = new RegExp(searchText, 'i');
             console.log(regex);
-            const res = allRecords.filter((item) => (regex.test(item.organisation) || regex.test(item.doctorName) || regex.test(documentName) || regex.test(doumentType)));
+            const res = allRecords.filter((item) => (regex.test(item.organisation) || regex.test(item.doctorName) || regex.test(item.documentName) || regex.test(item.doumentType)));
             console.log(res);
             setRecords(res);
         }
@@ -53,13 +53,7 @@ const ViewRecords = () => {
             >
                 <CircularProgress color="inherit" />
             </Backdrop>
-                <div style={{ display: "flex", gap: "30px", flexWrap: "wrap", justifyContent: "center" }} >
-                    {records.length === 0 && <div style={{ height: "70vh", }}><h4 style={{ margin: "30vh 30vw" }}>No Records Found</h4></div>}
-                    {records.length !== 0 && records.map((record, index) => {
-                        return <RecordCard key={index} data={record} refresh={refresh} setRefresh={setRefresh} />
-                    })}
-                </div>
-                <InputBase
+                <center style={{ padding: "20px" }}><InputBase
                     sx={{ ml: 1, flex: 1 }}
                     placeholder="Search"
                     inputProps={{ 'aria-label': 'search ' }}
@@ -68,9 +62,17 @@ const ViewRecords = () => {
                         setSearchText(event.target.value)
                     }}
                 />
-                <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
-                    <SearchIcon />
-                </IconButton>
+                    <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+                        <SearchIcon />
+                    </IconButton></center>
+                <div style={{ display: "flex", gap: "30px", flexWrap: "wrap", justifyContent: "center" }} >
+
+                    {records.length === 0 && <div style={{ height: "70vh", }}><h4 style={{ margin: "30vh 30vw" }}>No Records Found</h4></div>}
+                    {records.length !== 0 && records.map((record, index) => {
+                        return <RecordCard key={index} data={record} refresh={refresh} setRefresh={setRefresh} />
+                    })}
+                </div>
+
             </Container>
         </>
     );

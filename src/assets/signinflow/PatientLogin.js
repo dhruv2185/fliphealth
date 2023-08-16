@@ -95,9 +95,9 @@ const PatientLogin = () => {
                                 name: getProfile["name"],
                                 age: Number(getProfile["age"]),
                                 email: getProfile["email"],
-                                abhaId: getProfile["abhaId"],
-                                aadharId: getProfile["aadharId"],
-                                mobile: getProfile["mobile"],
+                                abhaId: Number(getProfile["abhaId"]),
+                                aadharId: Number(getProfile["aadharId"]),
+                                mobile: Number(getProfile["mobile"]),
                                 gender: getProfile["gender"]
                             }
                             sessionStorage.setItem("credential", JSON.stringify({ accountType: "PATIENT", accountAddress: res[0], profile: profile }));
@@ -248,11 +248,11 @@ const PatientLogin = () => {
             else {
                 const profile = {
                     name: getProfile["name"],
-                    age: getProfile["age"],
+                    age: Number(getProfile["age"]),
                     email: getProfile["email"],
-                    abhaId: getProfile["abhaId"],
-                    aadharId: getProfile["aadharId"],
-                    mobile: getProfile["mobile"],
+                    abhaId: Number(getProfile["abhaId"]),
+                    aadharId: Number(getProfile["aadharId"]),
+                    mobile: Number(getProfile["mobile"]),
                     gender: getProfile["gender"]
                 }
                 sessionStorage.setItem("credential", JSON.stringify({ accountType: "PATIENT", accountAddress: accounts[0], profile: profile }));

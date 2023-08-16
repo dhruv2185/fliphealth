@@ -102,13 +102,13 @@ const DoctorLogin = () => {
                         else {
                             const profile = {
                                 name: getProfile["name"],
-                                age: getProfile["age"],
+                                age: Number(getProfile["age"]),
                                 email: getProfile["email"],
-                                abhaId: getProfile["abhaId"],
-                                aadharId: getProfile["aadharId"],
-                                mobile: getProfile["mobile"],
+                                abhaId: Number(getProfile["abhaId"]),
+                                aadharId: Number(getProfile["aadharId"]),
+                                mobile: Number(getProfile["mobile"]),
                                 gender: getProfile["gender"],
-                                grNumber: getProfile["grNum"],
+                                grNumber: Number(getProfile["grNum"]),
                                 degreeName: getProfile["degreeName"]
                             }
                             sessionStorage.setItem("credential", JSON.stringify({ accountType: "DOCTOR", accountAddress: res[0], profile: profile }))
@@ -292,11 +292,11 @@ const DoctorLogin = () => {
                     name: getProfile["name"],
                     age: Number(getProfile["age"]),
                     email: getProfile["email"],
-                    abhaId: getProfile["abhaId"],
-                    aadharId: getProfile["aadharId"],
-                    mobile: getProfile["mobile"],
+                    abhaId: Number(getProfile["abhaId"]),
+                    aadharId: Number(getProfile["aadharId"]),
+                    mobile: Number(getProfile["mobile"]),
                     gender: getProfile["gender"],
-                    grNumber: getProfile["grNum"],
+                    grNumber: Number(getProfile["grNum"]),
                     degreeName: getProfile["degreeName"]
                 }
                 sessionStorage.setItem("credential", JSON.stringify({ accountType: "DOCTOR", accountAddress: accounts[0], profile: profile }))

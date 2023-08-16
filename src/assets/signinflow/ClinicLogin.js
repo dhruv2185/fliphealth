@@ -75,7 +75,7 @@ const ClinicLogin = () => {
                                 email: getProfile["email"],
 
 
-                                mobile: getProfile["phone"],
+                                mobile: Number(getProfile["phone"]),
                                 location: getProfile["location"],
                             }
                             sessionStorage.setItem("credential", JSON.stringify({ accountType: "CLINIC", accountAddress: res[0], profile: profile }))
@@ -170,7 +170,7 @@ const ClinicLogin = () => {
                     email: getProfile["email"],
 
 
-                    mobile: getProfile["phone"],
+                    mobile: Number(getProfile["phone"]),
                     location: getProfile["location"],
                 }
                 sessionStorage.setItem("credential", JSON.stringify({ accountType: "CLINIC", accountAddress: accounts[0], profile: profile }))

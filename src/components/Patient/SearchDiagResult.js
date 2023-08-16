@@ -7,6 +7,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ConfirmDialog from '../ConfirmDialog';
 const SearchDiagResult = (props) => {
     const { data, grantedDiag, isLoading, setIsLoading } = props;
+    console.log(data)
     const [accessGranted, setAccessGranted] = useState(false);
     const [confirm, setConfirm] = useState(false);
     useEffect(() => {
@@ -30,17 +31,21 @@ const SearchDiagResult = (props) => {
     const handleGranted = () => {
         enqueueSnackbar("Access already GRANTED", { variant: "warning" });
     }
+    const handleCopy = async () => {
+        await navigator.clipboard.writeText(data.myAdd);
+        enqueueSnackbar("Address Copied!", { variant: "success" });
+    }
     return (
         <>
             <ConfirmDialog open={confirm} setOpen={setConfirm} onConfirm={handleGrant} title={"Grant Access"} children={"Are you sure you want to GRANT access to this Diagnostic?"} />
             <Card sx={{ width: "60vw", minWidth: "400px", padding: "5px 20px", display: "flex", justifyContent: "space-between" }}>
                 <div style={{ display: "flex" }}>
                     <Avatar sx={{ bgcolor: "red", margin: "auto", textTransform: "uppercase" }} aria-label="recipe" >
-                        {data.name[0]}
+                        {data["Diagname"][0]}
                     </Avatar>
-                    <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{data.name}</p><p style={{ color: "grey", lineHeight: "18px" }}>E-mail : {data.email} | Phone : {Number(data.phone)}</p></div>
+                    <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{data["Diagname"]}</p><p style={{ color: "grey", lineHeight: "18px" }}>E-mail : {data["email"]} | Phone : {Number(data["phone"])}</p></div>
                 </div>
-                <div style={{ margin: "auto 15px" }}><IconButton><ContentCopyIcon /></IconButton>{!accessGranted && <Button onClick={() => {
+                <div style={{ margin: "auto 15px" }}><IconButton onClick={handleCopy}><ContentCopyIcon /></IconButton>{!accessGranted && <Button onClick={() => {
                     setConfirm(true);
                 }} variant="contained" style={{ margin: "auto 15px" }}>Grant Access</Button>}
                     {accessGranted && <Button onClick={handleGranted} variant="outlined" style={{ margin: "auto 15px" }}>Access Granted</Button>}</div>

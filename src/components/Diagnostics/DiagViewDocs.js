@@ -110,13 +110,7 @@ const DiagViewDocs = (props) => {
                     <p id="parent-modal-description">
                         Here, you can access Patient's Records.
                     </p><Container component="main" maxWidth="s" minWidth="xs"><CssBaseline />
-                        <div style={{ display: "flex", gap: "30px", flexWrap: "wrap", justifyContent: "center" }} >
-                            {records.length === 0 && <div style={{ height: "70vh", }}><h4 style={{ margin: "30vh 30vw" }}>No Records Found</h4></div>}
-                            {records.length !== 0 && records.map((record, index) => {
-                                return <DiagRecordCard key={index} data={record} />
-                            })}
-                        </div>
-                        <InputBase
+                        <center style={{ padding: "20px" }}><InputBase
                             sx={{ ml: 1, flex: 1 }}
                             placeholder="Search"
                             inputProps={{ 'aria-label': 'search ' }}
@@ -125,9 +119,16 @@ const DiagViewDocs = (props) => {
                                 setSearchText(event.target.value)
                             }}
                         />
-                        <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
-                            <SearchIcon />
-                        </IconButton>
+                            <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+                                <SearchIcon />
+                            </IconButton></center>
+                        <div style={{ display: "flex", gap: "30px", flexWrap: "wrap", justifyContent: "center" }} >
+                            {records.length === 0 && <div style={{ height: "70vh", }}><h4 style={{ margin: "30vh 30vw" }}>No Records Found</h4></div>}
+                            {records.length !== 0 && records.map((record, index) => {
+                                return <DiagRecordCard key={index} data={record} />
+                            })}
+                        </div>
+
                     </Container>
                 </Box>
             </Modal>
