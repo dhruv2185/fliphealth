@@ -23,10 +23,23 @@ import { enqueueSnackbar } from 'notistack';
 function App() {
   useEffect(() => {
     if (window.ethereum) {
-      window.ethereum.on('chainChanged', () => window.location.reload());
-      window.ethereum.on('accountsChanged', () => window.location.reload());
+      window.ethereum.on('chainChanged', () => {
+        sessionStorage.clear();
+        window.location.reload();
+      });
+      window.ethereum.on('accountsChanged', () => {
+        sessionStorage.clear();
+        window.location.reload();
+      });
     }
   }, [window.ethereum])
+  useEffect(() => {
+    const credentials = sessionStorage.getItem("credential") ? JSON.parse(sessionStorage.getItem("credential")) : null;
+    if (credentials) {
+      console.log(credentials)
+      dispatch({ type: "LOGIN", payload: credentials })
+    }
+  }, [])
   useEffect(() => {
     function onlineHandler() {
       enqueueSnackbar("You are online", { variant: "success" });
@@ -46,6 +59,7 @@ function App() {
     };
   }, []);
   const dispatch = useDispatch();
+
   // dispatch({
   //   type: "UPDATE", payload: {
   //     accountAddress: "0x81fc1C1f5210a9C5bD3D291fd6279Aa8705eC475", accountType: "HOSPITAL", authenticated: true, profile: {
@@ -55,7 +69,7 @@ function App() {
   // })
   const darkTheme = createTheme({
     palette: {
-      mode: 'light',
+      mode: 'dark',
       neutral: {
         main: '#f45c03',
 

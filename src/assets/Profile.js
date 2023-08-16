@@ -17,7 +17,8 @@ const Profile = () => {
     const accountType = useSelector(state => state.accountType);
     const navigate = useNavigate();
     useEffect(() => {
-        if (accountType === null) {
+        const credential = sessionStorage.getItem("credential") ? JSON.parse(sessionStorage.getItem("credential")) : null;
+        if (credential.accountType === null) {
             navigate("/");
         }
     }, [accountType])
