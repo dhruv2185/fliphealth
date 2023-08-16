@@ -79,9 +79,10 @@ const HospitalLogin = () => {
                                 email: getProfile["email"],
 
 
-                                mobile: getProfile["phone"],
+                                mobile: Number(getProfile["phone"]),
                                 license: getProfile["license"],
                             }
+                            sessionStorage.setItem("credential", JSON.stringify({ accountType: "HOSPITAL", accountAddress: res[0], profile: profile }))
                             enqueueSnackbar(`Welcome, ${profile.name}`);
                             dispatch({ type: "LOGIN", payload: { accountType: "HOSPITAL", accountAddress: res[0], profile: profile } })
                             navigate("/Dashboard");
@@ -175,9 +176,10 @@ const HospitalLogin = () => {
                     email: getProfile["email"],
 
 
-                    mobile: getProfile["phone"],
+                    mobile: Number(getProfile["phone"]),
                     license: getProfile["license"],
                 }
+                sessionStorage.setItem("credential", JSON.stringify({ accountType: "HOSPITAL", accountAddress: accounts[0], profile: profile }))
                 enqueueSnackbar(`Welcome, ${profile.name}`);
                 dispatch({ type: "LOGIN", payload: { accountType: "HOSPITAL", accountAddress: accounts[0], profile: profile } })
                 navigate("/Dashboard");

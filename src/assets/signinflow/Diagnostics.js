@@ -80,6 +80,7 @@ const Diagnostics = () => {
                                 mobile: getProfile["phone"],
                                 license: getProfile["license"],
                             }
+                            sessionStorage.setItem("credential", JSON.stringify({ accountType: "DIAGNOSTICS", accountAddress: res[0], profile: profile }))
                             enqueueSnackbar(`Welcome, ${profile.name}`);
                             dispatch({ type: "LOGIN", payload: { accountType: "DIAGNOSTICS", accountAddress: res[0], profile: profile } })
                             navigate("/Dashboard");
@@ -176,6 +177,7 @@ const Diagnostics = () => {
                     mobile: getProfile["phone"],
                     license: getProfile["license"],
                 }
+                sessionStorage.setItem("credential", JSON.stringify({ accountType: "DIAGNOSTICS", accountAddress: accounts[0], profile: profile }))
                 enqueueSnackbar(`Welcome, ${profile.name}`);
                 dispatch({ type: "LOGIN", payload: { accountType: "DIAGNOSTICS", accountAddress: accounts[0], profile: profile } })
                 navigate("/Dashboard");

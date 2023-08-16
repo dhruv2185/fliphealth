@@ -78,6 +78,7 @@ const ClinicLogin = () => {
                                 mobile: getProfile["phone"],
                                 location: getProfile["location"],
                             }
+                            sessionStorage.setItem("credential", JSON.stringify({ accountType: "CLINIC", accountAddress: res[0], profile: profile }))
                             enqueueSnackbar(`Welcome, ${profile.name}`);
                             dispatch({ type: "LOGIN", payload: { accountType: "CLINIC", accountAddress: res[0], profile: profile } })
                             navigate("/Dashboard");
@@ -172,6 +173,7 @@ const ClinicLogin = () => {
                     mobile: getProfile["phone"],
                     location: getProfile["location"],
                 }
+                sessionStorage.setItem("credential", JSON.stringify({ accountType: "CLINIC", accountAddress: accounts[0], profile: profile }))
                 enqueueSnackbar(`Welcome, ${profile.name}`);
                 dispatch({ type: "LOGIN", payload: { accountType: "CLINIC", accountAddress: accounts[0], profile: profile } })
                 navigate("/Dashboard");

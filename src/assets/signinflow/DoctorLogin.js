@@ -111,6 +111,7 @@ const DoctorLogin = () => {
                                 grNumber: getProfile["grNum"],
                                 degreeName: getProfile["degreeName"]
                             }
+                            sessionStorage.setItem("credential", JSON.stringify({ accountType: "DOCTOR", accountAddress: res[0], profile: profile }))
                             enqueueSnackbar(`Welcome, ${profile.name}`);
                             dispatch({ type: "LOGIN", payload: { accountType: "DOCTOR", accountAddress: res[0], profile: profile } })
                             navigate("/Dashboard");
@@ -298,6 +299,7 @@ const DoctorLogin = () => {
                     grNumber: getProfile["grNum"],
                     degreeName: getProfile["degreeName"]
                 }
+                sessionStorage.setItem("credential", JSON.stringify({ accountType: "DOCTOR", accountAddress: accounts[0], profile: profile }))
                 enqueueSnackbar(`Welcome, ${profile.name}`);
                 dispatch({ type: "LOGIN", payload: { accountType: "DOCTOR", accountAddress: accounts[0], profile: profile } })
                 navigate("/Dashboard");
