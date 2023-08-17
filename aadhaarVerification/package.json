@@ -1,0 +1,17 @@
+{
+  "name": "aadhaarverification",
+  "version": "1.0.0",
+  "description": "Aadhar verification api for FlipHealth",
+  "main": "index.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dhruv2185",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.2"
+  }
+}

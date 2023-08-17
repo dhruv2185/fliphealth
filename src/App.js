@@ -68,7 +68,10 @@ function App() {
   // })
   const darkTheme = createTheme({
     palette: {
-      mode: 'dark',
+      mode: 'light',
+      primary: {
+        main: '#02a695',
+      },
       neutral: {
         main: '#f45c03',
 

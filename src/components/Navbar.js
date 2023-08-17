@@ -159,7 +159,7 @@ function Navbar() {
                         ))}
                     </Box>
                     {!isLoggedIn && <Box sx={{ flexGrow: 0 }}>
-                        <Button onClick={handleOpenLoginMenu} variant='outlined'>SIGN IN</Button>
+                        <Button onClick={handleOpenLoginMenu} sx={{ color: "white" }} variant='outlined'>SIGN IN</Button>
                         <Menu
                             sx={{ mt: '45px' }}
                             id="menu-appbar"

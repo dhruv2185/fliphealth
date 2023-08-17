@@ -12,6 +12,7 @@ const Footer = () => {
             sx={{
 
                 p: 6,
+                backgroundColor: "antiquewhite"
             }}
         >
             <Container maxWidth="lg">
