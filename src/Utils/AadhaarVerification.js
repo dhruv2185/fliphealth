@@ -11,7 +11,8 @@ const authenticate = async () => {
                     "x-api-key": process.env.REACT_APP_SANDBOX_API_KEY,
                     "x-api-secret": process.env.REACT_APP_SANDBOX_API_SECRET,
                     "x-api-version": "1.0"
-                }
+                },
+                mode: 'cors'
             }
         )
         const data = await res.json()
@@ -43,6 +44,7 @@ const generateOtp = async (aadharNumber, accessToken) => {
                     "x-api-version": "1.0",
                     "content-type": "application/json"
                 },
+                mode: 'cors',
                 body: JSON.stringify({ aadhaar_number: aadharNumber })
             }
         )
@@ -81,6 +83,7 @@ const verifyOTP = async (refId, otp, accessToken) => {
                     "x-api-version": "1.0",
                     "content-type": "application/json"
                 },
+                mode: 'cors',
                 body: JSON.stringify({ ref_id: refId, otp: otp })
             }
         )

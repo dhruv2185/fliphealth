@@ -142,9 +142,9 @@ const PatientLogin = () => {
     }, [])
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
+        const data1 = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, gender: gender };
         let flag = 0;
-        if (data.name === "") {
+        if (data1.name === "") {
             setNameError({
                 error: true,
                 message: "Name cannot be empty!"
@@ -157,7 +157,7 @@ const PatientLogin = () => {
                 message: ""
             });
         }
-        if (data.age === "" || isNaN(data.age) || Number(data.age) < 0 || Number(data.age) > 100) {
+        if (data1.age === "" || isNaN(data1.age) || Number(data1.age) < 0 || Number(data1.age) > 100) {
             setAgeError({
                 error: true,
                 message: "Age cannot be empty!"
@@ -170,7 +170,7 @@ const PatientLogin = () => {
                 message: ""
             });
         }
-        if (data.phone === "" || isNaN(data.phone)) {
+        if (data1.phone === "" || isNaN(data1.phone)) {
             setPhoneError({
                 error: true,
                 message: "Phone cannot be empty!"
@@ -183,7 +183,7 @@ const PatientLogin = () => {
                 message: ""
             });
         }
-        if ((data.abha).length !== 14 || isNaN(data.abha)) {
+        if ((data1.abha).length !== 14 || isNaN(data1.abha)) {
             setAbhaError({
                 error: true,
                 message: "ABHA ID should be a valid 14 digit number"
@@ -196,7 +196,7 @@ const PatientLogin = () => {
                 message: ""
             });
         }
-        if ((data.aadhar).length !== 12 || isNaN(data.aadhar)) {
+        if ((data1.aadhar).length !== 12 || isNaN(data1.aadhar)) {
             setAadharError({
                 error: true,
                 message: "Aadhar ID should be a valid 12 digit number"
@@ -209,7 +209,7 @@ const PatientLogin = () => {
                 message: ""
             });
         }
-        if (data.email === "" || !data.email.includes('@')) {
+        if (data1.email === "" || !data1.email.includes('@')) {
             setEmailError({
                 error: true,
                 message: "Email cannot be empty!"
@@ -222,7 +222,7 @@ const PatientLogin = () => {
                 message: ""
             });
         }
-        if (data.gender === "") {
+        if (data1.gender === "") {
             setGenderError({
                 error: true,
                 message: "Select one of the above values"
@@ -238,28 +238,8 @@ const PatientLogin = () => {
         if (flag === 1) {
             return;
         }
-        // accessToken to be stored in the redux store
-        // let accessToken;
-        // const result = await generateOtp(data.aadhar, accessToken);
-        // error case
-        // if (result.message) {
-        //     enqueueSnackbar(result.message, { variant: "error" });
-        //     return;
-        // }
-        // const refId = result.ref_id;
 
-        // otp to be taken from user make form/ modal field for that
-        // let otp;
-        // const veriOTP = await verifyOTP(refId, otp, accessToken);
-        // error case
-        // if (veriOTP.message) {
-        //     enqueueSnackbar(veriOTP.message, { variant: "error" });
-        //     return;
-        // }
-        // const aadharDetails = veriOTP;
-        // note the format and create a new data object to be sent to the smart contract
-
-        const res = await register_patient(data, accounts[0]);
+        const res = await register_patient(data1, accounts[0]);
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
         }
@@ -341,7 +321,7 @@ const PatientLogin = () => {
             enqueueSnackbar(token.message, {
                 variant: "error"
             })
-            // return;
+            return;
         }
         else {
             setAccessToken(token);
@@ -350,7 +330,7 @@ const PatientLogin = () => {
         const result = await generateOtp(data.aadhar, accessToken);
         if (result.message) {
             enqueueSnackbar(result.message, { variant: "error" });
-            // return;
+            return;
         }
         setRefId(result.ref_id);
         setOpenOTP(true);
@@ -370,7 +350,7 @@ const PatientLogin = () => {
         const result = await generateOtp(data.aadhar, accessToken);
         if (result.message) {
             enqueueSnackbar(result.message, { variant: "error" });
-            // return;
+            return;
         }
         setRefId(result.ref_id);
     }
@@ -383,11 +363,14 @@ const PatientLogin = () => {
             return;
         }
         const aadharDetails = veriOTP;
-        data.name = aadharDetails.name;
-        data.gender = aadharDetails.gender;
-        data.age = 23;
-        data.email = aadharDetails.email;
-        console.log(data);
+        console.log(aadharDetails);
+        const calcAge = 2023 - Number(aadharDetails.year_of_birth)
+        setData({
+            ...data, name: aadharDetails.name,
+            gender: aadharDetails.gender,
+            age: calcAge,
+            email: aadharDetails.email
+        })
 
         const res = await register_patient(data, accounts[0]);
         if (res.message) {
