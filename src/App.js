@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Home from './assets/Home';
 
-
 import PatientLogin from './assets/signinflow/PatientLogin';
 import DoctorLogin from './assets/signinflow/DoctorLogin';
 import Profile from './assets/Profile';
@@ -16,8 +15,6 @@ import Contact from './assets/Contact';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { enqueueSnackbar } from 'notistack';
-
-
 
 function App() {
   useEffect(() => {
