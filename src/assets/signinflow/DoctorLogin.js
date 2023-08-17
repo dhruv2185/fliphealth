@@ -400,7 +400,7 @@ const DoctorLogin = () => {
             enqueueSnackbar(result.message, { variant: "error" });
             return;
         }
-        setRefId(result.ref_id);
+        setRefId(result);
         setOpenOTP(true);
     }
     const handleOtpChange = (newvalue) => {
@@ -419,14 +419,14 @@ const DoctorLogin = () => {
             enqueueSnackbar(result.message, { variant: "error" });
             return;
         }
-        setRefId(result.ref_id);
+        setRefId(result);
     }
     const handleSecondSubmit = async (event) => {
         event.preventDefault();
         const veriOTP = await verifyOTP(refId, otp, accessToken);
         // error case
-        if (veriOTP.message) {
-            enqueueSnackbar(veriOTP.message, { variant: "error" });
+        if (veriOTP.mess) {
+            enqueueSnackbar(veriOTP.mess, { variant: "error" });
             return;
         }
         const aadharDetails = veriOTP;
