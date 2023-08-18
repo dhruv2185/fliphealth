@@ -123,8 +123,10 @@ const DoctorLogin = () => {
                 })
                 .then((res) => {
                     setAccounts(res);
+                    console.log(res)
                     const authenticate = async () => {
                         const getProfile = await getDoctorOwnProfile(res[0]);
+                        console.log(getProfile)
                         if (!getProfile || getProfile["name"] === "") {
                             return;
                         }
@@ -285,9 +287,11 @@ const DoctorLogin = () => {
         }
 
         const res = await registerDoctor(data1, accounts[0]);
+
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
         }
+
         else {
             const getProfile = await getDoctorOwnProfile(accounts[0]);
             if (getProfile.message) {
