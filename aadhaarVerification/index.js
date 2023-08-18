@@ -26,20 +26,20 @@ app.post('/authenticate', async (req, res) => {
             },
             body: JSON.stringify(req.body),
         });
-        console.log(response);
+        // console.log(response);
         if (response.ok) {
             const data = await response.json();
-            console.log("access token aa gaya");
-            console.log(data);
+            // console.log("access token aa gaya");
+            // console.log(data);
             res.json(data);
         } else {
-            console.log(await response.json())
+            // console.log(await response.json())
             res.status(response.status).json({
                 message: "Kuch toh gadbad hai daya"
             });
         }
     } catch (error) {
-        console.log("error");
+        // console.log("error");
         res.status(500).send('Authentication Failed');
     }
 });
