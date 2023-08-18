@@ -9,9 +9,12 @@ contract clinic is doctor {
         string location;
     }
 
+    // Maps a user to a clinic
     mapping(address => address) public DoctorToClinic; // doctor address to clinic address
+    // Maps an address to Clinic Profile
     mapping(address => Clinic) public ClinicIndex; // doctor address to clinic struct
 
+    // Registers clinic on the blockchain
     function registerClinic(
         string memory _name,
         uint128 _phone,
@@ -21,10 +24,12 @@ contract clinic is doctor {
         ClinicIndex[msg.sender] = Clinic(_name, _phone, _email, _location);
     }
 
+    // Allows a user to enroll in a clinic
     function enrollInClinic(address _clinic) external {
         DoctorToClinic[msg.sender] = _clinic;
     }
 
+    // Returns profile of all doctors enrolled in the clinic
     function getAllDoctorsForClinic()
         external
         view
@@ -41,6 +46,7 @@ contract clinic is doctor {
         return (myDoctors);
     }
 
+    // Allows a user to exit from a clinic
     function exitFromClinic() external {
         delete DoctorToClinic[msg.sender];
     }
