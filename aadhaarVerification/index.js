@@ -33,7 +33,7 @@ app.post('/authenticate', async (req, res) => {
             console.log(data);
             res.json(data);
         } else {
-            console.log(response.json)
+            console.log(await response.json())
             res.status(response.status).json({
                 message: "Kuch toh gadbad hai daya"
             });
