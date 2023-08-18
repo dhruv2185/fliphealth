@@ -58,7 +58,9 @@ contract hospital is diagnostics, Ownable {
         organization[_doctor] = msg.sender;
     }
 
-    function revokeAccessToAll(address _doctor) external {
+    function revokeAccessToAll(
+        address _doctor
+    ) external authorizedHospital(_doctor, msg.sender) {
         delete accessList[_doctor];
     }
 

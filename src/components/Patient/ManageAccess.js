@@ -23,9 +23,6 @@ const ManageAccess = () => {
             const newres = res.filter(item => item.myAdd !== "0x0000000000000000000000000000000000000000");
             setDoctors(newres);
         }
-
-        // const res = await getAllDoctorsForAPatient('loggedInAddress')
-
         setIsLoading(false);
     }
     const fetchDiagnostics = async () => {
@@ -38,10 +35,6 @@ const ManageAccess = () => {
             const newres = res.filter(item => item.myAdd !== "0x0000000000000000000000000000000000000000");
             setDiagnostics(newres);
         }
-
-        // const res = await getDiagnosticForPatient('accountAddress')
-        // will return an array of objects and count of diagnostics sent
-
         setIsLoading(false);
         console.log(diagnostics);
     }
