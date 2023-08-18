@@ -230,7 +230,7 @@ const DoctorLogin = () => {
                 message: ""
             });
         }
-        if (data.aadhar.length !== 12 || isNaN(data.aadhar)) {
+        if (data1.aadhar.length !== 12 || isNaN(data1.aadhar)) {
             setAadharError({
                 error: true,
                 message: "Aadhar number should be of 12 digits"
@@ -286,7 +286,7 @@ const DoctorLogin = () => {
             return;
         }
 
-        const res = await registerDoctor(data, accounts[0]);
+        const res = await registerDoctor(data1, accounts[0]);
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
         }
@@ -320,7 +320,7 @@ const DoctorLogin = () => {
         event.preventDefault();
         setIsLoading(true);
         let flag = 0;
-        console.log(grnumber.current.value)
+        // console.log(grnumber.current.value)
         const onlyNumber = Number(grnumber.current.value.substring(2));
         const received = { phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, grnumber: onlyNumber, specialisation: specialisation.current.value }
         setData(received);
@@ -446,13 +446,23 @@ const DoctorLogin = () => {
             return;
         }
         const aadharDetails = veriOTP;
-        data.name = aadharDetails.name;
-        data.gender = aadharDetails.gender;
-        data.age = 23;
-        data.email = aadharDetails.email;
-        console.log(data);
+        const calcAge = 2023 - Number(aadharDetails.year_of_birth)
+        setData({
+            ...data, name: aadharDetails.name,
+            gender: aadharDetails.gender,
+            age: calcAge,
+            email: aadharDetails.email
+        })
 
-        const res = await registerDoctor(data, accounts[0]);
+        const newData = {
+            ...data,
+            name: aadharDetails.name,
+            gender: aadharDetails.gender,
+            age: calcAge,
+            email: aadharDetails.email
+        }
+
+        const res = await registerDoctor(newData, accounts[0]);
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
         }
