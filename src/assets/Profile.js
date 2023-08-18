@@ -18,9 +18,12 @@ const Profile = () => {
     const navigate = useNavigate();
     useEffect(() => {
         const credential = sessionStorage.getItem("credential") ? JSON.parse(sessionStorage.getItem("credential")) : null;
-        if (credential.accountType === null) {
+        if (!credential) {
             navigate("/");
         }
+        else if (credential.accountType === null) {
+            navigate("/");
+        }// eslint-disable-next-line react-hooks/exhaustive-deps
     }, [accountType])
     return (
         <>

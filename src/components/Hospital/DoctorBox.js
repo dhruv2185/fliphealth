@@ -7,7 +7,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ConfirmDialog from '../ConfirmDialog';
 const DoctorBox = (props) => {
     const accountAddress = useSelector(state => state.accountAddress)
-    const { data, grantedDoctors, isLoading, setIsLoading } = props;
+    const { data, grantedDoctors, setIsLoading } = props;
     const [accessGranted, setAccessGranted] = useState(false);
     const [confirm, setConfirm] = useState(false);
     useEffect(() => {

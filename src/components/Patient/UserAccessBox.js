@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Card, IconButton } from '@mui/material';
+import { Avatar, Button, Card, IconButton } from '@mui/material';
 import React, { useState } from 'react';
 import { revokeDoctorsAccess } from '../../Utils/SmartContractUtils';
 import { enqueueSnackbar } from 'notistack';

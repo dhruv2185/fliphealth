@@ -41,6 +41,7 @@ const ManageAccess = () => {
     useEffect(() => {
         fetchDoctors();
         fetchDiagnostics();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refresh])
 
 

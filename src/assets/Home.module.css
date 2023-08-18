@@ -8,9 +8,9 @@
 
 }
 
-body {
-    /* background-color: rgb(2, 0, 35); */
-}
+
+/* background-color: rgb(2, 0, 35); */
+
 
 .btn {
     padding: 0.85em 2em;
@@ -159,9 +159,8 @@ body {
     font-size: 1.75rem;
 }
 
-.two {
-    /* background-image: linear-gradient(to bottom right, rgb(0, 0, 75), rgb(0, 0, 0)); */
-}
+
+/* background-image: linear-gradient(to bottom right, rgb(0, 0, 75), rgb(0, 0, 0)); */
 
 @media screen and (min-width: 995px) {
     .heading {

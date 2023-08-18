@@ -23,7 +23,7 @@ import ConfirmDialog from '../../components/ConfirmDialog';
 
 
 const HospitalLogin = () => {
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [confirm, setConfirm] = useState(false);
@@ -97,7 +97,7 @@ const HospitalLogin = () => {
             enqueueSnackbar("Please install Metamask to Proceed!", { variant: "error" });
             navigate("/");
 
-        }
+        }// eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const handleSubmit = async () => {
 

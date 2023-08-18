@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Button from '@mui/material/Button';
@@ -22,7 +22,7 @@ import { useSnackbar } from 'notistack';
 
 
 const Diagnostics = () => {
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
@@ -92,12 +92,12 @@ const Diagnostics = () => {
             enqueueSnackbar("Please install Metamask to Proceed!", { variant: "error" });
             navigate("/");
 
-        }
+        }// eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = { name: name.current.value, phone: phone.current.value, email: email.current.value, license: license.current.value };
-        const flag = 0;
+        let flag = 0;
         if (data.name === "") {
             setNameError({
                 error: true,
