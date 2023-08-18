@@ -63,15 +63,25 @@ contract patient {
         address myAdd;
     }
 
+    // List of addresses of all the doctors
     address[] internal doctors;
+    // List of addresses of all the diagnostics
     address[] internal diagnostics;
+
+    // Maps the address of the diagnostic to the diagnostic struct
     mapping(address => Diagnostic) public DiagnosticIndex;
+    // Maps address of diagnostic to list of addresses of users who have granted access to the diagnostic
     mapping(address => address[]) internal DiagnosticAccessList;
+    // Maps the address of the patient to the patient struct
     mapping(address => Patient) internal patientIndex;
+    // Maps the address of the doctor to the doctor struct
     mapping(address => Doctor) internal doctorIndex;
+    // Maps the address of the doctor to all the addresses of the users who have granted access to the doctor
     mapping(address => address[]) internal accessList; // doctor address to user address
+    // Maps the address of the user to the list of health records
     mapping(address => HealthRecord[]) internal userRecords; // address of user to list od ids of health records
 
+    // Check if the user has granted access to the doctor
     function isAuthorized(
         address user,
         address doctor
@@ -85,6 +95,7 @@ contract patient {
         return false;
     }
 
+    // Check if the user has granted access to the diagnostic
     function isAuthorizedDiagnostic(
         address _user,
         address _diagnostic
@@ -100,6 +111,7 @@ contract patient {
         return false;
     }
 
+    // Returns profile of the entered doctor
     function DocProfileReturn(
         address _doctor
     ) public view returns (DocProfile memory) {
@@ -114,6 +126,7 @@ contract patient {
         return docprof;
     }
 
+    // Registers the patient :  Adds patient struct to the patientIndex
     function register_patient(
         string memory _name,
         uint16 _age,
@@ -135,14 +148,17 @@ contract patient {
         );
     }
 
+    // Grants the doctor access to sender's documents
     function grantAccess(address _doctorAddress) public {
         accessList[_doctorAddress].push(msg.sender);
     }
 
+    // Grants the diagnostic access to sender's documents
     function grantAccessToDiagnostic(address _diagnosticAddress) public {
         DiagnosticAccessList[_diagnosticAddress].push(msg.sender);
     }
 
+    // Adds the record metadata to the userRecords mapping
     function addRecordByUser(
         string memory _org,
         string memory _date,
@@ -167,6 +183,7 @@ contract patient {
         );
     }
 
+    // Returns position of a patient in a doctor's accessList
     function getPatientIndex(
         address _doctor,
         address _user
@@ -180,6 +197,7 @@ contract patient {
         return users.length; // User address not found in the array
     }
 
+    // Revokes access of the doctor to the sender's documents
     function revokeAccess(address _doctor) external {
         uint256 index = getPatientIndex(_doctor, msg.sender);
 
@@ -190,10 +208,12 @@ contract patient {
         }
     }
 
+    // Returns Patient profile of the user.
     function getPatientOwnProfile() external view returns (Patient memory) {
         return patientIndex[msg.sender];
     }
 
+    // Returns Patient profile of the entered user.
     function getPatientProfile(
         address _patient
     ) internal view returns (PatientProfile memory) {
@@ -207,6 +227,7 @@ contract patient {
         return patientProf;
     }
 
+    // Returns position of document in the userRecords mapping
     function getRecocrdIndex(
         address _patient,
         string memory _cid
@@ -223,6 +244,7 @@ contract patient {
         return documents.length;
     }
 
+    // Deletes the record metaData from the userRecords mapping
     function deleteRecord(string memory _cid) external {
         address _patient = msg.sender;
         uint256 index = getRecocrdIndex(_patient, _cid);

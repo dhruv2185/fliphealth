@@ -11,14 +11,19 @@ contract hospital is diagnostics, Ownable {
         uint128 phone;
         string license;
     }
-    mapping(address => Hospital) public hospitals; /// hospital mapping
-    mapping(address => address) public organization; ///doctor struct to hospital struct
 
+    // Maps a user address to a hospital struct
+    mapping(address => Hospital) public hospitals; // hospital mapping
+    // Maps a user address to a hospital address
+    mapping(address => address) public organization; // doctor struct to hospital struct
+
+    // Check if the doctor is authorized to access the hospital
     modifier authorizedHospital(address _doctor, address _hospital) {
         require(organization[_doctor] == _hospital, "unauthorized");
         _;
     }
 
+    // Returns all doctors enrolled in the hospital
     function getAllDoctorsForHospital()
         external
         view
@@ -33,6 +38,7 @@ contract hospital is diagnostics, Ownable {
         return myDoctors;
     }
 
+    // Registers a hospital on the blockchain
     function registerHospital(
         string memory _hospname,
         string memory _email,
@@ -48,27 +54,32 @@ contract hospital is diagnostics, Ownable {
         );
     }
 
+    // Allows hospital to remove a doctor
     function removeDoctor(
         address _doctor
     ) external authorizedHospital(_doctor, msg.sender) {
         delete organization[_doctor];
     }
 
+    // Allows hospital to add a doctor
     function addHospital(address _doctor) external {
         organization[_doctor] = msg.sender;
     }
 
+    // Allows hospital to revoke access to a doctor
     function revokeAccessToAll(
         address _doctor
     ) external authorizedHospital(_doctor, msg.sender) {
         delete accessList[_doctor];
     }
 
+    // Allows owner to withdraw funds from the contract
     function withdraw() external onlyOwner {
         address payable _owner = payable(owner());
         _owner.transfer(address(this).balance);
     }
 
+    // Allows user to set the cost of registering a hospital
     function setCost(uint _fee) external onlyOwner {
         cost = _fee;
     }

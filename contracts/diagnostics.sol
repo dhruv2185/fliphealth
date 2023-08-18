@@ -2,6 +2,7 @@ pragma solidity ^0.8.0;
 import "./clinic.sol";
 
 contract diagnostics is clinic {
+    // Registers a diagnostic on the blockchain
     function registerDiagnostic(
         string memory _Diagname,
         string memory _email,
@@ -18,6 +19,7 @@ contract diagnostics is clinic {
         );
     }
 
+    // Returns profile of all patients who have granted access to the diagnostic
     function getPatientsForDiagnostic()
         external
         view
@@ -32,6 +34,7 @@ contract diagnostics is clinic {
         return patients;
     }
 
+    // Returns health records of patient of the diagnostic if authorized
     function getHealthRecordsDiagnostic(
         address patAddress
     ) public view returns (HealthRecord[] memory) {
@@ -39,6 +42,7 @@ contract diagnostics is clinic {
         return userRecords[patAddress];
     }
 
+    // Returns profile of all diagnostics on the blockchain
     function getAllDiagnostics()
         external
         view
@@ -62,6 +66,7 @@ contract diagnostics is clinic {
         return (allDiagnostics);
     }
 
+    // Returns profiles of the diagnostics authorized by the user
     function getDiagnosticsForUser()
         external
         view
@@ -85,6 +90,7 @@ contract diagnostics is clinic {
         return (authDiagnostic);
     }
 
+    // Uploads health records of the patient to the blockchain by authorized diagnostic
     function uploadRecordsDiagnostic(
         address _patient,
         string memory _org,
@@ -110,6 +116,7 @@ contract diagnostics is clinic {
         );
     }
 
+    // Returns position of the user in the DiagnosticAccessList of the specific diagnostic
     function getPatientIndexDia(
         address _diagnostc,
         address _user
@@ -123,6 +130,7 @@ contract diagnostics is clinic {
         return Diagnostics.length;
     }
 
+    // Revokes access of the diagnostic to the patient's records
     function revokeAccessDiagnostic(address _diagnostic) external {
         uint256 index = getPatientIndexDia(_diagnostic, msg.sender);
 

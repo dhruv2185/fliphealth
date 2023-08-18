@@ -2,6 +2,7 @@ pragma solidity ^0.8.0;
 import "./patient.sol";
 
 contract doctor is patient {
+    // Registers doctor on the blockchain
     function registerDoctor(
         uint128 _abhaId,
         uint128 _aadharId,
@@ -25,10 +26,12 @@ contract doctor is patient {
         );
     }
 
+    // Returns doctor profile of the sender
     function getDocOwnProfile() external view returns (Doctor memory) {
         return doctorIndex[msg.sender];
     }
 
+    // Returns profile of all the patients of the user
     function getPatients() external view returns (PatientProfile[] memory) {
         uint patientCount = accessList[msg.sender].length;
         // add a response if patientCount is 0
@@ -39,6 +42,7 @@ contract doctor is patient {
         return patients;
     }
 
+    // Returns healthrecords of the patient if authorized
     function getHealthRecords(
         address patAddress
     ) public view returns (HealthRecord[] memory) {
@@ -46,6 +50,7 @@ contract doctor is patient {
         return userRecords[patAddress];
     }
 
+    // Returns profiles of all doctors on the blockchain
     function getAllDoctors() external view returns (DocProfile[] memory) {
         uint256 numDoctors = doctors.length;
         DocProfile[] memory allDoctors = new DocProfile[](numDoctors);
@@ -56,6 +61,7 @@ contract doctor is patient {
         return allDoctors;
     }
 
+    // Returns profiles of all doctors authorized by the user
     function getDoctorsForUser() external view returns (DocProfile[] memory) {
         uint count = 0;
         DocProfile[] memory authDoctors = new DocProfile[](50);
