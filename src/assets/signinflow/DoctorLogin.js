@@ -16,28 +16,36 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import Footer from '../../components/Footer';
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, useMediaQuery } from '@mui/material';
 import { getDoctorOwnProfile, registerDoctor } from '../../Utils/SmartContractUtils';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { MuiOtpInput } from 'mui-one-time-password-input';
 import { authenticate, generateOtp, verifyOTP } from '../../Utils/AadhaarVerification';
 import Modal from '@mui/material/Modal';
+import { useTheme } from '@emotion/react';
 
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: "60vw",
-    height: "40vh",
-    minHeight: "600px",
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
+
 const DoctorLogin = () => {
+    const theme = useTheme();
+    const fullscreen = useMediaQuery(theme.breakpoints.down('md'));
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: "60vw",
+        height: "40vh",
+        minHeight: "600px",
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+        ...(fullscreen && {
+            height: '80vh',
+            width: '80vw',
+        })
+    };
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
