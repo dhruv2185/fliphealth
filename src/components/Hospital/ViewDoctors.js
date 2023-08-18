@@ -36,7 +36,7 @@ const ViewDoctors = () => {
                 >
                     <CircularProgress color="inherit" />
                 </Backdrop>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px", minHeight: "60vh" }}>
                     {doctors !== [] && doctors.map((doc) => (doc["name"] !== "" && <DoctorAccessBox key={doc["address"]} data={doc} setRefresh={setRefresh} refresh={refresh} setIsLoading={setIsLoading} />))}
                     {doctors.length === 0 && <h3>No Doctors Available</h3>}</Box>
             </Container>

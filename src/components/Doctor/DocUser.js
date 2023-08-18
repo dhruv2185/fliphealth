@@ -107,15 +107,15 @@ const DocUser = () => {
                             <b><h4>{Number(docProfile["mobile"])}</h4></b>
                         </div>
                         <center>
-                            {cli === "NA" && <><InputBase
-                                sx={{ ml: 1, flex: 1, minWidth: "410px", backgroundColor: "#595959", padding: 1, borderRadius: "5px" }}
+                            {cli === "NA" && <div><InputBase
+                                sx={{ ml: 1, flex: 1, minWidth: "300px", backgroundColor: "#595959", padding: 1, borderRadius: "5px" }}
                                 inputRef={search}
                                 placeholder="Add Clinic (Address)"
                                 inputProps={{ 'aria-label': 'search ' }} /><IconButton type="submit" sx={{ p: '10px' }} onClick={() => {
                                     setConfirm1(true);
                                 }} aria-label="search">
                                     <AddIcon />
-                                </IconButton></>}
+                                </IconButton></div>}
                             {cli !== "" && cli !== "NA" && <Button type="submit" sx={{ p: '10px' }} onClick={() => {
                                 setConfirm2(true);
 

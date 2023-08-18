@@ -110,8 +110,8 @@ const SearchDoctors = () => {
                 </Paper>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>
                     {searchResults.length !== 0 && searchResults.map((item, index) => <DoctorBox key={index} data={item} grantedDoctors={grantedDoctors} isLoading={isLoading} setIsLoading={setIsLoading} />)}
-                    {searchResults.length === 0 && search.current.value === "" && <h5>ENTER A SEARCH QUERY</h5>}
-                    {searchResults.length === 0 && search.current.value !== "" && <h5>NO RESULTS FOUND</h5>}
+                    {searchResults.length === 0 && !search.current.value && <h5>ENTER A SEARCH QUERY</h5>}
+                    {searchResults.length === 0 && search.current.value && <h5>NO RESULTS FOUND</h5>}
                 </Box>
             </Container>
         </>

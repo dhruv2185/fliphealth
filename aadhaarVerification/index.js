@@ -26,7 +26,7 @@ app.post('/authenticate', async (req, res) => {
             },
             body: JSON.stringify(req.body),
         });
-        // console.log(response);
+        console.log(response);
         if (response.ok) {
             const data = await response.json();
             console.log("access token aa gaya");

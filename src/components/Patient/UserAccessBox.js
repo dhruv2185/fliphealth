@@ -42,7 +42,7 @@ function UserAccessBox(props) {
                     <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{data.name}</p><p style={{ color: "grey", lineHeight: "18px" }}>{data.degreeName} | GR : {Number(data.grNum)}</p></div>
 
                 </div>
-                <div style={{ margin: "auto 15px" }}><IconButton onClick={handleCopy}><ContentCopyIcon /></IconButton><Button onClick={() => { setConfirm(true) }} variant="outlined" color='neutral' style={{ margin: "auto 15px" }}>Revoke Access</Button></div>
+                <div style={{ margin: "auto 15px", display: "flex", flexWrap: "nowrap" }}><IconButton onClick={handleCopy}><ContentCopyIcon /></IconButton><Button onClick={() => { setConfirm(true) }} variant="outlined" color='neutral' style={{ margin: "auto 15px" }}>Revoke Access</Button></div>
 
             </Card>
         </>

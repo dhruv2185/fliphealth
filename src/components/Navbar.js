@@ -17,7 +17,7 @@ import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import { useNavigate } from 'react-router-dom';
 
 
-const pages = ['Home', 'About', 'Contact Us'];
+const pages = [];
 const settings = ['Dashboard', 'Logout'];
 const user = ['Doctor', 'Patient', 'Hospital', 'Clinic', 'Diagnostics'];
 

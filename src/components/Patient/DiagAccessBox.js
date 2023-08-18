@@ -33,7 +33,7 @@ const DiagAccessBox = (props) => {
                     <Avatar sx={{ bgcolor: "red", margin: "auto" }} aria-label="recipe">
                         {data.name[0]}
                     </Avatar>
-                    <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{data.name}</p><p style={{ color: "grey", lineHeight: "18px" }}>E-mail : {data.email} | Phone : {Number(data.phone)}</p></div>
+                    <div style={{ margin: "auto 15px", lineHeight: "14px", textOverflow: "ellipsis" }}><p >{data.name}</p><p style={{ color: "grey", lineHeight: "18px", textOverflow: "ellipsis" }}>E-mail : {data.email} <br /> Phone : {Number(data.phone)}</p></div>
                 </div>
                 <div style={{ margin: "auto 15px" }}>
                     <IconButton onClick={handleCopy}><ContentCopyIcon /></IconButton>

@@ -38,7 +38,7 @@ const ViewClinDoctors = () => {
                 >
                     <CircularProgress color="inherit" />
                 </Backdrop>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px", minHeight: "60vh" }}>
                     {doctors && doctors.map((doctor, index) => {
                         if (doctor["name"] !== "") {
                             return (

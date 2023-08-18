@@ -41,9 +41,9 @@ const SearchDiagResult = (props) => {
             <Card sx={{ width: "60vw", minWidth: "400px", padding: "5px 20px", display: "flex", justifyContent: "space-between" }}>
                 <div style={{ display: "flex" }}>
                     <Avatar sx={{ bgcolor: "red", margin: "auto", textTransform: "uppercase" }} aria-label="recipe" >
-                        {data["Diagname"][0]}
+                        {data["name"][0]}
                     </Avatar>
-                    <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{data["Diagname"]}</p><p style={{ color: "grey", lineHeight: "18px" }}>E-mail : {data["email"]} | Phone : {Number(data["phone"])}</p></div>
+                    <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{data["name"]}</p><p style={{ color: "grey", lineHeight: "18px" }}>E-mail : {data["email"]} | Phone : {Number(data["phone"])}</p></div>
                 </div>
                 <div style={{ margin: "auto 15px" }}><IconButton onClick={handleCopy}><ContentCopyIcon /></IconButton>{!accessGranted && <Button onClick={() => {
                     setConfirm(true);

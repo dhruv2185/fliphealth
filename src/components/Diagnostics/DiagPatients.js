@@ -39,7 +39,7 @@ const DiagPatients = () => {
                 >
                     <CircularProgress color="inherit" />
                 </Backdrop>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px" }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "10px", minHeight: "42vh" }}>
                     {patients !== null && patients.map((patient, index) => {
                         return <DiagPatientBox key={index} patient={patient} />
                     })

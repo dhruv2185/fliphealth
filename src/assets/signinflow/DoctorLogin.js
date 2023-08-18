@@ -31,7 +31,7 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: "60vw",
     height: "40vh",
-    minHeight: "400px",
+    minHeight: "600px",
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -419,6 +419,7 @@ const DoctorLogin = () => {
             enqueueSnackbar(result.message, { variant: "error" });
             return;
         }
+        setOtp("");
         setRefId(result);
     }
     const handleSecondSubmit = async (event) => {
@@ -427,6 +428,7 @@ const DoctorLogin = () => {
         // error case
         if (veriOTP.mess) {
             enqueueSnackbar(veriOTP.mess, { variant: "error" });
+            setOtp("");
             return;
         }
         const aadharDetails = veriOTP;

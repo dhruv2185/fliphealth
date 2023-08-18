@@ -14,7 +14,7 @@ function PatientBox(props) {
                 <Avatar sx={{ bgcolor: "red", margin: "auto" }} aria-label="recipe">
                     {patient["name"][0]}
                 </Avatar>
-                <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{patient["name"]}</p><p style={{ color: "grey", lineHeight: "18px" }}>{patient["gender"]} | Age : {Number(patient["age"])} yrs</p></div>
+                <div style={{ margin: "auto 15px", lineHeight: "14px" }}><p >{patient["name"]}</p><p style={{ color: "grey", lineHeight: "18px" }}>{patient["gender"]} | Age : {Number(patient["age"])} </p></div>
             </div>
             <Button onClick={openRecords} variant="contained" style={{ margin: "auto 15px" }}>VIEW RECORDS</Button>
         </Card><ViewPatDocs open={open} setOpen={setOpen} patientAddress={patient.myAdd} /></>
