@@ -316,7 +316,8 @@ const PatientLogin = () => {
             return;
         }
 
-        const token = authenticate();
+        const token = await authenticate();
+        console.log("token :", token);
         if (token.message) {
             enqueueSnackbar(token.message, {
                 variant: "error"
@@ -327,12 +328,13 @@ const PatientLogin = () => {
             setAccessToken(token);
         }
 
-        const result = await generateOtp(data.aadhar, accessToken);
+        const result = await generateOtp(received.aadhar, accessToken);
         if (result.message) {
             enqueueSnackbar(result.message, { variant: "error" });
             return;
         }
-        setRefId(result.ref_id);
+        console.log(result);
+        setRefId(result);
         setOpenOTP(true);
     }
     const handleOtpChange = (newvalue) => {
@@ -352,19 +354,20 @@ const PatientLogin = () => {
             enqueueSnackbar(result.message, { variant: "error" });
             return;
         }
-        setRefId(result.ref_id);
+        setRefId(result);
     }
     const handleSecondSubmit = async (event) => {
         event.preventDefault();
         const veriOTP = await verifyOTP(refId, otp, accessToken);
         // error case
-        if (veriOTP.message) {
-            enqueueSnackbar(veriOTP.message, { variant: "error" });
+        if (veriOTP.mess) {
+            enqueueSnackbar(veriOTP.mess, { variant: "error" });
             return;
         }
         const aadharDetails = veriOTP;
         console.log(aadharDetails);
         const calcAge = 2023 - Number(aadharDetails.year_of_birth)
+        console.log(calcAge);
         setData({
             ...data, name: aadharDetails.name,
             gender: aadharDetails.gender,
@@ -372,7 +375,15 @@ const PatientLogin = () => {
             email: aadharDetails.email
         })
 
-        const res = await register_patient(data, accounts[0]);
+        const newData = {
+            ...data,
+            name: aadharDetails.name,
+            gender: aadharDetails.gender,
+            age: calcAge,
+            email: aadharDetails.email
+        }
+        console.log("newData ", newData);
+        const res = await register_patient(newData, accounts[0]);
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
         }
