@@ -270,6 +270,7 @@ const PatientLogin = () => {
     };
     const handleFirstSubmit = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
         let flag = 0;
         const received = { phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value }
         setData(received);
@@ -313,6 +314,7 @@ const PatientLogin = () => {
             });
         }
         if (flag === 1) {
+            setIsLoading(false);
             return;
         }
 
@@ -322,6 +324,7 @@ const PatientLogin = () => {
             enqueueSnackbar(token.message, {
                 variant: "error"
             })
+            setIsLoading(false);
             return;
         }
         else {
@@ -331,11 +334,13 @@ const PatientLogin = () => {
         const result = await generateOtp(received.aadhar, accessToken);
         if (result.message) {
             enqueueSnackbar(result.message, { variant: "error" });
+            setIsLoading(false);
             return;
         }
         console.log(result);
         setRefId(result);
         setOpenOTP(true);
+        setIsLoading(false);
     }
     const handleOtpChange = (newvalue) => {
         setOtp(newvalue);
@@ -349,21 +354,26 @@ const PatientLogin = () => {
     }
     const resendOTP = async () => {
         console.log("resend otp");
+        setIsLoading(true);
         const result = await generateOtp(data.aadhar, accessToken);
         if (result.message) {
             enqueueSnackbar(result.message, { variant: "error" });
+            setIsLoading(false);
             return;
         }
+        setIsLoading(false);
         setOtp("");
         setRefId(result);
     }
     const handleSecondSubmit = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
         const veriOTP = await verifyOTP(refId, otp, accessToken);
         // error case
         if (veriOTP.mess) {
             enqueueSnackbar(veriOTP.mess, { variant: "error" });
             setOtp("");
+            setIsLoading(false);
             return;
         }
         const aadharDetails = veriOTP;
@@ -388,11 +398,13 @@ const PatientLogin = () => {
         const res = await register_patient(newData, accounts[0]);
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
+            setIsLoading(false);
         }
         else {
             const getProfile = await getPatientOwnProfile(accounts[0]);
             if (getProfile.message) {
                 enqueueSnackbar(getProfile.message, { variant: "error" });
+                setIsLoading(false);
             }
             else {
                 const profile = {
@@ -410,6 +422,7 @@ const PatientLogin = () => {
                 navigate("/Dashboard");
             }
         }
+        setIsLoading(false);
         console.log(res);
     }
 

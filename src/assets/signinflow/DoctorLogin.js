@@ -310,6 +310,7 @@ const DoctorLogin = () => {
     };
     const handleFirstSubmit = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
         let flag = 0;
         // console.log(grnumber.current.value)
         const onlyNumber = Number(grnumber.current.value.substring(2));
@@ -381,6 +382,7 @@ const DoctorLogin = () => {
             });
         }
         if (flag === 1) {
+            setIsLoading(false);
             return;
         }
 
@@ -389,6 +391,7 @@ const DoctorLogin = () => {
             enqueueSnackbar(token.message, {
                 variant: "error"
             })
+            setIsLoading(false);
             return;
         }
         else {
@@ -398,6 +401,7 @@ const DoctorLogin = () => {
         const result = await generateOtp(data.aadhar, accessToken);
         if (result.message) {
             enqueueSnackbar(result.message, { variant: "error" });
+            setIsLoading(false);
             return;
         }
         setRefId(result);
@@ -411,6 +415,8 @@ const DoctorLogin = () => {
             return;
         }
         setOpenOTP(false);
+        setIsLoading(false);
+
 
     }
     const resendOTP = async () => {
