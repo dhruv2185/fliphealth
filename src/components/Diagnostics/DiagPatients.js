@@ -13,8 +13,6 @@ const DiagPatients = () => {
     const [patients, setPatients] = React.useState(null);
     const accountAddress = useSelector(state => state.accountAddress);
 
-
-
     useEffect(() => {
         const getPatients = async () => {
             const res = await getPatientsOfDiagnostic(accountAddress);
@@ -25,7 +23,6 @@ const DiagPatients = () => {
                 setPatients(res);
             }
             setIsLoading(false);
-            console.log(res);
         }
         getPatients();
     }, [accountAddress]);

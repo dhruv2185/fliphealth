@@ -60,19 +60,16 @@ const DocUser = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             const res = await getDoctorOwnProfile(accountAddress);
-
             if (res.message) {
                 enqueueSnackbar(res.message, { variant: "error" });
             }
             else {
                 setDocProfile(res);
             }
-            console.log(res);
         }
         fetchProfile();
         fetchOrgs();
     }, [accountAddress, refresh])
-
 
     return (
         <><ConfirmDialog open={confirm1} setOpen={setConfirm1} onConfirm={handleAdd} title={"ADD to Clinic"} children={"Are you sure you want to ADD yourself to this clinic?"} />

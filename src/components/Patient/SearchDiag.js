@@ -29,9 +29,6 @@ const SearchDiag = () => {
             console.log(result)
         }
         setIsLoading(false);
-        // const result = await getDiagProfile("0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029", "0x22207fBEF242156F1cbF1DC83a13d32A2c5Cd029");
-
-
     }
     const fetchDiagnostics = async () => {
         setIsLoading(true);
@@ -50,47 +47,22 @@ const SearchDiag = () => {
                 }
             })
             setGrantedDiag(newres);
-            console.log(newres)
         }
         setIsLoading(false);
-        // const res = await getDiagnosticForPatient('accountAddress')
-        // will return an array of objects and count of diagnostics sent
-        // console.log(res);
-        // or add a setState function which will store the granted diagnostics
-
     }
     const getByName = async (name) => {
         setIsLoading(true);
         const res = await getAllDiagnostics(accountAddress);
         const regex = new RegExp(name, "gi");
-
-
         const result = res.filter(
             item => (name !== '' && regex.test(item["name"]))
         )
         setResults(result);
-        console.log(result);
         setIsLoading(false);
     }
     const searchHandler = (e) => {
         e.preventDefault();
 
-
-        // to filter out the already granted diagnostics
-
-        // const fetchDiagnostics = async () => {
-        //     const res = await getDiagnosticForPatient(accountAddress);
-        //     // const res = await getDiagnosticForPatient('accountAddress')
-        //     // will return an array of objects and count of diagnostics sent
-        //     console.log(res);
-        //     // or add a setState function which will store the granted diagnostics
-        //     return res;
-        // }
-
-        // if search by name
-        // const res = await getAllDiagnostics();
-        // console.log(res);
-        // further logic to filter out the result using regex
         fetchDiagnostics();
         if (searchType === "name") {
             getByName(search.current.value);
@@ -99,7 +71,6 @@ const SearchDiag = () => {
         if (searchType === "address") {
             getByAddress(search.current.value);
         }
-
     }
     return (
         <>

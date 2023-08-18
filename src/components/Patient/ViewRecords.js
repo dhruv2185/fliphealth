@@ -26,8 +26,6 @@ const ViewRecords = () => {
                 setAllRecords(res);
             }
             setLoading(false);
-            console.log(res);
-
         }
         getRecords();
     }, [refresh, accountAddress])
@@ -35,9 +33,7 @@ const ViewRecords = () => {
     useEffect(() => {
         if (searchText !== "") {
             const regex = new RegExp(searchText, 'i');
-            console.log(regex);
             const res = allRecords.filter((item) => (regex.test(item.organisation) || regex.test(item.doctorName) || regex.test(item.documentName) || regex.test(item.doumentType)));
-            console.log(res);
             setRecords(res);
         }
         else {

@@ -16,7 +16,6 @@ const SearchDoctors = () => {
     const [grantedDoctors, setGrantedDoctors] = useState([]);
     const getByAddress = async (search) => {
         setIsLoading(true);
-
         const res = await searchDoctorByAddress(
             search,
             accountAddress

@@ -13,7 +13,6 @@ const DoctorBox = (props) => {
     useEffect(() => {
         setAccessGranted(grantedDoctors.some(item => data.myAdd === item.myAdd));
     }, [grantedDoctors, data]);
-    // const doctorAddress = data.myAdd;
 
     const handleAdd = async () => {
         setIsLoading(true);

@@ -15,7 +15,6 @@ const SearchDoctor = () => {
     const [searchType, setSearchType] = useState('name');
     const [searchResults, setSearchResults] = useState([]);
     const [grantedDoctors, setGrantedDoctors] = useState([]);
-    console.log(search.current.value)
     const getByAddress = async (search) => {
         setIsLoading(true);
         const res = await searchDoctorByAddress(
@@ -28,7 +27,6 @@ const SearchDoctor = () => {
         else {
             setSearchResults([res]);
         }
-        console.log(res)
         setIsLoading(false);
 
     }
@@ -47,10 +45,8 @@ const SearchDoctor = () => {
                     grNum: item["grNum"],
                     myAdd: item["myAdd"]
                 }
-
             })
             setGrantedDoctors(newres);
-            console.log(newres)
         }
         setIsLoading(false);
     }
@@ -61,7 +57,6 @@ const SearchDoctor = () => {
         )
         const regex = new RegExp(search, "gi");
         const newres = res.map(item => {
-
             return {
                 name: item["name"],
                 degreeName: item["degreeName"],
@@ -69,12 +64,10 @@ const SearchDoctor = () => {
                 grNum: item["grNum"],
                 myAdd: item["myAdd"]
             }
-
         })
         const result = newres.filter(
             item => (search !== "" && regex.test(item["name"]))
         )
-        console.log(result)
         setSearchResults(result);
         setIsLoading(false);
 
@@ -90,8 +83,6 @@ const SearchDoctor = () => {
         if (searchType === "name") {
             getByName(search.current.value);
         }
-
-
     }
     const handleChange = (event) => {
         setSearchType(event.target.value);

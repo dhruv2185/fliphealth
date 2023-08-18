@@ -30,13 +30,7 @@ function SearchDocResult(props) {
         }
         setIsLoading(false);
 
-
-        // const res = await grantAccessToDoctor(
-        //     doctorAddress,
-        //     loggedInAddress
-        // )
     }
-    // grantAccessOnPress();
     const handleGranted = () => {
         enqueueSnackbar("Access already GRANTED!", { variant: "warning" });
     }

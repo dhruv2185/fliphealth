@@ -263,10 +263,7 @@ const PatientLogin = () => {
                 dispatch({ type: "LOGIN", payload: { accountType: "PATIENT", accountAddress: accounts[0], profile: profile } })
                 navigate("/Dashboard");
             }
-
         }
-        console.log(res);
-
     };
     const handleFirstSubmit = async (event) => {
         event.preventDefault();
@@ -319,7 +316,6 @@ const PatientLogin = () => {
         }
 
         const token = await authenticate();
-        console.log("token :", token);
         if (token.message) {
             enqueueSnackbar(token.message, {
                 variant: "error"
@@ -337,7 +333,6 @@ const PatientLogin = () => {
             setIsLoading(false);
             return;
         }
-        console.log(result);
         setRefId(result);
         setOpenOTP(true);
         setIsLoading(false);
@@ -353,7 +348,6 @@ const PatientLogin = () => {
 
     }
     const resendOTP = async () => {
-        console.log("resend otp");
         setIsLoading(true);
         const result = await generateOtp(data.aadhar, accessToken);
         if (result.message) {
@@ -377,9 +371,7 @@ const PatientLogin = () => {
             return;
         }
         const aadharDetails = veriOTP;
-        console.log(aadharDetails);
         const calcAge = 2023 - Number(aadharDetails.year_of_birth)
-        console.log(calcAge);
         setData({
             ...data, name: aadharDetails.name,
             gender: aadharDetails.gender,
@@ -394,7 +386,6 @@ const PatientLogin = () => {
             age: calcAge,
             email: aadharDetails.email
         }
-        console.log("newData ", newData);
         const res = await register_patient(newData, accounts[0]);
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
@@ -423,7 +414,6 @@ const PatientLogin = () => {
             }
         }
         setIsLoading(false);
-        console.log(res);
     }
 
     return (

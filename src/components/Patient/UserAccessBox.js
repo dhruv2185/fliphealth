@@ -22,10 +22,6 @@ function UserAccessBox(props) {
             enqueueSnackbar("Access Revoked!", { variant: "success" });
         }
         setRefresh(!refresh);
-        // const res = revokeDoctorsAccess(
-        //     docotrAddress,
-        //     loggedInAddress
-        // )
     }
     const handleCopy = async () => {
         await navigator.clipboard.writeText(data.myAdd);

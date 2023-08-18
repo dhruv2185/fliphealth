@@ -152,11 +152,9 @@ const DoctorLogin = () => {
     }, [])
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // add field for degree name
         const onlyNumber = Number(grnumber.current.value.substring(2));
         const data1 = { name: name.current.value, age: age.current.value, phone: phone.current.value, abha: abha.current.value, aadhar: aadhar.current.value, email: email.current.value, grnumber: onlyNumber, gender: gender, specialisation: specialisation.current.value };
         let flag = 0;
-        // check if all fields are filled
         if (data1.name === "") {
             setNameError({
                 error: true,
@@ -306,7 +304,6 @@ const DoctorLogin = () => {
             }
 
         }
-        console.log(res);
     };
     const handleFirstSubmit = async (event) => {
         event.preventDefault();
@@ -416,8 +413,6 @@ const DoctorLogin = () => {
         }
         setOpenOTP(false);
         setIsLoading(false);
-
-
     }
     const resendOTP = async () => {
         const result = await generateOtp(data.aadhar, accessToken);
@@ -480,9 +475,7 @@ const DoctorLogin = () => {
                 dispatch({ type: "LOGIN", payload: { accountType: "DOCTOR", accountAddress: accounts[0], profile: profile } })
                 navigate("/Dashboard");
             }
-
         }
-        console.log(res);
     }
 
     return (

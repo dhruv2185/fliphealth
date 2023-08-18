@@ -43,7 +43,6 @@ const DiagViewDocs = (props) => {
             height: '100vh',
             width: '100vw',
         })
-
     };
 
     const [records, setRecords] = useState([]);
@@ -52,9 +51,7 @@ const DiagViewDocs = (props) => {
 
     useEffect(() => {
         const getRecords = async () => {
-            // const res = await getHealthRecordsOfPatient("accountAddress");
             setIsLoading(true);
-            // console.log(patientAddress)
             const res = await getHealthRecordsOfPatient(patientAddress, accountAddress);
             if (res.message) {
                 enqueueSnackbar(res.message, { variant: "error" });
@@ -65,7 +62,6 @@ const DiagViewDocs = (props) => {
                 console.log(res);
             }
             setIsLoading(false);
-
         }
         getRecords();
     }, [patientAddress, accountAddress]);
@@ -73,9 +69,7 @@ const DiagViewDocs = (props) => {
     useEffect(() => {
         if (searchText !== "") {
             const regex = new RegExp(searchText, 'i');
-            console.log(regex);
             const res = allRecords.filter((item) => (regex.test(item.organisation) || regex.test(item.doctorName) || regex.test(item.documentName) || regex.test(item.doumentType)));
-            console.log(res);
             setRecords(res);
         }
         else {
@@ -128,7 +122,6 @@ const DiagViewDocs = (props) => {
                                 return <DiagRecordCard key={index} data={record} />
                             })}
                         </div>
-
                     </Container>
                 </Box>
             </Modal>

@@ -39,11 +39,8 @@ const ManageAccess = () => {
         console.log(diagnostics);
     }
     useEffect(() => {
-
-
         fetchDoctors();
         fetchDiagnostics();
-
     }, [refresh])
 
 

@@ -166,10 +166,7 @@ const ClinicLogin = () => {
             else {
                 const profile = {
                     name: getProfile["name"],
-
                     email: getProfile["email"],
-
-
                     mobile: Number(getProfile["phone"]),
                     location: getProfile["location"],
                 }
@@ -180,7 +177,6 @@ const ClinicLogin = () => {
             }
 
         }
-        // console.log(res);
     };
 
 

@@ -60,7 +60,6 @@ const ViewPatDocs = (props) => {
             else {
                 setRecords(res);
                 setAllRecords(res);
-                console.log(res);
             }
             setIsLoading(false);
         }
@@ -70,9 +69,7 @@ const ViewPatDocs = (props) => {
     useEffect(() => {
         if (searchText !== "") {
             const regex = new RegExp(searchText, 'i');
-            console.log(regex);
             const res = allRecords.filter((item) => (regex.test(item.organisation) || regex.test(item.doctorName) || regex.test(item.documentName) || regex.test(item.doumentType)));
-            console.log(res);
             setRecords(res);
         }
         else {

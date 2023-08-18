@@ -22,7 +22,6 @@ const ViewPatients = () => {
                 setPatients(res);
             }
             setIsLoading(false);
-            console.log(res);
         }
         fetchPatients();
     }, [accountAddress]);

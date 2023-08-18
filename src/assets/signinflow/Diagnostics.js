@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Web3 from 'web3';
 import { useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Button from '@mui/material/Button';
@@ -73,10 +72,7 @@ const Diagnostics = () => {
                         else {
                             const profile = {
                                 name: getProfile["Diagname"],
-
                                 email: getProfile["email"],
-
-
                                 mobile: Number(getProfile["phone"]),
                                 license: getProfile["license"],
                             }
@@ -100,7 +96,6 @@ const Diagnostics = () => {
     }, [])
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // add field for degree name
         const data = { name: name.current.value, phone: phone.current.value, email: email.current.value, license: license.current.value };
         const flag = 0;
         if (data.name === "") {
@@ -170,10 +165,7 @@ const Diagnostics = () => {
             else {
                 const profile = {
                     name: getProfile["Diagname"],
-
                     email: getProfile["email"],
-
-
                     mobile: Number(getProfile["phone"]),
                     license: getProfile["license"],
                 }
@@ -182,9 +174,7 @@ const Diagnostics = () => {
                 dispatch({ type: "LOGIN", payload: { accountType: "DIAGNOSTICS", accountAddress: accounts[0], profile: profile } })
                 navigate("/Dashboard");
             }
-
         }
-        // console.log(res);
     };
 
     return (

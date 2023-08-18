@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import Web3 from 'web3';
 import { useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Button from '@mui/material/Button';
@@ -184,7 +183,6 @@ const HospitalLogin = () => {
                 dispatch({ type: "LOGIN", payload: { accountType: "HOSPITAL", accountAddress: accounts[0], profile: profile } })
                 navigate("/Dashboard");
             }
-
         }
     };
 

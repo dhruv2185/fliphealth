@@ -138,8 +138,6 @@ const DiagUpload = () => {
             setIsLoading(true);
             try {
                 const result = await ipfs.add(file);
-                console.log(result);
-                console.log("uploaded");
 
                 const data = {
                     org: orgName.current.value,
@@ -161,7 +159,6 @@ const DiagUpload = () => {
                     resetHandler();
                 }
                 setIsLoading(false);
-                console.log(res);
             }
             catch (err) {
                 enqueueSnackbar("Error in uploading record", { variant: "error" });

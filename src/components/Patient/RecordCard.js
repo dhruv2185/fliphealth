@@ -34,24 +34,17 @@ const RecordCard = (props) => {
 
     const unpinFromInfura = async (hash) => {
         await ipfs.pin.rm(hash);
-        // console.log(res);
     }
 
     const removeDocFromBlock = async (hash) => {
         await deleteDocument(accountAddress, hash)
-        // console.log(res);
     }
 
     const handleRemove = async () => {
         setIsLoading(true);
         try {
-            // console.log(data.documentPath);
-
             await unpinFromInfura(data.documentPath);
             await removeDocFromBlock(data.documentCid);
-
-
-
             enqueueSnackbar("Record DELETED successfully!", { variant: "success" });
         }
         catch (err) {

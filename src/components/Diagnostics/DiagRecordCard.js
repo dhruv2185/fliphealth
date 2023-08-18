@@ -4,20 +4,15 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-
 import pdf from "../../assets/images/PDF.png";
-
 import { IconButton } from '@mui/material';
-
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const DiagRecordCard = (props) => {
 
-
     const { data } = props;
     return (
         <>
-
             <Card sx={{ maxWidth: 400, width: 200 }}>
                 <CardMedia
                     component="img"
@@ -42,7 +37,6 @@ const DiagRecordCard = (props) => {
                 </CardContent>
                 <CardActions sx={{ display: "flex", justifyContent: "center" }}>
                     <a href={`https://skywalker.infura-ipfs.io/ipfs/${data.documentPath}`} target='_blank' rel='noreferrer'><IconButton><VisibilityIcon /></IconButton></a>
-
                 </CardActions>
             </Card>
         </>

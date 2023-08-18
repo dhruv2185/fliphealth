@@ -13,9 +13,7 @@ const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
 
 const UploadRecords = () => {
     const [isLoading, setIsLoading] = useState(false);
-
     const accountAddress = useSelector(state => state.accountAddress);
-
     const [file, setFile] = useState(null);
     const ipfs = ipfsHttpClient({
         url: "https://ipfs.infura.io:5001",
@@ -117,15 +115,9 @@ const UploadRecords = () => {
             setFileErr(true);
         }
         else {
-            // console.log("uploading");
-            // console.log(ipfs);
-            // console.log(file);
             setIsLoading(true);
             try {
                 const result = await ipfs.add(file);
-                // const result = await ipfs.pin.rm(file.cid);
-                // console.log(result);
-                // console.log("uploaded");
                 const data = {
                     org: orgName.current.value,
                     date: new Date(),
@@ -138,7 +130,6 @@ const UploadRecords = () => {
                 const res = await uploadRecordByUser(
                     data,
                     accountAddress
-                    // loggedInAddress
                 )
                 if (res.message) {
                     enqueueSnackbar(res.message, { variant: "error" })

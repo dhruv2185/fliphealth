@@ -17,7 +17,6 @@ const DiagAccessBox = (props) => {
         else {
             enqueueSnackbar("Diagnostic Access Revoked!", { variant: "success" });
         }
-
         setRefresh(!refresh);
     }
     const handleCopy = async () => {
