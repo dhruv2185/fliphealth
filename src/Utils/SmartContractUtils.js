@@ -1,16 +1,16 @@
 import Web3 from 'web3';
 import { hospitalABI } from '../abis/hospital'
-console.log(hospitalABI);
+// console.log(hospitalABI);
 const web3 = new Web3(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
-console.log(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
+// console.log(process.env.REACT_APP_BLOCKCHAIN_PROVIDER_URL);
 const hospitalAddress = process.env.REACT_APP_HOSPITAL_CONTRACT_ADDRESS
-console.log(hospitalAddress);
+// console.log(hospitalAddress);
 const doctorContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
 const hospitalContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
 const diagContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
 const clinicContract = new web3.eth.Contract(hospitalABI, hospitalAddress);
 
-
+// @dev This function is used to register the doctor
 const registerDoctor = async (data, accountAddress) => {
     try {
         const result = await doctorContract.methods.registerDoctor(

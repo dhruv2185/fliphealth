@@ -349,7 +349,6 @@ const PatientLogin = () => {
     }
     const resendOTP = async () => {
         console.log("resend otp");
-
         const result = await generateOtp(data.aadhar, accessToken);
         if (result.message) {
             enqueueSnackbar(result.message, { variant: "error" });
