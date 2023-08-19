@@ -81,7 +81,7 @@ function App() {
     <>
       <ThemeProvider theme={darkTheme}>
 
-        <Router basename="/React">
+        <Router >
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/Dashboard" element={<Profile />} />
