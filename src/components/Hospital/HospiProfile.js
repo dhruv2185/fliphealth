@@ -24,7 +24,7 @@ const HospiProfile = () => {
     }
     useEffect(() => {
         getProfile(accountAddress);
-    }, []);
+    }, [accountAddress]);
 
     return (
         <>

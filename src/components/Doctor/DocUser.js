@@ -69,6 +69,7 @@ const DocUser = () => {
         }
         fetchProfile();
         fetchOrgs();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [accountAddress, refresh])
 
     return (

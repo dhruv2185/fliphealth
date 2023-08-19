@@ -6,7 +6,7 @@ import { grantAccessToDiagnostic } from '../../Utils/SmartContractUtils';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ConfirmDialog from '../ConfirmDialog';
 const SearchDiagResult = (props) => {
-    const { data, grantedDiag, isLoading, setIsLoading } = props;
+    const { data, grantedDiag, setIsLoading } = props;
     console.log(data)
     const [accessGranted, setAccessGranted] = useState(false);
     const [confirm, setConfirm] = useState(false);

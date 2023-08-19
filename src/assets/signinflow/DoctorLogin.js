@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Button from '@mui/material/Button';
@@ -46,7 +46,7 @@ const DoctorLogin = () => {
             width: '80vw',
         })
     };
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
     const dispatch = useDispatch();
@@ -123,8 +123,10 @@ const DoctorLogin = () => {
                 })
                 .then((res) => {
                     setAccounts(res);
+                    console.log(res)
                     const authenticate = async () => {
                         const getProfile = await getDoctorOwnProfile(res[0]);
+                        console.log(getProfile)
                         if (!getProfile || getProfile["name"] === "") {
                             return;
                         }
@@ -156,7 +158,7 @@ const DoctorLogin = () => {
             enqueueSnackbar("Please install Metamask to Proceed!", { variant: "error" });
             navigate("/");
 
-        }
+        }// eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -285,9 +287,11 @@ const DoctorLogin = () => {
         }
 
         const res = await registerDoctor(data1, accounts[0]);
+
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
         }
+
         else {
             const getProfile = await getDoctorOwnProfile(accounts[0]);
             if (getProfile.message) {
@@ -624,7 +628,7 @@ const DoctorLogin = () => {
                             </Button>
                             <Grid container>
                                 <Grid item xs>
-                                    <Link onClick={() => { setAadhaar(true) }} variant="body2">
+                                    <Link style={{ cursor: "pointer" }} onClick={() => { setAadhaar(true) }} variant="body2">
                                         Sign Up with Aadhaar
                                     </Link>
                                 </Grid>
@@ -636,7 +640,7 @@ const DoctorLogin = () => {
                             </Grid>
                         </Box>
                     </Box>}{
-                        aadhar && <><Modal
+                        aadhaar && <><Modal
                             open={openOTP}
                             onClose={handleClose}
                             aria-labelledby="modal-modal-title"
@@ -737,7 +741,7 @@ const DoctorLogin = () => {
                                     </Button>
                                     <Grid container>
                                         <Grid item xs>
-                                            <Link onClick={() => {
+                                            <Link style={{ cursor: "pointer" }} onClick={() => {
                                                 setAadhaar(false);
                                             }} variant="body2">
                                                 TEST Sign up

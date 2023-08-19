@@ -30,7 +30,7 @@ const ViewClinDoctors = () => {
 
     return (
         <>
-            <Container component="main" maxWidth="s" minWidth="xs">
+            <Container component="main" maxwidth="s" minwidth="xs">
                 <CssBaseline />
                 <Backdrop
                     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -45,6 +45,7 @@ const ViewClinDoctors = () => {
                                 <ClinDocBox key={index} data={doctor} />
                             );
                         }
+                        return null;
                     })
                     }{!doctors && <h5>Failed to load data. Please reload the page OR switch tabs!</h5>}
                     {doctors && doctors.length === 0 && <h5>No Doctors Found!</h5>}

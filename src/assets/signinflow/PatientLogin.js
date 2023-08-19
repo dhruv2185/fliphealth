@@ -1,13 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Web3 from 'web3';
+import { useDispatch } from 'react-redux';
+
 import { useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -48,7 +47,7 @@ const PatientLogin = () => {
             width: '80vw',
         })
     };
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
@@ -145,7 +144,7 @@ const PatientLogin = () => {
         } else {
             enqueueSnackbar("Please install Metamask to Proceed!", { variant: "error" });
             navigate("/");
-        }
+        }// eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const handleSubmit = async (event) => {
         event.preventDefault();

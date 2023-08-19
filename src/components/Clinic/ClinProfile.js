@@ -31,7 +31,7 @@ const ClinProfile = () => {
     }
     useEffect(() => {
         fetchProfile(accountAddress, accountAddress);
-    }, []);
+    }, [accountAddress]);
 
     return (
         <>

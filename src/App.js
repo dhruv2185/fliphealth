@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 import { enqueueSnackbar } from 'notistack';
 
 function App() {
+  const dispatch = useDispatch();
   useEffect(() => {
     if (window.ethereum) {
       window.ethereum.on('chainChanged', () => {
@@ -28,14 +29,14 @@ function App() {
         window.location.reload();
       });
     }
-  }, [window.ethereum])
+  }, [])
   useEffect(() => {
     const credentials = sessionStorage.getItem("credential") ? JSON.parse(sessionStorage.getItem("credential")) : null;
     if (credentials) {
       console.log(credentials)
       dispatch({ type: "LOGIN", payload: credentials })
     }
-  }, [])
+  }, [dispatch])
   useEffect(() => {
     function onlineHandler() {
       enqueueSnackbar("You are online", { variant: "success" });
@@ -54,7 +55,7 @@ function App() {
       window.removeEventListener("offline", offlineHandler);
     };
   }, []);
-  const dispatch = useDispatch();
+
 
   // dispatch({
   //   type: "UPDATE", payload: {
