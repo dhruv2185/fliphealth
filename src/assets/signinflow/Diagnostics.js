@@ -69,6 +69,10 @@ const Diagnostics = () => {
                         if (!getProfile || getProfile["Diagname"] === "") {
                             return;
                         }
+                        else if (getProfile.message) {
+                            enqueueSnackbar(getProfile.message, { variant: "error" });
+                            return;
+                        }
                         else {
                             const profile = {
                                 name: getProfile["Diagname"],
@@ -154,26 +158,33 @@ const Diagnostics = () => {
             return;
         }
         const res = await registerDiagnostic(data, accounts[0]);
+        enqueueSnackbar("Please wait for a few seconds, Registration takes time!", { variant: "info" })
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
         }
         else {
-            const getProfile = await getDiagProfile(accounts[0]);
-            if (getProfile.message) {
-                enqueueSnackbar(getProfile.message, { variant: "error" });
-            }
-            else {
-                const profile = {
-                    name: getProfile["Diagname"],
-                    email: getProfile["email"],
-                    mobile: Number(getProfile["phone"]),
-                    license: getProfile["license"],
+            setIsLoading(true);
+            setTimeout(async () => {
+                const getProfile = await getDiagProfile(accounts[0]);
+                if (getProfile.message) {
+                    enqueueSnackbar(getProfile.message, { variant: "error" });
+                    setIsLoading(false);
                 }
-                sessionStorage.setItem("credential", JSON.stringify({ accountType: "DIAGNOSTICS", accountAddress: accounts[0], profile: profile }))
-                enqueueSnackbar(`Welcome, ${profile.name}`);
-                dispatch({ type: "LOGIN", payload: { accountType: "DIAGNOSTICS", accountAddress: accounts[0], profile: profile } })
-                navigate("/Dashboard");
-            }
+                else {
+                    const profile = {
+                        name: getProfile["Diagname"],
+                        email: getProfile["email"],
+                        mobile: Number(getProfile["phone"]),
+                        license: getProfile["license"],
+                    }
+                    setIsLoading(false);
+                    sessionStorage.setItem("credential", JSON.stringify({ accountType: "DIAGNOSTICS", accountAddress: accounts[0], profile: profile }))
+                    enqueueSnackbar(`Welcome, ${profile.name}`);
+                    dispatch({ type: "LOGIN", payload: { accountType: "DIAGNOSTICS", accountAddress: accounts[0], profile: profile } })
+                    navigate("/Dashboard");
+                }
+            }, 20000)
+
         }
     };
 

@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import pdf from "../../assets/images/PDF.png";
+import pdf from "../../assets/images/File.png";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import { deleteDocument } from '../../Utils/SmartContractUtils';
 import { IconButton } from '@mui/material';

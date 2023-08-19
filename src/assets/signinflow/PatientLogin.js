@@ -115,8 +115,13 @@ const PatientLogin = () => {
                     setAccounts(res);
                     // console.log(accounts);
                     const authenticate = async () => {
+
                         const getProfile = await getPatientOwnProfile(res[0]);
                         if (!getProfile || getProfile["name"] === "") {
+                            return;
+                        }
+                        else if (getProfile.message) {
+                            enqueueSnackbar(getProfile.message, { variant: "error" });
                             return;
                         }
                         else {
@@ -246,29 +251,36 @@ const PatientLogin = () => {
         }
 
         const res = await register_patient(data1, accounts[0]);
+        enqueueSnackbar("Please wait for a few seconds, Registration takes time!", { variant: "info" })
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
         }
         else {
-            const getProfile = await getPatientOwnProfile(accounts[0]);
-            if (getProfile.message) {
-                enqueueSnackbar(getProfile.message, { variant: "error" });
-            }
-            else {
-                const profile = {
-                    name: getProfile["name"],
-                    age: Number(getProfile["age"]),
-                    email: getProfile["email"],
-                    abhaId: Number(getProfile["abhaId"]),
-                    aadharId: Number(getProfile["aadharId"]),
-                    mobile: Number(getProfile["mobile"]),
-                    gender: getProfile["gender"]
+            setIsLoading(true);
+            setTimeout(async () => {
+                const getProfile = await getPatientOwnProfile(accounts[0]);
+                if (getProfile.message) {
+                    enqueueSnackbar(getProfile.message, { variant: "error" });
+                    setIsLoading(false);
                 }
-                sessionStorage.setItem("credential", JSON.stringify({ accountType: "PATIENT", accountAddress: accounts[0], profile: profile }));
-                enqueueSnackbar(`Welcome, ${profile.name}`);
-                dispatch({ type: "LOGIN", payload: { accountType: "PATIENT", accountAddress: accounts[0], profile: profile } })
-                navigate("/Dashboard");
-            }
+                else {
+                    const profile = {
+                        name: getProfile["name"],
+                        age: Number(getProfile["age"]),
+                        email: getProfile["email"],
+                        abhaId: Number(getProfile["abhaId"]),
+                        aadharId: Number(getProfile["aadharId"]),
+                        mobile: Number(getProfile["mobile"]),
+                        gender: getProfile["gender"]
+                    }
+                    setIsLoading(false);
+                    sessionStorage.setItem("credential", JSON.stringify({ accountType: "PATIENT", accountAddress: accounts[0], profile: profile }));
+                    enqueueSnackbar(`Welcome, ${profile.name}`);
+                    dispatch({ type: "LOGIN", payload: { accountType: "PATIENT", accountAddress: accounts[0], profile: profile } })
+                    navigate("/Dashboard");
+                }
+            }, 20000)
+
         }
     };
     const handleFirstSubmit = async (event) => {
@@ -393,33 +405,39 @@ const PatientLogin = () => {
             email: aadharDetails.email
         }
         const res = await register_patient(newData, accounts[0]);
+        enqueueSnackbar("Please wait for a few seconds, Registration takes time!", { variant: "info" })
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
             setIsLoading(false);
         }
         else {
-            const getProfile = await getPatientOwnProfile(accounts[0]);
-            if (getProfile.message) {
-                enqueueSnackbar(getProfile.message, { variant: "error" });
-                setIsLoading(false);
-            }
-            else {
-                const profile = {
-                    name: getProfile["name"],
-                    age: Number(getProfile["age"]),
-                    email: getProfile["email"],
-                    abhaId: Number(getProfile["abhaId"]),
-                    aadharId: Number(getProfile["aadharId"]),
-                    mobile: Number(getProfile["mobile"]),
-                    gender: getProfile["gender"]
+            setIsLoading(true);
+            setTimeout(async () => {
+                const getProfile = await getPatientOwnProfile(accounts[0]);
+                if (getProfile.message) {
+                    enqueueSnackbar(getProfile.message, { variant: "error" });
+                    setIsLoading(false);
                 }
-                sessionStorage.setItem("credential", JSON.stringify({ accountType: "PATIENT", accountAddress: accounts[0], profile: profile }))
-                enqueueSnackbar(`Welcome, ${profile.name}`);
-                dispatch({ type: "LOGIN", payload: { accountType: "PATIENT", accountAddress: accounts[0], profile: profile } })
-                navigate("/Dashboard");
-            }
+                else {
+                    const profile = {
+                        name: getProfile["name"],
+                        age: Number(getProfile["age"]),
+                        email: getProfile["email"],
+                        abhaId: Number(getProfile["abhaId"]),
+                        aadharId: Number(getProfile["aadharId"]),
+                        mobile: Number(getProfile["mobile"]),
+                        gender: getProfile["gender"]
+                    }
+                    setIsLoading(false);
+                    sessionStorage.setItem("credential", JSON.stringify({ accountType: "PATIENT", accountAddress: accounts[0], profile: profile }))
+                    enqueueSnackbar(`Welcome, ${profile.name}`);
+                    dispatch({ type: "LOGIN", payload: { accountType: "PATIENT", accountAddress: accounts[0], profile: profile } })
+                    navigate("/Dashboard");
+                }
+            }, 20000)
+
         }
-        setIsLoading(false);
+
     }
 
     return (
@@ -537,7 +555,7 @@ const PatientLogin = () => {
                             </Button>
                             <Grid container>
                                 <Grid item xs>
-                                    <Link onClick={() => { setAadhaar(true) }} variant="body2">
+                                    <Link style={{ cursor: "pointer" }} onClick={() => { setAadhaar(true) }} variant="body2">
                                         Sign Up with Aadhaar
                                     </Link>
                                 </Grid>
@@ -631,7 +649,7 @@ const PatientLogin = () => {
                                     </Button>
                                     <Grid container>
                                         <Grid item xs>
-                                            <Link onClick={() => {
+                                            <Link style={{ cursor: "pointer" }} onClick={() => {
                                                 setAadhaar(false);
                                             }} variant="body2">
                                                 TEST Sign up
