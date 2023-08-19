@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Home from './assets/Home';
 
@@ -81,20 +81,20 @@ function App() {
     <>
       <ThemeProvider theme={darkTheme}>
 
-        <Router >
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route exact path="/Dashboard" element={<Profile />} />
-            <Route exact path="/Patient/SignIn" element={<PatientLogin />} />
-            <Route exact path="/Doctor/SignIn" element={<DoctorLogin />} />
-            <Route exact path="/Diagnostics/SignIn" element={<Diagnostics />} />
-            <Route exact path="/Clinic/SignIn" element={<ClinicLogin />} />
-            <Route exact path="/Hospital/SignIn" element={<HospitalLogin />} />
-            <Route exact path="/About" element={<About />} />
-            <Route exact path="/Contact" element={<Contact />} />
 
-          </Routes>
-        </Router>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/Dashboard" element={<Profile />} />
+          <Route exact path="/Patient/SignIn" element={<PatientLogin />} />
+          <Route exact path="/Doctor/SignIn" element={<DoctorLogin />} />
+          <Route exact path="/Diagnostics/SignIn" element={<Diagnostics />} />
+          <Route exact path="/Clinic/SignIn" element={<ClinicLogin />} />
+          <Route exact path="/Hospital/SignIn" element={<HospitalLogin />} />
+          <Route exact path="/About" element={<About />} />
+          <Route exact path="/Contact" element={<Contact />} />
+
+        </Routes>
+
       </ThemeProvider>
     </>
   );
