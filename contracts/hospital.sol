@@ -45,7 +45,7 @@ contract hospital is diagnostics, Ownable {
         uint _phone,
         string memory _license
     ) external payable {
-        require(msg.value == cost);
+        require(msg.value >= cost);
         hospitals[msg.sender] = Hospital(
             _hospname,
             _email,
