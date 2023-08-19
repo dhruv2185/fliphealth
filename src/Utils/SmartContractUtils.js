@@ -484,6 +484,7 @@ const getDoctorOwnProfile = async (accountAddress) => {
         const result = await doctorContract.methods.getDocOwnProfile().call({
             from: accountAddress
         })
+        console.log(result);
         const userData = result;
         return userData
     } catch (error) {
@@ -594,7 +595,7 @@ const addDoctorToHospital = async (docAddress, accountAddress) => {
         const transactionParams = {
             from: accountAddress,
             to: hospitalAddress,
-            data: hospitalContract.methods.addDoctorTOHospital(docAddress).encodeABI(),
+            data: hospitalContract.methods.addHospital(docAddress).encodeABI(),
         }
         const txHash = await window.ethereum.request({
             method: 'eth_sendTransaction',
@@ -602,6 +603,7 @@ const addDoctorToHospital = async (docAddress, accountAddress) => {
         });
         return txHash;
     } catch (error) {
+        console.log(error);
         const errObject = {
             message: "Failed to add doctor, Please check your balance or try again later",
         }
@@ -718,7 +720,7 @@ const registerHospital = async (data, accountAddress) => {
                 data.phone,
                 data.license
             ).encodeABI(),
-            value: web3.utils.toWei('0.1', 'ether')
+            value: web3.utils.toWei('0.0001', 'ether')
         }
         const txHash = await window.ethereum.request({
             method: 'eth_sendTransaction',
@@ -818,9 +820,9 @@ const getDiagProfile = async (address, accountAddress) => {
     try {
         const res = await diagContract.methods.DiagnosticIndex(address).call({
             from: accountAddress,
-            gas: 3000000
         });
         res.myAdd = address;
+        console.log(res);
         return res;
     } catch (error) {
         const errObject = {
@@ -949,11 +951,16 @@ const registerClinic = async (data, accountAddress) => {
 // }
 const enrollInClinicForDoctor = async (cliAddress, accountAddress) => {
     try {
-        const res = await clinicContract.methods.enrollInClinic(cliAddress).send({
+        const transactionParams = {
             from: accountAddress,
-            gas: 3000000
+            to: hospitalAddress,
+            data: clinicContract.methods.enrollInClinic(cliAddress).encodeABI(),
+        }
+        const txHash = await window.ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [transactionParams],
         });
-        return res
+        return txHash;
     } catch (error) {
         const errObject = {
             message: "Failed to enroll in clinic, Please check your balance or try again later",
@@ -1029,6 +1036,27 @@ const exitFromClinic = async (accountAddress) => {
     }
 }
 
+const setCostByAdmin = async (fee, accountAddress) => {
+    try {
+        const transactionParams = {
+            from: accountAddress,
+            to: hospitalAddress,
+            data: clinicContract.methods.setCost(fee).encodeABI(),
+        }
+        const txHash = await window.ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [transactionParams],
+        });
+        return txHash;
+    } catch (error) {
+        console.log(error);
+        const errObject = {
+            message: "Failed to update the cost of registering a hospital. Please try again later"
+        }
+        return errObject;
+    }
+}
+
 export {
     registerDoctor,
     register_patient,
@@ -1043,5 +1071,5 @@ export {
     registerDiagnostic, getAllDiagnostics, getDiagProfile, getPatientsOfDiagnostic, grantAccessToDiagnostic, revokeAccessOfDiagnostic, getDiagnosticForPatient, uploadRecordsByDiagnostic, deleteDocument,
     registerClinic, enrollInClinicForDoctor, getDoctorsOfClinic,
     getClinicProfile, exitFromClinic, getOrgOfDoctor,
-    getHealthRecordsOfPatient,
+    getHealthRecordsOfPatient, setCostByAdmin
 }

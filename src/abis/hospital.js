@@ -1,120 +1,5 @@
 export const hospitalABI = [
     {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_doctor",
-                "type": "address"
-            }
-        ],
-        "name": "addHospital",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "_org",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_date",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_doctorName",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_documentName",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_path",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_cid",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_docType",
-                "type": "string"
-            }
-        ],
-        "name": "addRecordByUser",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "_cid",
-                "type": "string"
-            }
-        ],
-        "name": "deleteRecord",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_clinic",
-                "type": "address"
-            }
-        ],
-        "name": "enrollInClinic",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "exitFromClinic",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_doctorAddress",
-                "type": "address"
-            }
-        ],
-        "name": "grantAccess",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_diagnosticAddress",
-                "type": "address"
-            }
-        ],
-        "name": "grantAccessToDiagnostic",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
         "anonymous": false,
         "inputs": [
             {
@@ -132,321 +17,6 @@ export const hospitalABI = [
         ],
         "name": "OwnershipTransferred",
         "type": "event"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "_name",
-                "type": "string"
-            },
-            {
-                "internalType": "uint16",
-                "name": "_age",
-                "type": "uint16"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_abhaId",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_aadharId",
-                "type": "uint256"
-            },
-            {
-                "internalType": "string",
-                "name": "_gender",
-                "type": "string"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_mobile",
-                "type": "uint256"
-            },
-            {
-                "internalType": "string",
-                "name": "_email",
-                "type": "string"
-            }
-        ],
-        "name": "register_patient",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "_name",
-                "type": "string"
-            },
-            {
-                "internalType": "uint128",
-                "name": "_phone",
-                "type": "uint128"
-            },
-            {
-                "internalType": "string",
-                "name": "_email",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_location",
-                "type": "string"
-            }
-        ],
-        "name": "registerClinic",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "_Diagname",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_email",
-                "type": "string"
-            },
-            {
-                "internalType": "uint128",
-                "name": "_phone",
-                "type": "uint128"
-            },
-            {
-                "internalType": "string",
-                "name": "_license",
-                "type": "string"
-            }
-        ],
-        "name": "registerDiagnostic",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint128",
-                "name": "_abhaId",
-                "type": "uint128"
-            },
-            {
-                "internalType": "uint128",
-                "name": "_aadharId",
-                "type": "uint128"
-            },
-            {
-                "internalType": "string",
-                "name": "_name",
-                "type": "string"
-            },
-            {
-                "internalType": "uint16",
-                "name": "_age",
-                "type": "uint16"
-            },
-            {
-                "internalType": "uint64",
-                "name": "_grNum",
-                "type": "uint64"
-            },
-            {
-                "internalType": "uint128",
-                "name": "_mobile",
-                "type": "uint128"
-            },
-            {
-                "internalType": "string",
-                "name": "_email",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_degreeName",
-                "type": "string"
-            }
-        ],
-        "name": "registerDoctor",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "_hospname",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_email",
-                "type": "string"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_phone",
-                "type": "uint256"
-            },
-            {
-                "internalType": "string",
-                "name": "_license",
-                "type": "string"
-            }
-        ],
-        "name": "registerHospital",
-        "outputs": [],
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_doctor",
-                "type": "address"
-            }
-        ],
-        "name": "removeDoctor",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "renounceOwnership",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_doctor",
-                "type": "address"
-            }
-        ],
-        "name": "revokeAccess",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_diagnostic",
-                "type": "address"
-            }
-        ],
-        "name": "revokeAccessDiagnostic",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_doctor",
-                "type": "address"
-            }
-        ],
-        "name": "revokeAccessToAll",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_fee",
-                "type": "uint256"
-            }
-        ],
-        "name": "setCost",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "newOwner",
-                "type": "address"
-            }
-        ],
-        "name": "transferOwnership",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_patient",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "_org",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_date",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_docName",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_name",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_path",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_cid",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_docType",
-                "type": "string"
-            }
-        ],
-        "name": "uploadRecordsDiagnostic",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "withdraw",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
     },
     {
         "inputs": [
@@ -579,6 +149,95 @@ export const hospitalABI = [
             }
         ],
         "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_doctor",
+                "type": "address"
+            }
+        ],
+        "name": "addHospital",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_org",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_date",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_doctorName",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_documentName",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_path",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_cid",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_docType",
+                "type": "string"
+            }
+        ],
+        "name": "addRecordByUser",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_cid",
+                "type": "string"
+            }
+        ],
+        "name": "deleteRecord",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_clinic",
+                "type": "address"
+            }
+        ],
+        "name": "enrollInClinic",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "exitFromClinic",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -1122,6 +781,32 @@ export const hospitalABI = [
         "inputs": [
             {
                 "internalType": "address",
+                "name": "_doctorAddress",
+                "type": "address"
+            }
+        ],
+        "name": "grantAccess",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_diagnosticAddress",
+                "type": "address"
+            }
+        ],
+        "name": "grantAccessToDiagnostic",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
                 "name": "",
                 "type": "address"
             }
@@ -1195,6 +880,321 @@ export const hospitalABI = [
             }
         ],
         "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "uint128",
+                "name": "_phone",
+                "type": "uint128"
+            },
+            {
+                "internalType": "string",
+                "name": "_email",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_location",
+                "type": "string"
+            }
+        ],
+        "name": "registerClinic",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_Diagname",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_email",
+                "type": "string"
+            },
+            {
+                "internalType": "uint128",
+                "name": "_phone",
+                "type": "uint128"
+            },
+            {
+                "internalType": "string",
+                "name": "_license",
+                "type": "string"
+            }
+        ],
+        "name": "registerDiagnostic",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint128",
+                "name": "_abhaId",
+                "type": "uint128"
+            },
+            {
+                "internalType": "uint128",
+                "name": "_aadharId",
+                "type": "uint128"
+            },
+            {
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "uint16",
+                "name": "_age",
+                "type": "uint16"
+            },
+            {
+                "internalType": "uint64",
+                "name": "_grNum",
+                "type": "uint64"
+            },
+            {
+                "internalType": "uint128",
+                "name": "_mobile",
+                "type": "uint128"
+            },
+            {
+                "internalType": "string",
+                "name": "_email",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_degreeName",
+                "type": "string"
+            }
+        ],
+        "name": "registerDoctor",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_hospname",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_email",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_phone",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "_license",
+                "type": "string"
+            }
+        ],
+        "name": "registerHospital",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "uint16",
+                "name": "_age",
+                "type": "uint16"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_abhaId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_aadharId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "_gender",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_mobile",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "_email",
+                "type": "string"
+            }
+        ],
+        "name": "register_patient",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_doctor",
+                "type": "address"
+            }
+        ],
+        "name": "removeDoctor",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_doctor",
+                "type": "address"
+            }
+        ],
+        "name": "revokeAccess",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_diagnostic",
+                "type": "address"
+            }
+        ],
+        "name": "revokeAccessDiagnostic",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_doctor",
+                "type": "address"
+            }
+        ],
+        "name": "revokeAccessToAll",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_fee",
+                "type": "uint256"
+            }
+        ],
+        "name": "setCost",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "transferOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_patient",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "_org",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_date",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_docName",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_path",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_cid",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_docType",
+                "type": "string"
+            }
+        ],
+        "name": "uploadRecordsDiagnostic",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "withdraw",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     }
 ]

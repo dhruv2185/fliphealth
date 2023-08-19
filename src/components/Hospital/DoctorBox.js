@@ -16,6 +16,7 @@ const DoctorBox = (props) => {
 
     const handleAdd = async () => {
         setIsLoading(true);
+        console.log(data.myAdd, accountAddress);
         const res = await addDoctorToHospital(data.myAdd, accountAddress);
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });

@@ -21,12 +21,13 @@ const SearchDiag = () => {
     const getByAddress = async (address) => {
         setIsLoading(true);
         const result = await getDiagProfile(address, accountAddress);
+        // console.log(result);
         if (result.message) {
             enqueueSnackbar(result.message, { variant: "error" })
         }
         else {
             setResults([result]);
-            console.log(result)
+            // console.log(result)
         }
         setIsLoading(false);
     }
