@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import store from "./store/reducer";
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
