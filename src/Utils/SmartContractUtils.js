@@ -720,7 +720,7 @@ const registerHospital = async (data, accountAddress) => {
                 data.phone,
                 data.license
             ).encodeABI(),
-            value: web3.utils.toWei('0.0001', 'ether')
+            value: 100000000000000
         }
         const txHash = await window.ethereum.request({
             method: 'eth_sendTransaction',
