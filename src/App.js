@@ -18,43 +18,43 @@ import { enqueueSnackbar } from 'notistack';
 
 function App() {
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   if (window.ethereum) {
-  //     window.ethereum.on('chainChanged', () => {
-  //       sessionStorage.clear();
-  //       window.location.reload();
-  //     });
-  //     window.ethereum.on('accountsChanged', () => {
-  //       sessionStorage.clear();
-  //       window.location.reload();
-  //     });
-  //   }
-  // }, [])
-  // useEffect(() => {
-  //   const credentials = sessionStorage.getItem("credential") ? JSON.parse(sessionStorage.getItem("credential")) : null;
-  //   if (credentials) {
-  //     console.log(credentials)
-  //     dispatch({ type: "LOGIN", payload: credentials })
-  //   }
-  // }, [dispatch])
-  // useEffect(() => {
-  //   function onlineHandler() {
-  //     enqueueSnackbar("You are online", { variant: "success" });
-  //   }
+  useEffect(() => {
+    if (window.ethereum) {
+      window.ethereum.on('chainChanged', () => {
+        sessionStorage.clear();
+        window.location.reload();
+      });
+      window.ethereum.on('accountsChanged', () => {
+        sessionStorage.clear();
+        window.location.reload();
+      });
+    }
+  }, [])
+  useEffect(() => {
+    const credentials = sessionStorage.getItem("credential") ? JSON.parse(sessionStorage.getItem("credential")) : null;
+    if (credentials) {
+      console.log(credentials)
+      dispatch({ type: "LOGIN", payload: credentials })
+    }
+  }, [dispatch])
+  useEffect(() => {
+    function onlineHandler() {
+      enqueueSnackbar("You are online", { variant: "success" });
+    }
 
-  //   function offlineHandler() {
-  //     enqueueSnackbar("You are offline", { variant: "error" });
-  //   }
+    function offlineHandler() {
+      enqueueSnackbar("You are offline", { variant: "error" });
+    }
 
-  //   window.addEventListener("online", onlineHandler);
-  //   window.addEventListener("offline", offlineHandler);
+    window.addEventListener("online", onlineHandler);
+    window.addEventListener("offline", offlineHandler);
 
 
-  //   return () => {
-  //     window.removeEventListener("online", onlineHandler);
-  //     window.removeEventListener("offline", offlineHandler);
-  //   };
-  // }, []);
+    return () => {
+      window.removeEventListener("online", onlineHandler);
+      window.removeEventListener("offline", offlineHandler);
+    };
+  }, []);
 
 
   // dispatch({
