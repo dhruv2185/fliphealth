@@ -83,15 +83,15 @@ function App() {
 
         <Router >
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/Dashboard" element={<Profile />} />
-            <Route path="/Patient/SignIn" element={<PatientLogin />} />
-            <Route path="/Doctor/SignIn" element={<DoctorLogin />} />
-            <Route path="/Diagnostics/SignIn" element={<Diagnostics />} />
-            <Route path="/Clinic/SignIn" element={<ClinicLogin />} />
-            <Route path="/Hospital/SignIn" element={<HospitalLogin />} />
-            <Route path="/About" element={<About />} />
-            <Route path="/Contact" element={<Contact />} />
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="/Dashboard" element={<Profile />} />
+            <Route exact path="/Patient/SignIn" element={<PatientLogin />} />
+            <Route exact path="/Doctor/SignIn" element={<DoctorLogin />} />
+            <Route exact path="/Diagnostics/SignIn" element={<Diagnostics />} />
+            <Route exact path="/Clinic/SignIn" element={<ClinicLogin />} />
+            <Route exact path="/Hospital/SignIn" element={<HospitalLogin />} />
+            <Route exact path="/About" element={<About />} />
+            <Route exact path="/Contact" element={<Contact />} />
 
           </Routes>
         </Router>
