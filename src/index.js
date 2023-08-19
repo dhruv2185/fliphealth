@@ -14,7 +14,7 @@ root.render(
 
   <Provider store={store}>
     <SnackbarProvider autoHideDuration={3000}>
-      <Router >
+      <Router basename='/index.html' >
         <App /></Router ></SnackbarProvider>
   </Provider>
 );
