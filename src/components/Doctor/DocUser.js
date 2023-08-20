@@ -48,10 +48,12 @@ const DocUser = () => {
             enqueueSnackbar(res.message, { variant: "error" });
         }
         else {
-            const o = res["hospitalProfile"].hospname === "" ? "NA" : ["hospitalProfile"].hospname;
+            // console.log(res["hospitalProfile"].hospname, res["clinicProfile"]);
+            const o = res["hospitalProfile"].hospname === "" ? "NA" : res["hospitalProfile"].hospname;
             const c = res["clinicProfile"].name === "" ? "NA" : res["clinicProfile"].name;
             setHosp(o);
             setCli(c);
+            // console.log(o, c);
         }
         setIsLoading(false);
     }

@@ -720,7 +720,7 @@ const registerHospital = async (data, accountAddress) => {
                 data.phone,
                 data.license
             ).encodeABI(),
-            value: 100000000000000
+            value: "100000000000000"
         }
         const txHash = await window.ethereum.request({
             method: 'eth_sendTransaction',
@@ -728,6 +728,7 @@ const registerHospital = async (data, accountAddress) => {
         });
         return txHash;
     } catch (error) {
+        console.log(error);
         const errObject = {
             message: "Failed to register hospital, Please check your balance or try again later",
         }
@@ -804,10 +805,11 @@ const getAllDiagnostics = async (accountAddress) => {
     try {
         const res = await diagContract.methods.getAllDiagnostics().call({
             from: accountAddress,
-            gas: 3000000
         });
+        console.log(res);
         return res;
     } catch (error) {
+        console.log(error);
         const errObject = {
             message: "Failed to fetch diagnostics, Please reload the page or try again later",
         }

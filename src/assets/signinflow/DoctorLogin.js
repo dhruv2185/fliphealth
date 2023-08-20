@@ -36,7 +36,7 @@ const DoctorLogin = () => {
         transform: 'translate(-50%, -50%)',
         width: "60vw",
         height: "40vh",
-        minHeight: "600px",
+        minHeight: "650px",
         bgcolor: 'background.paper',
         border: '2px solid #000',
         boxShadow: 24,
@@ -123,10 +123,10 @@ const DoctorLogin = () => {
                 })
                 .then((res) => {
                     setAccounts(res);
-                    console.log(res)
+                    // console.log(res)
                     const authenticate = async () => {
                         const getProfile = await getDoctorOwnProfile(res[0]);
-                        console.log(getProfile)
+                        // console.log(getProfile)
                         if (!getProfile || getProfile["name"] === "") {
                             return;
                         }
@@ -405,7 +405,7 @@ const DoctorLogin = () => {
             return;
         }
 
-        const token = authenticate();
+        const token = await authenticate();
         if (token.message) {
             enqueueSnackbar(token.message, {
                 variant: "error"
@@ -417,7 +417,7 @@ const DoctorLogin = () => {
             setAccessToken(token);
         }
 
-        const result = await generateOtp(data.aadhar, accessToken);
+        const result = await generateOtp(received.aadhar, accessToken);
         if (result.message) {
             enqueueSnackbar(result.message, { variant: "error" });
             setIsLoading(false);
@@ -425,6 +425,7 @@ const DoctorLogin = () => {
         }
         setRefId(result);
         setOpenOTP(true);
+        setIsLoading(false);
     }
     const handleOtpChange = (newvalue) => {
         setOtp(newvalue);
@@ -437,16 +438,21 @@ const DoctorLogin = () => {
         setIsLoading(false);
     }
     const resendOTP = async () => {
+        // console.log(data)
+        setIsLoading(true);
         const result = await generateOtp(data.aadhar, accessToken);
         if (result.message) {
             enqueueSnackbar(result.message, { variant: "error" });
+            setIsLoading(false);
             return;
         }
+        setIsLoading(false);
         setOtp("");
         setRefId(result);
     }
     const handleSecondSubmit = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
         const veriOTP = await verifyOTP(refId, otp, accessToken);
         // error case
         if (veriOTP.mess) {
@@ -475,6 +481,7 @@ const DoctorLogin = () => {
         enqueueSnackbar("Please wait for a few seconds, Registration takes time!", { variant: "info" })
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
+            setIsLoading(false);
         }
         else {
             setIsLoading(true);

@@ -363,10 +363,12 @@ const PatientLogin = () => {
             return;
         }
         setOpenOTP(false);
+        setIsLoading(false);
 
     }
     const resendOTP = async () => {
         setIsLoading(true);
+        // console.log(data.aadhar)
         const result = await generateOtp(data.aadhar, accessToken);
         if (result.message) {
             enqueueSnackbar(result.message, { variant: "error" });

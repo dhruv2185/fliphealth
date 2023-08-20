@@ -26,8 +26,16 @@ const SearchDiag = () => {
             enqueueSnackbar(result.message, { variant: "error" })
         }
         else {
-            setResults([result]);
-            // console.log(result)
+            const newRes = {
+                name: result["Diagname"],
+                email: result["email"],
+                phone: result["phone"],
+                license: result["license"],
+                myAdd: result.myAdd
+            }
+            // console.log(newRes);
+            setResults([newRes]);
+            // console.log(results)
         }
         setIsLoading(false);
     }
@@ -55,9 +63,21 @@ const SearchDiag = () => {
         setIsLoading(true);
         const res = await getAllDiagnostics(accountAddress);
         const regex = new RegExp(name, "gi");
-        const result = res.filter(
-            item => (name !== '' && regex.test(item["name"]))
+        const newRes = res.map(
+            item => {
+                return {
+                    name: item["name"],
+                    email: item["email"],
+                    phone: item["phone"],
+                    license: item["license"],
+                    myAdd: item["myAdd"]
+                }
+            }
         )
+        const result = newRes.filter(
+            item => (name !== "" && regex.test(item["name"]))
+        )
+        // console.log(result);
         setResults(result);
         setIsLoading(false);
     }

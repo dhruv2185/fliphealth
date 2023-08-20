@@ -50,7 +50,9 @@ const ViewRecords = () => {
                 <CircularProgress color="inherit" />
             </Backdrop>
                 <center style={{ padding: "20px" }}><InputBase
-                    sx={{ ml: 1, flex: 1 }}
+                    sx={{
+                        ml: 1, flex: 1
+                    }}
                     placeholder="Search"
                     inputProps={{ 'aria-label': 'search ' }}
                     value={searchText}
