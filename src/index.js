@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import store from "./store/reducer";
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
+import { HashRouter as Router } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -13,7 +14,8 @@ root.render(
 
   <Provider store={store}>
     <SnackbarProvider autoHideDuration={3000}>
-      <App /></SnackbarProvider>
+      <Router basename='/index.html' >
+        <App /></Router ></SnackbarProvider>
   </Provider>
 );
 

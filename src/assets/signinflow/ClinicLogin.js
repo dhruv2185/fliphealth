@@ -68,6 +68,10 @@ const ClinicLogin = () => {
                         if (!getProfile || getProfile["name"] === "") {
                             return;
                         }
+                        else if (getProfile.message) {
+                            enqueueSnackbar(getProfile.message, { variant: "error" });
+                            return;
+                        }
                         else {
                             const profile = {
                                 name: getProfile["name"],
@@ -155,26 +159,33 @@ const ClinicLogin = () => {
             return;
         }
         const res = await registerClinic(data, accounts[0]);
+        enqueueSnackbar("Please wait for a few seconds, Registration takes time!", { variant: "info" })
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
         }
         else {
-            const getProfile = await getClinicProfile(accounts[0]);
-            if (getProfile.message) {
-                enqueueSnackbar(getProfile.message, { variant: "error" });
-            }
-            else {
-                const profile = {
-                    name: getProfile["name"],
-                    email: getProfile["email"],
-                    mobile: Number(getProfile["phone"]),
-                    location: getProfile["location"],
+            setIsLoading(true);
+            setTimeout(async () => {
+                const getProfile = await getClinicProfile(accounts[0]);
+                if (getProfile.message) {
+                    enqueueSnackbar(getProfile.message, { variant: "error" });
+                    setIsLoading(false)
                 }
-                sessionStorage.setItem("credential", JSON.stringify({ accountType: "CLINIC", accountAddress: accounts[0], profile: profile }))
-                enqueueSnackbar(`Welcome, ${profile.name}`);
-                dispatch({ type: "LOGIN", payload: { accountType: "CLINIC", accountAddress: accounts[0], profile: profile } })
-                navigate("/Dashboard");
-            }
+                else {
+                    const profile = {
+                        name: getProfile["name"],
+                        email: getProfile["email"],
+                        mobile: Number(getProfile["phone"]),
+                        location: getProfile["location"],
+                    }
+                    setIsLoading(false)
+                    sessionStorage.setItem("credential", JSON.stringify({ accountType: "CLINIC", accountAddress: accounts[0], profile: profile }))
+                    enqueueSnackbar(`Welcome, ${profile.name}`);
+                    dispatch({ type: "LOGIN", payload: { accountType: "CLINIC", accountAddress: accounts[0], profile: profile } })
+                    navigate("/Dashboard");
+                }
+            }, 20000)
+
 
         }
     };

@@ -20,7 +20,7 @@ const PatUser = () => {
                 setProfile(res);
             }
             setIsLoading(false);
-            console.log(res);
+            // console.log(res);
         }
         fetchProfile();
     }, [accountAddress]);

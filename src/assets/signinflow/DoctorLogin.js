@@ -130,6 +130,10 @@ const DoctorLogin = () => {
                         if (!getProfile || getProfile["name"] === "") {
                             return;
                         }
+                        else if (getProfile.message) {
+                            enqueueSnackbar(getProfile.message, { variant: "error" });
+                            return;
+                        }
                         else {
                             const profile = {
                                 name: getProfile["name"],
@@ -287,33 +291,39 @@ const DoctorLogin = () => {
         }
 
         const res = await registerDoctor(data1, accounts[0]);
-
+        enqueueSnackbar("Please wait for a few seconds, Registration takes time!", { variant: "info" })
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
         }
 
         else {
-            const getProfile = await getDoctorOwnProfile(accounts[0]);
-            if (getProfile.message) {
-                enqueueSnackbar(getProfile.message, { variant: "error" });
-            }
-            else {
-                const profile = {
-                    name: getProfile["name"],
-                    age: Number(getProfile["age"]),
-                    email: getProfile["email"],
-                    abhaId: Number(getProfile["abhaId"]),
-                    aadharId: Number(getProfile["aadharId"]),
-                    mobile: Number(getProfile["mobile"]),
-                    gender: getProfile["gender"],
-                    grNumber: Number(getProfile["grNum"]),
-                    degreeName: getProfile["degreeName"]
+            setIsLoading(true);
+            setTimeout(async () => {
+                const getProfile = await getDoctorOwnProfile(accounts[0]);
+                if (getProfile.message) {
+                    enqueueSnackbar(getProfile.message, { variant: "error" });
+                    setIsLoading(false);
                 }
-                sessionStorage.setItem("credential", JSON.stringify({ accountType: "DOCTOR", accountAddress: accounts[0], profile: profile }))
-                enqueueSnackbar(`Welcome, ${profile.name}`);
-                dispatch({ type: "LOGIN", payload: { accountType: "DOCTOR", accountAddress: accounts[0], profile: profile } })
-                navigate("/Dashboard");
-            }
+                else {
+                    const profile = {
+                        name: getProfile["name"],
+                        age: Number(getProfile["age"]),
+                        email: getProfile["email"],
+                        abhaId: Number(getProfile["abhaId"]),
+                        aadharId: Number(getProfile["aadharId"]),
+                        mobile: Number(getProfile["mobile"]),
+                        gender: getProfile["gender"],
+                        grNumber: Number(getProfile["grNum"]),
+                        degreeName: getProfile["degreeName"]
+                    }
+                    setIsLoading(false);
+                    sessionStorage.setItem("credential", JSON.stringify({ accountType: "DOCTOR", accountAddress: accounts[0], profile: profile }))
+                    enqueueSnackbar(`Welcome, ${profile.name}`);
+                    dispatch({ type: "LOGIN", payload: { accountType: "DOCTOR", accountAddress: accounts[0], profile: profile } })
+                    navigate("/Dashboard");
+                }
+            }, 20000)
+
 
         }
     };
@@ -462,31 +472,38 @@ const DoctorLogin = () => {
         }
 
         const res = await registerDoctor(newData, accounts[0]);
+        enqueueSnackbar("Please wait for a few seconds, Registration takes time!", { variant: "info" })
         if (res.message) {
             enqueueSnackbar(res.message, { variant: "error" });
         }
         else {
-            const getProfile = await getDoctorOwnProfile(accounts[0]);
-            if (getProfile.message) {
-                enqueueSnackbar(getProfile.message, { variant: "error" });
-            }
-            else {
-                const profile = {
-                    name: getProfile["name"],
-                    age: Number(getProfile["age"]),
-                    email: getProfile["email"],
-                    abhaId: Number(getProfile["abhaId"]),
-                    aadharId: Number(getProfile["aadharId"]),
-                    mobile: Number(getProfile["mobile"]),
-                    gender: getProfile["gender"],
-                    grNumber: Number(getProfile["grNum"]),
-                    degreeName: getProfile["degreeName"]
+            setIsLoading(true);
+            setTimeout(async () => {
+                const getProfile = await getDoctorOwnProfile(accounts[0]);
+                if (getProfile.message) {
+                    enqueueSnackbar(getProfile.message, { variant: "error" });
+                    setIsLoading(false);
                 }
-                sessionStorage.setItem("credential", JSON.stringify({ accountType: "DOCTOR", accountAddress: accounts[0], profile: profile }))
-                enqueueSnackbar(`Welcome, ${profile.name}`);
-                dispatch({ type: "LOGIN", payload: { accountType: "DOCTOR", accountAddress: accounts[0], profile: profile } })
-                navigate("/Dashboard");
-            }
+                else {
+                    const profile = {
+                        name: getProfile["name"],
+                        age: Number(getProfile["age"]),
+                        email: getProfile["email"],
+                        abhaId: Number(getProfile["abhaId"]),
+                        aadharId: Number(getProfile["aadharId"]),
+                        mobile: Number(getProfile["mobile"]),
+                        gender: getProfile["gender"],
+                        grNumber: Number(getProfile["grNum"]),
+                        degreeName: getProfile["degreeName"]
+                    }
+                    setIsLoading(false);
+                    sessionStorage.setItem("credential", JSON.stringify({ accountType: "DOCTOR", accountAddress: accounts[0], profile: profile }))
+                    enqueueSnackbar(`Welcome, ${profile.name}`);
+                    dispatch({ type: "LOGIN", payload: { accountType: "DOCTOR", accountAddress: accounts[0], profile: profile } })
+                    navigate("/Dashboard");
+                }
+            }, 20000)
+
         }
     }
 
