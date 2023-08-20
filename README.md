@@ -20,7 +20,7 @@ https://fliphealth-aadhaar-verification-proxy.onrender.com
 - Aadhar-based Authentication.
 - Metamask based authorisation and identity-management.
 - Access control mechanism defined using smart contracts.
-- Data storage in an encrypted form on IPFS(Inter-Planetary File Storage) as well as blockchain infrastructure.
+- Data storage in an encrypted form on IPFS (Inter-Planetary File Storage) as well as blockchain infrastructure.
 - Easy to use user interface for people of different cohorts.
 
 ## Getting Started
@@ -46,7 +46,7 @@ https://fliphealth-aadhaar-verification-proxy.onrender.com
 ## Usage
 - Start the DApp: `npm start`
 - Open your web browser and navigate to `http://localhost:3000`.
-- continue ahead using the easy to use and fluent interface of the app.
+- Continue ahead using the easy-to-use and fluent interface of the app.
 
 
   
