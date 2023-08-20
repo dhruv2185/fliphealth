@@ -108,7 +108,7 @@ const DocUser = () => {
                         </div>
                         <center>
                             {cli === "NA" && <div><InputBase
-                                sx={{ ml: 1, flex: 1, minWidth: "300px", backgroundColor: "#595959", padding: 1, borderRadius: "5px" }}
+                                sx={{ ml: 1, flex: 1, minWidth: "300px", backgroundColor: "#F5F2F2", padding: 1, borderRadius: "5px" }}
                                 inputRef={search}
                                 placeholder="Add Clinic (Address)"
                                 inputProps={{ 'aria-label': 'search ' }} /><IconButton type="submit" sx={{ p: '10px' }} onClick={() => {

@@ -345,7 +345,7 @@ const PatientLogin = () => {
             setAccessToken(token);
         }
 
-        const result = await generateOtp(received.aadhar, accessToken);
+        const result = await generateOtp(received.aadhar, token);
         if (result.message) {
             enqueueSnackbar(result.message, { variant: "error" });
             setIsLoading(false);
