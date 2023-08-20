@@ -405,7 +405,7 @@ const DoctorLogin = () => {
             return;
         }
 
-        const token = authenticate();
+        const token = await authenticate();
         if (token.message) {
             enqueueSnackbar(token.message, {
                 variant: "error"
@@ -417,7 +417,7 @@ const DoctorLogin = () => {
             setAccessToken(token);
         }
 
-        const result = await generateOtp(data.aadhar, accessToken);
+        const result = await generateOtp(received.aadhar, accessToken);
         if (result.message) {
             enqueueSnackbar(result.message, { variant: "error" });
             setIsLoading(false);

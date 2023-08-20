@@ -235,6 +235,7 @@ const getPatientOwnProfile = async (accountAddress) => {
         const userData = result;
         return userData;
     } catch (error) {
+        console.log(error);
         const errObject = {
             message: "Failed to fetch your profile, Please reload the page or try again later",
         }
