@@ -6,7 +6,7 @@ This website is a blockchain base PHR management system, which means it guarante
 # Live Application URL
 https://fliphealth.vercel.app
 
-# Proxy server URL
+# Aadhaar Authentication server URL
 https://fliphealth-aadhaar-verification-proxy.onrender.com
 
 ## Table of Contents
